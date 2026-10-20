@@ -1,39 +1,49 @@
-# Modelo de landing page para fisioterapeutas
+# Como editar esta página direto no GitHub, sem pedir para a IA
 
-Modelo padrão construído com base no protótipo que o Marcelo enviou (página da nutricionista Luciana Mara, PDF Prototipo_1), adaptado para fisioterapia.
+Você só mexe em **um bloco no topo do arquivo index.html**, chamado **ÁREA DE EDIÇÃO**. Todo o resto é funcionamento da página e não precisa ser tocado.
 
-## Estrutura, igual à do modelo
+## Passo a passo para mudar textos, WhatsApp e cor
 
-1. Primeira dobra: marca, chamada com especialidade, público e cidade, frase de apresentação, botão e foto do profissional.
-2. Faixa em carrossel: quem já se tratou com ele.
-3. É para você que: três dores do paciente.
-4. Como funciona a avaliação: três cartões (avaliação completa, plano personalizado, acompanhamento e suporte).
-5. Faixa em carrossel: o que dizem os pacientes.
-6. Quem vai te acompanhar nesse processo: apresentação com foto.
-7. FAQ em barras que abrem e fecham.
-8. Rodapé preto com nome, CREFITO e endereço.
-9. Botão flutuante de WhatsApp e botão de agendar avaliação depois de cada seção.
+1. Abra o repositório e toque no arquivo **index.html**.
+2. Toque no ícone do lápis para editar.
+3. Logo no começo do arquivo está o bloco **ÁREA DE EDIÇÃO**, entre as linhas com vários sinais de igual.
+4. Mude **só o que está entre aspas**: nome, especialidade, público, cidade, frase de apresentação, WhatsApp, CREFITO, endereço, textos e perguntas.
+5. Não apague aspas, vírgulas nem chaves.
+6. No final da página do GitHub, confirme a alteração no botão de salvar a edição (Commit changes). O site atualiza sozinho em seguida.
 
-Todos os botões levam para o WhatsApp do profissional com a mensagem de agendamento de avaliação já escrita.
+## Como trocar a imagem
 
-## Como personalizar para um cliente
+Tem dois jeitos, escolha um:
 
-Abra o arquivo index.html e edite só o bloco CONFIG no final: nome, especialidade, público, cidade, frase de apresentação, WhatsApp, CREFITO, endereço, foto, cor do botão, dores, passos, textos sobre e perguntas do FAQ. Salve e publique. Nenhum outro trecho precisa mudar.
+**Jeito 1, por arquivo (o mais simples):**
+1. Suba a foto para este repositório com o nome **foto.jpg** (enviar arquivo, com o nome exato).
+2. Na ÁREA DE EDIÇÃO, mude a linha da foto para: foto: "foto.jpg"
 
-## Como gerar a amostra grátis da primeira dobra de um lead
+**Jeito 2, por link:**
+1. Copie o link direto da imagem.
+2. Na ÁREA DE EDIÇÃO, cole esse link no lugar de foto.svg, entre as aspas.
 
-O link da página aceita parâmetros. Monte o link com os dados públicos do lead e envie esse link na abordagem:
+Enquanto nenhuma foto é colocada, aparece a imagem cinza **foto.svg** que já está no repositório.
 
-?nome=Nome%20do%20Profissional&especialidade=dor%20na%20coluna&cidade=Cidade&whatsapp=5511999999999&foto=URL_DA_FOTO
+## Como mudar o link do botão
 
-Nome, especialidade, cidade, WhatsApp e foto do link substituem o CONFIG na hora, sem editar o arquivo. É assim que cada lead recebe uma prévia com o nome e a foto dele, como no método do Marcelo.
+Na ÁREA DE EDIÇÃO existe o campo **linkDoBotao**:
+
+1. Se ele estiver vazio, todos os botões usam automaticamente o WhatsApp do campo **whatsapp**, com a mensagem de agendar avaliação já escrita.
+2. Se você colar qualquer link nesse campo, todos os botões da página passam a usar esse link. Um lugar só muda a página inteira.
+
+## Como gerar a amostra da primeira dobra de um lead
+
+O link da página aceita os dados do lead e monta a prévia sem editar arquivo nenhum. Exemplo de link:
+
+?nome=Nome%20do%20Profissional&especialidade=dor%20na%20coluna&cidade=Cidade&whatsapp=5511999999999&foto=LINK_DA_FOTO
+
+Troque os valores pelos dados públicos daquele fisioterapeuta e envie esse link na abordagem do WhatsApp. É a amostra personalizada do método do Marcelo.
+
+## A estrutura da página
+
+Primeira dobra com especialidade, cidade e foto. Faixa de quem já se tratou. Três dores do paciente. Como funciona a avaliação em três cartões. Faixa de depoimentos. Apresentação do profissional. FAQ. Rodapé com CREFITO e endereço. Botão de WhatsApp depois de cada parte e botão flutuante no canto.
 
 ## Cuidados deste nicho
 
-1. Nada de promessa de cura ou de resultado garantido nos textos. A frase da primeira dobra e as respostas do FAQ já foram escritas sem prometer resultado.
-2. Nome e número do CREFITO aparecem na página, como a publicidade de fisioterapia exige.
-3. Fotos de evolução e depoimentos só entram com autorização do paciente. Enquanto não houver, ficam os espaços cinza do modelo.
-
-## Publicação
-
-Quando a Caroline enviar o link do repositório no GitHub, estes arquivos sobem para ele e o Cloudflare Pages publica a cada envio, como nos outros projetos dela.
+Nada de promessa de cura ou de resultado garantido nos textos. Nome e CREFITO visíveis na página. Fotos de pacientes e depoimentos só com autorização de quem aparece.

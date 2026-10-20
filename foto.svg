@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="1000" viewBox="0 0 800 1000">
+  <rect width="800" height="1000" fill="#efefef"/>
+  <circle cx="400" cy="380" r="130" fill="#bdbdbd"/>
+  <path d="M400 545c-125 0-225 100-225 225 0 20 16 35 36 35h378c20 0 36-15 36-35 0-125-100-225-225-225z" fill="#bdbdbd"/>
+  <text x="400" y="930" font-family="Arial, sans-serif" font-size="30" fill="#8a8a8a" text-anchor="middle">FOTO DO PROFISSIONAL</text>
+</svg>

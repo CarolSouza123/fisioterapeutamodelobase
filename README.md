@@ -1,49 +1,36 @@
-# Como editar esta página direto no GitHub, sem pedir para a IA
+# Site de amostras para fisioterapeutas: um site só, infinitos links personalizados
 
-Você só mexe em **um bloco no topo do arquivo index.html**, chamado **ÁREA DE EDIÇÃO**. Todo o resto é funcionamento da página e não precisa ser tocado.
+A página base fica oculta dentro do código. Na raiz do site fica o **seu painel**. Você cadastra o profissional no painel e o site cria na hora o endereço dele, por exemplo **/dra-ana-paula-ribeiro**. Nenhum repositório novo por amostra.
 
-## Passo a passo para mudar textos, WhatsApp e cor
+## Como ativar no Cloudflare, uma única vez
 
-1. Abra o repositório e toque no arquivo **index.html**.
-2. Toque no ícone do lápis para editar.
-3. Logo no começo do arquivo está o bloco **ÁREA DE EDIÇÃO**, entre as linhas com vários sinais de igual.
-4. Mude **só o que está entre aspas**: nome, especialidade, público, cidade, frase de apresentação, WhatsApp, CREFITO, endereço, textos e perguntas.
-5. Não apague aspas, vírgulas nem chaves.
-6. No final da página do GitHub, confirme a alteração no botão de salvar a edição (Commit changes). O site atualiza sozinho em seguida.
+1. Conecte este repositório no Cloudflare Pages, se ainda não conectou: preset nenhum, sem comando de build, pasta de saída na raiz, branch de produção **main**.
+2. Crie um namespace KV: no painel do Cloudflare, área de armazenamento KV, criar namespace com o nome que você quiser, por exemplo **fisioterapeutas**.
+3. Vincule o KV ao projeto: abra o projeto no Pages, configurações, funções (Functions), vinculações de KV, adicionar com o nome de variável exatamente **PROFISSIONAIS_KV** e escolher o namespace que você criou.
+4. Crie sua chave: no mesmo projeto, configurações, variáveis de ambiente, produção, adicionar a variável **ADMIN_KEY** com uma chave só sua e marcar como secreta.
+5. Faça uma nova implantação da versão mais recente (implantações, tentar de novo na mais recente, ou aguarde o próximo envio ao GitHub).
 
-## Como trocar a imagem
+Sem os passos 3 e 4 o painel abre, mas avisa que falta ativar. Com eles, tudo funciona.
 
-Tem dois jeitos, escolha um:
+## Como usar o painel no dia a dia
 
-**Jeito 1, por arquivo (o mais simples):**
-1. Suba a foto para este repositório com o nome **foto.jpg** (enviar arquivo, com o nome exato).
-2. Na ÁREA DE EDIÇÃO, mude a linha da foto para: foto: "foto.jpg"
+1. Abra o endereço do site. Digite sua chave e entre.
+2. Preencha nome, especialidade, cidade, quem ele atende, frase, WhatsApp dele, cor do botão, link da foto, CREFITO e endereço. Nome e WhatsApp são obrigatórios; o resto vazio usa o padrão do modelo.
+3. Toque em **Salvar e gerar o link**. O endereço do profissional aparece na tela, com botões para copiar, abrir a amostra e enviar para ele no WhatsApp dele, com a mensagem já escrita.
+4. Para corrigir algo, salve de novo com o mesmo nome: o mesmo endereço é atualizado, sem duplicar.
+5. Para apagar uma amostra, use o botão **Excluir** na lista. O link para de funcionar na hora.
 
-**Jeito 2, por link:**
-1. Copie o link direto da imagem.
-2. Na ÁREA DE EDIÇÃO, cole esse link no lugar de foto.svg, entre as aspas.
+## Como a página dele é montada
 
-Enquanto nenhuma foto é colocada, aparece a imagem cinza **foto.svg** que já está no repositório.
+O endereço /nome-do-profissional lê os dados salvos e monta a página modelo com nome, especialidade, cidade, foto, cor e WhatsApp dele em todos os botões. A estrutura é a do protótipo: primeira dobra, faixas de resultados e de depoimentos, três dores, como funciona a avaliação, apresentação, FAQ e rodapé com CREFITO. As páginas de amostra saem com noindex, para o Google não indexar amostras de prospecção.
 
-## Como mudar o link do botão
+## Arquivos deste repositório
 
-Na ÁREA DE EDIÇÃO existe o campo **linkDoBotao**:
+1. **index.html**: o painel (raiz do site).
+2. **functions/[slug].js**: monta a página personalizada de cada profissional e guarda o modelo oculto.
+3. **functions/api/profissionais.js**: salva, lista e exclui os cadastros no KV, protegido pela sua chave.
+4. **foto.svg**: imagem cinza padrão enquanto a foto do profissional não é informada.
 
-1. Se ele estiver vazio, todos os botões usam automaticamente o WhatsApp do campo **whatsapp**, com a mensagem de agendar avaliação já escrita.
-2. Se você colar qualquer link nesse campo, todos os botões da página passam a usar esse link. Um lugar só muda a página inteira.
+## Cuidados
 
-## Como gerar a amostra da primeira dobra de um lead
-
-O link da página aceita os dados do lead e monta a prévia sem editar arquivo nenhum. Exemplo de link:
-
-?nome=Nome%20do%20Profissional&especialidade=dor%20na%20coluna&cidade=Cidade&whatsapp=5511999999999&foto=LINK_DA_FOTO
-
-Troque os valores pelos dados públicos daquele fisioterapeuta e envie esse link na abordagem do WhatsApp. É a amostra personalizada do método do Marcelo.
-
-## A estrutura da página
-
-Primeira dobra com especialidade, cidade e foto. Faixa de quem já se tratou. Três dores do paciente. Como funciona a avaliação em três cartões. Faixa de depoimentos. Apresentação do profissional. FAQ. Rodapé com CREFITO e endereço. Botão de WhatsApp depois de cada parte e botão flutuante no canto.
-
-## Cuidados deste nicho
-
-Nada de promessa de cura ou de resultado garantido nos textos. Nome e CREFITO visíveis na página. Fotos de pacientes e depoimentos só com autorização de quem aparece.
+Nada de promessa de cura ou de resultado garantido nos textos do modelo. Nome e CREFITO visíveis na página do profissional. Fotos de pacientes e depoimentos só com autorização de quem aparece.

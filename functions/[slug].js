@@ -88,7 +88,7 @@ const EDITAR = Object.assign({}, PADRAO, window.DADOS || {});
   .marca .bolha{width:38px;height:38px;border-radius:50%;background:var(--cor-destaque);color:#fff;display:flex;align-items:center;justify-content:center;font-size:18px}
   .marca small{display:block;font-family:'Manrope',sans-serif;font-size:10px;font-weight:700;letter-spacing:3px;color:var(--cor-suave);text-transform:uppercase}
   section{padding:68px 0}
-  .hero{display:grid;grid-template-columns:1.05fr .95fr;grid-template-areas:"texto foto" "acao foto";gap:10px 44px;align-items:center;padding-top:30px}
+  .hero{display:grid;grid-template-columns:1.05fr .95fr;grid-template-areas:"texto foto" "acao foto";gap:10px 44px;align-items:center;padding-top:30px;padding-bottom:48px}
   .hero-texto{grid-area:texto}
   .hero .foto-caixa{grid-area:foto}
   .hero-acao{grid-area:acao;align-self:start;margin-top:14px}
@@ -160,14 +160,12 @@ const EDITAR = Object.assign({}, PADRAO, window.DADOS || {});
   <section style="padding-top:10px" data-secao-faixa>
     <div class="wrap"><h2 class="titulo" data-campo="tituloFaixa1"></h2></div>
     <div class="faixa"><div class="faixa-trilha" data-faixa></div></div>
-    <div class="wrap botao-centro"><a class="botao" data-botao href="#" target="_blank" rel="noopener">Quero agendar minha avaliação</a></div>
   </section>
 
   <section style="background:var(--cor-clara)">
     <div class="wrap para-voce">
       <h2 class="titulo">É para você que:</h2>
       <ul data-dores></ul>
-      <div class="botao-centro"><a class="botao" data-botao href="#" target="_blank" rel="noopener">Quero agendar minha avaliação</a></div>
     </div>
   </section>
 
@@ -175,14 +173,12 @@ const EDITAR = Object.assign({}, PADRAO, window.DADOS || {});
     <div class="wrap">
       <h2 class="titulo">Veja como funciona a minha avaliação</h2>
       <div class="passos" data-passos></div>
-      <div class="botao-centro"><a class="botao" data-botao href="#" target="_blank" rel="noopener">Quero agendar minha avaliação</a></div>
     </div>
   </section>
 
   <section style="padding-top:6px" data-secao-faixa>
     <div class="wrap"><h2 class="titulo" data-campo="tituloFaixa2"></h2></div>
     <div class="faixa"><div class="faixa-trilha" data-faixa></div></div>
-    <div class="wrap botao-centro"><a class="botao" data-botao href="#" target="_blank" rel="noopener">Quero agendar minha avaliação</a></div>
   </section>
 
   <section>

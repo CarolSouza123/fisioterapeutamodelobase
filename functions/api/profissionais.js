@@ -25,7 +25,7 @@ function gerarSlug(nome) {
     .slice(0, 60);
 }
 
-const CAMPOS = ["nome","especialidade","publico","cidade","fraseApresentacao","whatsapp","linkDoBotao","foto","corDoBotao","crefito","endereco","tituloFaixa1","tituloFaixa2","sobre1","sobre2","sobre3"];
+const CAMPOS = ["nome","especialidade","publico","cidade","fraseApresentacao","whatsapp","linkDoBotao","foto","corDoBotao","crefito","endereco","tituloFaixa1","tituloFaixa2","sobre1","sobre2","sobre3","revisao"];
 
 export async function onRequestGet(context) {
   const bloqueio = checarAcesso(context);
@@ -46,7 +46,7 @@ export async function onRequestGet(context) {
     if (!bruto) continue;
     try {
       const dados = JSON.parse(bruto);
-      profissionais.push({ slug: chave.name.replace("prof:", ""), nome: dados.nome || "", cidade: dados.cidade || "", especialidade: dados.especialidade || "", whatsapp: dados.whatsapp || "", criadoEm: dados.criadoEm || "" });
+      profissionais.push({ slug: chave.name.replace("prof:", ""), nome: dados.nome || "", cidade: dados.cidade || "", especialidade: dados.especialidade || "", whatsapp: dados.whatsapp || "", criadoEm: dados.criadoEm || "", revisao: dados.revisao || "a_analisar" });
     } catch (e) { /* registro ignorado */ }
   }
   profissionais.sort(function(a, b){ return (b.criadoEm || "").localeCompare(a.criadoEm || ""); });
@@ -59,6 +59,17 @@ export async function onRequestPost(context) {
   const kv = context.env.PROFISSIONAIS_KV;
   let corpo;
   try { corpo = await context.request.json(); } catch (e) { return respostaJson({ erro: "Dados invalidos." }, 400); }
+  // Atualizacao so da tarja de revisao: nao mexe em mais nada.
+  if (corpo.slug && corpo.revisao && !corpo.nome) {
+    const slugRev = gerarSlug(String(corpo.slug).trim());
+    const brutoRev = await kv.get("prof:" + slugRev);
+    if (!brutoRev) return respostaJson({ erro: "Profissional nao encontrado." }, 404);
+    const dadosRev = JSON.parse(brutoRev);
+    dadosRev.revisao = corpo.revisao === "revisado" ? "revisado" : "a_analisar";
+    dadosRev.atualizadoEm = new Date().toISOString();
+    await kv.put("prof:" + slugRev, JSON.stringify(dadosRev));
+    return respostaJson({ ok: true, slug: slugRev, revisao: dadosRev.revisao });
+  }
   const nome = (corpo.nome || "").trim();
   if (!nome) return respostaJson({ erro: "Falta o nome do profissional." }, 400);
   let slug = gerarSlug((corpo.slug || "").trim() || nome);
@@ -70,6 +81,9 @@ export async function onRequestPost(context) {
     if (typeof corpo[campo] === "string") dados[campo] = corpo[campo].trim();
   }
   dados.nome = nome;
+  if (!dados.revisao) {
+    dados.revisao = existente ? (JSON.parse(existente).revisao || "a_analisar") : "a_analisar";
+  }
   await kv.put("prof:" + slug, JSON.stringify(dados));
   return respostaJson({ ok: true, slug: slug, caminho: "/" + slug, editou: !!existente });
 }

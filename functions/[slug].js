@@ -299,17 +299,9 @@ const EDITAR = Object.assign({}, PADRAO, window.DADOS || {});
   }
 
   // Titulo principal montado so com as partes que existem.
-  var titulo;
-  if (ehPilates) {
-    titulo = EDITAR.especialidade;
-    if (EDITAR.publico) titulo += " para " + EDITAR.publico;
-    if (EDITAR.cidade) titulo += " em " + EDITAR.cidade;
-  } else {
-    titulo = "Fisioterapeuta";
-    if (EDITAR.especialidade) titulo += " especialista em " + EDITAR.especialidade;
-    if (EDITAR.publico) titulo += " para " + EDITAR.publico;
-    if (EDITAR.cidade) titulo += " em " + EDITAR.cidade;
-  }
+  // Titulo padrao definido pela Caroline: so "Especialista em X em Cidade".
+  var titulo = "Especialista em " + (EDITAR.especialidade || (ehPilates ? "Pilates" : "Fisioterapia"));
+  if (EDITAR.cidade) titulo += " em " + EDITAR.cidade;
   document.querySelector("[data-titulo]").textContent = titulo + "!";
 
   function preencher(campo, valor){

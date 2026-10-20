@@ -250,6 +250,14 @@ const EDITAR = Object.assign({}, PADRAO, window.DADOS || {});
   // Regra da pagina: o que nao foi preenchido nao aparece. Nada de texto
   // entre colchetes e nenhuma secao vazia para o visitante.
   function vazio(v){ return !v || !String(v).trim() || /^\\[.*\\]$/.test(String(v).trim()); }
+  // Textos colados do Instagram vem com letrinhas estilizadas (unicode
+  // matematico) que aparecem numa fonte estranha: normaliza para a letra
+  // comum, mantendo os acentos.
+  Object.keys(EDITAR).forEach(function(c){
+    if (typeof EDITAR[c] === "string" && c !== "foto") {
+      EDITAR[c] = EDITAR[c].normalize("NFKD").normalize("NFC");
+    }
+  });
   ["nome","especialidade","publico","cidade","fraseApresentacao","crefito","endereco","sobre1","sobre2","sobre3","foto"].forEach(function(c){
     if (vazio(EDITAR[c])) EDITAR[c] = "";
   });

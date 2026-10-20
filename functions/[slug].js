@@ -142,7 +142,7 @@ const EDITAR = Object.assign({}, PADRAO, window.DADOS || {});
   <div class="wrap">
     <div class="marca">
       <span class="bolha" data-campo="inicial">F</span>
-      <span><span data-campo="nome">[Nome do profissional]</span><small>Fisioterapia</small></span>
+      <span><span data-campo="nome">[Nome do profissional]</span><small data-rotulo>Fisioterapia</small></span>
     </div>
   </div>
 </header>
@@ -246,7 +246,9 @@ const EDITAR = Object.assign({}, PADRAO, window.DADOS || {});
     raiz.setProperty("--cor-escura", mistura(0, 0.78));
     raiz.setProperty("--cor-clara", mistura(255, 0.85));
   })();
-  document.title = EDITAR.cidade ? EDITAR.nome + " | Fisioterapia em " + EDITAR.cidade : EDITAR.nome + " | Fisioterapia";
+  document.title = EDITAR.cidade
+    ? EDITAR.nome + " | " + (ehPilates ? "Pilates" : "Fisioterapia") + " em " + EDITAR.cidade
+    : EDITAR.nome + " | " + (ehPilates ? "Pilates" : "Fisioterapia");
 
   // Regra da pagina: o que nao foi preenchido nao aparece. Nada de texto
   // entre colchetes e nenhuma secao vazia para o visitante.
@@ -254,6 +256,8 @@ const EDITAR = Object.assign({}, PADRAO, window.DADOS || {});
   ["nome","especialidade","publico","cidade","fraseApresentacao","crefito","endereco","sobre1","sobre2","sobre3","foto"].forEach(function(c){
     if (vazio(EDITAR[c])) EDITAR[c] = "";
   });
+  var espMinuscula = (EDITAR.especialidade || "").toLowerCase();
+  var ehPilates = espMinuscula.indexOf("pilates") !== -1 && espMinuscula.indexOf("fisioterapia") === -1;
 
   // Frase de apresentacao automatica, criada da especialidade quando o
   // profissional nao escreveu a dele.
@@ -272,17 +276,32 @@ const EDITAR = Object.assign({}, PADRAO, window.DADOS || {});
     return "Ajudo " + quem + " a " + beneficio + ", com atendimento individual e um plano de tratamento feito para a sua rotina.";
   }
   if (!EDITAR.fraseApresentacao) EDITAR.fraseApresentacao = gerarFrase();
+  // A area da pessoa manda no rotulo da pagina: quem e de pilates nao
+  // pode sair rotulado como fisioterapia (nem o contrario).
+  document.querySelector("[data-rotulo]").textContent = ehPilates ? "Pilates" : "Fisioterapia";
   if (!EDITAR.sobre1 && EDITAR.nome) {
-    EDITAR.sobre1 = "Sou " + EDITAR.nome + ", fisioterapeuta" +
-      (EDITAR.especialidade ? " especialista em " + EDITAR.especialidade : "") +
-      (EDITAR.cidade ? ", e atendo em " + EDITAR.cidade : "") + ".";
+    if (ehPilates) {
+      EDITAR.sobre1 = "Sou " + EDITAR.nome + " e dou aulas de " + EDITAR.especialidade +
+        (EDITAR.cidade ? " em " + EDITAR.cidade : "") + ".";
+    } else {
+      EDITAR.sobre1 = "Sou " + EDITAR.nome + ", fisioterapeuta" +
+        (EDITAR.especialidade ? " especialista em " + EDITAR.especialidade : "") +
+        (EDITAR.cidade ? ", e atendo em " + EDITAR.cidade : "") + ".";
+    }
   }
 
   // Titulo principal montado so com as partes que existem.
-  var titulo = "Fisioterapeuta";
-  if (EDITAR.especialidade) titulo += " especialista em " + EDITAR.especialidade;
-  if (EDITAR.publico) titulo += " para " + EDITAR.publico;
-  if (EDITAR.cidade) titulo += " em " + EDITAR.cidade;
+  var titulo;
+  if (ehPilates) {
+    titulo = EDITAR.especialidade;
+    if (EDITAR.publico) titulo += " para " + EDITAR.publico;
+    if (EDITAR.cidade) titulo += " em " + EDITAR.cidade;
+  } else {
+    titulo = "Fisioterapeuta";
+    if (EDITAR.especialidade) titulo += " especialista em " + EDITAR.especialidade;
+    if (EDITAR.publico) titulo += " para " + EDITAR.publico;
+    if (EDITAR.cidade) titulo += " em " + EDITAR.cidade;
+  }
   document.querySelector("[data-titulo]").textContent = titulo + "!";
 
   function preencher(campo, valor){
@@ -302,7 +321,7 @@ const EDITAR = Object.assign({}, PADRAO, window.DADOS || {});
 
   // Rodape montado: nome e Fisioterapeuta sempre; CREFITO e endereco so
   // quando preenchidos.
-  var partesRodape = ["<strong>" + EDITAR.nome + "</strong>", "Fisioterapeuta"];
+  var partesRodape = ["<strong>" + EDITAR.nome + "</strong>", ehPilates ? "Pilates" : "Fisioterapeuta"];
   if (EDITAR.crefito) partesRodape.push("CREFITO " + EDITAR.crefito);
   document.querySelector("[data-rodape]").innerHTML = partesRodape.join(" · ");
   var divEndereco = document.querySelector("[data-endereco]");

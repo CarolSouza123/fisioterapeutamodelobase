@@ -8,6 +8,9 @@ const MODELO = `<!DOCTYPE html>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Landing page para fisioterapeuta</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <meta name="description" content="Landing page modelo para fisioterapeutas. Agende sua avaliação pelo WhatsApp.">
 
 <script>window.DADOS = {{DADOS_JSON}};</script>
@@ -78,46 +81,47 @@ const EDITAR = Object.assign({}, PADRAO, window.DADOS || {});
   }
   *{margin:0;padding:0;box-sizing:border-box}
   html{scroll-behavior:smooth}
-  body{font-family:system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;color:var(--cor-texto);background:#fff;line-height:1.55;-webkit-font-smoothing:antialiased}
+  body{font-family:'Manrope',system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;color:var(--cor-texto);background:#fff;line-height:1.6;-webkit-font-smoothing:antialiased}
   .wrap{max-width:1120px;margin:0 auto;padding:0 22px}
   header.topo{padding:26px 0 6px}
-  .marca{display:flex;align-items:center;gap:10px;font-weight:800;font-size:21px}
+  .marca{display:flex;align-items:center;gap:10px;font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:23px;letter-spacing:.1px}
   .marca .bolha{width:38px;height:38px;border-radius:50%;background:var(--cor-destaque);color:#fff;display:flex;align-items:center;justify-content:center;font-size:18px}
-  .marca small{display:block;font-size:10px;font-weight:600;letter-spacing:2.5px;color:var(--cor-suave);text-transform:uppercase}
-  section{padding:56px 0}
+  .marca small{display:block;font-family:'Manrope',sans-serif;font-size:10px;font-weight:700;letter-spacing:3px;color:var(--cor-suave);text-transform:uppercase}
+  section{padding:68px 0}
   .hero{display:grid;grid-template-columns:1.05fr .95fr;grid-template-areas:"texto foto" "acao foto";gap:10px 44px;align-items:center;padding-top:30px}
   .hero-texto{grid-area:texto}
   .hero .foto-caixa{grid-area:foto}
   .hero-acao{grid-area:acao;align-self:start;margin-top:14px}
-  .hero h1{font-size:clamp(30px,4.6vw,46px);line-height:1.16;font-weight:800;letter-spacing:-.5px}
-  .hero p{margin:20px 0 28px;font-size:17px;color:#2c2c2c;max-width:520px}
-  .foto-caixa{background:#efefef;border-radius:14px;min-height:340px;display:flex;align-items:center;justify-content:center;overflow:hidden}
+  .hero h1{font-family:'Fraunces',Georgia,serif;font-size:clamp(32px,4.8vw,50px);line-height:1.12;font-weight:600;letter-spacing:-.2px}
+  .hero p{margin:22px 0 30px;font-size:17.5px;color:#33302c;max-width:520px}
+  .foto-caixa{background:#efefef;border-radius:26px;min-height:340px;display:flex;align-items:center;justify-content:center;overflow:hidden}
+  .hero .foto-caixa{border-radius:180px 180px 26px 26px}
   .foto-caixa img{width:100%;height:100%;object-fit:cover;min-height:340px}
-  .botao{display:inline-block;background:var(--cor-botao);color:#fff;font-weight:700;font-style:italic;font-size:16px;padding:15px 34px;border-radius:9px;text-decoration:none;min-height:52px}
+  .botao{display:inline-block;background:var(--cor-botao);color:#fff;font-weight:700;font-size:16px;padding:16px 38px;border-radius:99px;text-decoration:none;min-height:54px;letter-spacing:.2px;box-shadow:0 10px 24px rgba(20,16,10,.16)}
   .botao-centro{text-align:center;margin-top:34px}
-  h2.titulo{font-size:clamp(22px,3vw,28px);font-weight:800;text-align:center;letter-spacing:-.3px}
+  h2.titulo{font-family:'Fraunces',Georgia,serif;font-size:clamp(24px,3.2vw,32px);font-weight:600;text-align:center;letter-spacing:-.2px}
   .faixa{overflow:hidden;padding:26px 0 4px}
   .faixa-trilha{display:flex;gap:18px;width:max-content;animation:rolar 30s linear infinite}
   .faixa:hover .faixa-trilha{animation-play-state:paused}
   @keyframes rolar{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-  .cartao-resultado{width:250px;flex:0 0 auto;display:grid;grid-template-columns:1fr 1fr;border-radius:10px;overflow:hidden;border:1px solid var(--cor-linha)}
+  .cartao-resultado{width:250px;flex:0 0 auto;display:grid;grid-template-columns:1fr 1fr;border-radius:18px;overflow:hidden;border:1px solid var(--cor-linha)}
   .cartao-resultado .metade{background:var(--cor-cinza);min-height:190px;display:flex;align-items:flex-end;padding:8px;font-size:11px;color:#666}
   .cartao-resultado .metade.escura{background:var(--cor-clara);color:#444}
   .para-voce{max-width:640px;margin:0 auto}
   .para-voce ul{list-style:none;margin-top:30px;display:grid;gap:20px}
   .para-voce li{display:flex;gap:16px;align-items:center;font-size:16.5px}
-  .icone-quadrado{width:46px;height:46px;flex:0 0 auto;border-radius:10px;background:var(--cor-clara);color:var(--cor-escura);display:flex;align-items:center;justify-content:center;font-size:21px}
+  .icone-quadrado{width:46px;height:46px;flex:0 0 auto;border-radius:50%;background:var(--cor-clara);color:var(--cor-escura);display:flex;align-items:center;justify-content:center;font-size:20px}
   .passos{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:36px}
-  .passo{border:1px solid #cfcfcf;border-radius:12px;padding:26px 24px}
-  .passo h3{font-size:18px;font-weight:800;margin:16px 0 10px}
+  .passo{border:1px solid #e3ded6;border-radius:20px;padding:28px 26px;background:#fff;box-shadow:0 6px 18px rgba(20,16,10,.05)}
+  .passo h3{font-family:'Fraunces',Georgia,serif;font-size:19px;font-weight:600;margin:16px 0 10px}
   .passo p{font-size:14.5px;color:#333}
   .sobre{display:grid;grid-template-columns:1.05fr .95fr;gap:44px;align-items:center}
-  .sobre h2{font-size:clamp(24px,3.2vw,32px);font-weight:800;line-height:1.25}
+  .sobre h2{font-family:'Fraunces',Georgia,serif;font-size:clamp(26px,3.4vw,36px);font-weight:600;line-height:1.22}
   .sobre p{margin-top:18px;font-size:16px;color:#2c2c2c}
   .sobre .botao{margin-top:26px}
   .faq{max-width:680px;margin:34px auto 0;display:grid;gap:12px}
-  .faq details{background:var(--cor-escura);border-radius:9px;overflow:hidden}
-  .faq summary{color:#fff;font-weight:700;font-style:italic;font-size:15.5px;text-align:center;padding:17px 20px;cursor:pointer;list-style:none;min-height:54px;display:flex;align-items:center;justify-content:center}
+  .faq details{background:var(--cor-escura);border-radius:16px;overflow:hidden}
+  .faq summary{color:#fff;font-weight:600;font-size:15.5px;text-align:center;padding:18px 22px;cursor:pointer;list-style:none;min-height:54px;display:flex;align-items:center;justify-content:center}
   .faq summary::-webkit-details-marker{display:none}
   .faq details p{color:#e8e8e8;font-size:14.5px;padding:0 22px 20px;text-align:center}
   footer{background:var(--cor-escura);color:#e8e2da;padding:30px 0;text-align:center;font-size:13.5px}
@@ -159,7 +163,7 @@ const EDITAR = Object.assign({}, PADRAO, window.DADOS || {});
     <div class="wrap botao-centro"><a class="botao" data-botao href="#" target="_blank" rel="noopener">Quero agendar minha avaliação</a></div>
   </section>
 
-  <section>
+  <section style="background:var(--cor-clara)">
     <div class="wrap para-voce">
       <h2 class="titulo">É para você que:</h2>
       <ul data-dores></ul>
@@ -167,7 +171,7 @@ const EDITAR = Object.assign({}, PADRAO, window.DADOS || {});
     </div>
   </section>
 
-  <section style="padding-top:6px">
+  <section style="padding-top:6px;background:var(--cor-clara)">
     <div class="wrap">
       <h2 class="titulo">Veja como funciona a minha avaliação</h2>
       <div class="passos" data-passos></div>

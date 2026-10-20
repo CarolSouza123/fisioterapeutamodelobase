@@ -31,6 +31,14 @@ export async function onRequestGet(context) {
   const bloqueio = checarAcesso(context);
   if (bloqueio) return bloqueio;
   const kv = context.env.PROFISSIONAIS_KV;
+  const urlGet = new URL(context.request.url);
+  const slugUnico = (urlGet.searchParams.get("slug") || "").trim().toLowerCase();
+  if (slugUnico) {
+    const brutoUm = await kv.get("prof:" + slugUnico);
+    if (!brutoUm) return respostaJson({ erro: "Profissional nao encontrado." }, 404);
+    try { return respostaJson({ profissional: JSON.parse(brutoUm), slug: slugUnico }); }
+    catch (e) { return respostaJson({ erro: "Registro invalido." }, 500); }
+  }
   const lista = await kv.list({ prefix: "prof:" });
   const profissionais = [];
   for (const chave of lista.keys) {

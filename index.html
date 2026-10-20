@@ -54,7 +54,8 @@
 
   <div id="area-painel" class="escondido">
     <div class="cartao">
-      <h2 style="margin-top:0">Novo profissional</h2>
+      <h2 style="margin-top:0" id="titulo-form">Novo profissional</h2>
+      <button class="botao-claro escondido" id="cancelar-edicao" style="min-height:40px;padding:8px 13px;font-size:13.5px;margin-bottom:4px">Cancelar edição</button>
       <label for="f-nome">Nome do profissional *</label>
       <input id="f-nome" placeholder="Ex.: Dra. Ana Paula Ribeiro">
       <div class="linha">
@@ -70,7 +71,7 @@
       <label for="f-publico">Quem ele atende</label>
       <input id="f-publico" placeholder="Ex.: quem sente dor nas costas">
       <label for="f-frase">Frase de apresentação</label>
-      <textarea id="f-frase" placeholder="Como ele ajuda o paciente, em uma ou duas frases. Se deixar vazio, entra o texto padrão do modelo."></textarea>
+      <textarea id="f-frase" placeholder="Como ele ajuda o paciente, em uma ou duas frases. Se deixar vazio, a página cria uma frase automática pela especialidade."></textarea>
       <div class="linha">
         <div>
           <label for="f-whats">WhatsApp dele (com DDD) *</label>
@@ -106,11 +107,28 @@
       </div>
     </div>
 
+    <div class="cartao">
+      <h2 style="margin-top:0">Importar da planilha</h2>
+      <p class="sub">Suba o arquivo de leads e crie as amostras a partir dele, uma por vez ou todas de uma vez. No fim, baixe a planilha de volta já com os links preenchidos.</p>
+      <label for="arquivo-planilha">Arquivo de leads (xlsx ou csv)</label>
+      <input type="file" id="arquivo-planilha" accept=".xlsx,.xls,.csv">
+      <div class="aviso" id="aviso-import"></div>
+      <div id="area-import" class="escondido">
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:14px">
+          <button class="botao-claro" id="criar-todos">Criar para todos</button>
+          <button class="botao-claro" id="baixar-planilha">Baixar planilha com os links</button>
+        </div>
+        <p class="sub" id="progresso-import"></p>
+        <div id="lista-import"></div>
+      </div>
+    </div>
+
     <h2>Profissionais cadastrados</h2>
     <div id="lista"></div>
   </div>
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script>
 var chave = "";
 var ultimoLink = "";
@@ -151,8 +169,11 @@ document.getElementById("entrar").addEventListener("click", async function(){
   }
 });
 
+var slugsExistentes = {};
 async function carregarLista(){
   var dados = await chamarApi("GET");
+  slugsExistentes = {};
+  dados.profissionais.forEach(function(p){ slugsExistentes[p.slug] = true; });
   var box = document.getElementById("lista");
   box.innerHTML = "";
   if (!dados.profissionais.length){
@@ -176,6 +197,10 @@ async function carregarLista(){
     bAbrir.className = "botao-claro";
     bAbrir.textContent = "Abrir";
     bAbrir.addEventListener("click", function(){ window.open("/" + p.slug, "_blank"); });
+    var bEditar = document.createElement("button");
+    bEditar.className = "botao-claro";
+    bEditar.textContent = "Editar";
+    bEditar.addEventListener("click", function(){ editarProfissional(p.slug); });
     var bExcluir = document.createElement("button");
     bExcluir.className = "botao-perigo";
     bExcluir.textContent = "Excluir";
@@ -186,6 +211,7 @@ async function carregarLista(){
     });
     item.appendChild(info);
     item.appendChild(bAbrir);
+    item.appendChild(bEditar);
     item.appendChild(bExcluir);
     box.appendChild(item);
   });
@@ -205,6 +231,7 @@ document.getElementById("salvar").addEventListener("click", async function(){
   if (!whats){ aviso("aviso-form", "Falta o WhatsApp dele.", "erro"); return; }
   var corpo = {
     nome: nome,
+    slug: editandoSlug || undefined,
     especialidade: document.getElementById("f-especialidade").value.trim(),
     cidade: document.getElementById("f-cidade").value.trim(),
     publico: document.getElementById("f-publico").value.trim(),
@@ -223,6 +250,7 @@ document.getElementById("salvar").addEventListener("click", async function(){
     document.getElementById("url-gerada").textContent = ultimoLink;
     document.getElementById("link-gerado").style.display = "block";
     aviso("aviso-form", r.editou ? "Amostra atualizada." : "Amostra criada. Link pronto para enviar.", "ok");
+    if (editandoSlug) sairEdicao(false);
     carregarLista();
   } catch (e) {
     aviso("aviso-form", e.message, "erro");
@@ -240,6 +268,175 @@ document.getElementById("enviar-whats").addEventListener("click", function(){
   if (!ultimoWhats) return;
   var texto = "Olá, " + ultimoNome + "! Fiz uma amostra gratuita da primeira parte de uma página para você, com seu nome e sua especialidade. É esta aqui: " + ultimoLink + " Quando puder, me diz o que achou.";
   window.open("https://wa.me/" + ultimoWhats + "?text=" + encodeURIComponent(texto), "_blank");
+});
+
+// ---------- Editar profissional ----------
+var editandoSlug = "";
+function preencherCampo(id, valor){ document.getElementById(id).value = valor || ""; }
+async function editarProfissional(slug){
+  try {
+    var r = await chamarApi("GET", null, "?slug=" + encodeURIComponent(slug));
+    var d = r.profissional || {};
+    editandoSlug = slug;
+    preencherCampo("f-nome", d.nome);
+    preencherCampo("f-especialidade", d.especialidade);
+    preencherCampo("f-cidade", d.cidade);
+    preencherCampo("f-publico", d.publico);
+    preencherCampo("f-frase", d.fraseApresentacao);
+    preencherCampo("f-whats", d.whatsapp);
+    document.getElementById("f-cor").value = d.corDoBotao || "#111111";
+    preencherCampo("f-foto", d.foto);
+    preencherCampo("f-crefito", d.crefito);
+    preencherCampo("f-endereco", d.endereco);
+    var img = document.getElementById("previa-foto");
+    if (d.foto){ img.src = d.foto; img.style.display = "block"; } else { img.style.display = "none"; }
+    document.getElementById("titulo-form").textContent = "Editando: " + (d.nome || slug);
+    document.getElementById("cancelar-edicao").classList.remove("escondido");
+    document.getElementById("salvar").textContent = "Salvar alterações";
+    document.getElementById("titulo-form").scrollIntoView({ behavior: "smooth" });
+    aviso("aviso-form", "Editando " + (d.nome || slug) + ". O link continua o mesmo.", "ok");
+  } catch (e) { alert(e.message); }
+}
+function sairEdicao(limpar){
+  editandoSlug = "";
+  document.getElementById("titulo-form").textContent = "Novo profissional";
+  document.getElementById("cancelar-edicao").classList.add("escondido");
+  document.getElementById("salvar").textContent = "Salvar e gerar o link";
+  if (limpar){
+    ["f-nome","f-especialidade","f-cidade","f-publico","f-frase","f-whats","f-foto","f-crefito","f-endereco"].forEach(function(id){ preencherCampo(id, ""); });
+    document.getElementById("previa-foto").style.display = "none";
+  }
+}
+document.getElementById("cancelar-edicao").addEventListener("click", function(){ sairEdicao(true); limparAviso("aviso-form"); });
+
+// ---------- Importar da planilha ----------
+var importados = [];
+var todasLinhas = [];
+var workbookOriginal = null;
+function gerarSlugCliente(nome){
+  return nome.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "").slice(0, 60);
+}
+function normalizarLinha(linha, idx){
+  var m = {};
+  Object.keys(linha).forEach(function(k){ m[String(k).trim().toLowerCase()] = linha[k]; });
+  return {
+    idx: idx,
+    nome: String(m.nome || "").trim(),
+    whatsapp: String(m.whatsapp || "").replace(/\D/g, ""),
+    especialidade: String(m.especialidade || "").trim(),
+    cidade: String(m.cidade || "").trim(),
+    link: "",
+    status: ""
+  };
+}
+function parseCsv(texto){
+  var linhas = texto.split(/\r?\n/).filter(function(l){ return l.trim(); });
+  if (!linhas.length) return [];
+  var sep = linhas[0].indexOf(";") !== -1 ? ";" : ",";
+  var cab = linhas[0].split(sep).map(function(c){ return c.trim().replace(/^"|"$/g, ""); });
+  return linhas.slice(1).map(function(l){
+    var partes = l.split(sep);
+    var o = {};
+    cab.forEach(function(c, i){ o[c] = (partes[i] || "").trim().replace(/^"|"$/g, ""); });
+    return o;
+  });
+}
+function montarListaImport(){
+  var box = document.getElementById("lista-import");
+  box.innerHTML = "";
+  importados.forEach(function(l){
+    var slug = gerarSlugCliente(l.nome);
+    if (slugsExistentes[slug] && !l.link){ l.link = location.origin + "/" + slug; l.status = "Já cadastrada"; }
+    var item = document.createElement("div");
+    item.className = "item";
+    var info = document.createElement("div");
+    info.className = "info";
+    var nome = document.createElement("div");
+    nome.className = "nome";
+    nome.textContent = l.nome;
+    var detalhe = document.createElement("div");
+    detalhe.className = "detalhe";
+    detalhe.textContent = (l.cidade ? l.cidade + " · " : "") + l.whatsapp + (l.status ? " · " + l.status : "");
+    info.appendChild(nome);
+    info.appendChild(detalhe);
+    var b = document.createElement("button");
+    b.className = "botao-claro";
+    b.textContent = l.link ? "Ver link" : "Criar amostra";
+    b.addEventListener("click", async function(){
+      if (l.link){ prompt("Link da amostra:", l.link); return; }
+      b.textContent = "Criando...";
+      try {
+        await criarAmostraImport(l);
+        b.textContent = "Ver link";
+        detalhe.textContent = (l.cidade ? l.cidade + " · " : "") + l.whatsapp + " · " + l.status;
+      } catch (e) { b.textContent = "Tentar de novo"; alert(e.message); }
+    });
+    item.appendChild(info);
+    item.appendChild(b);
+    box.appendChild(item);
+  });
+}
+async function criarAmostraImport(l){
+  var r = await chamarApi("POST", { nome: l.nome, whatsapp: l.whatsapp, especialidade: l.especialidade, cidade: l.cidade });
+  l.link = location.origin + r.caminho;
+  l.status = r.editou ? "Atualizada" : "Criada";
+  slugsExistentes[r.slug] = true;
+  return r;
+}
+document.getElementById("arquivo-planilha").addEventListener("change", async function(){
+  var arq = this.files[0];
+  if (!arq) return;
+  limparAviso("aviso-import");
+  try {
+    var linhas;
+    if (/\.csv$/i.test(arq.name)){
+      linhas = parseCsv(await arq.text());
+      workbookOriginal = null;
+    } else {
+      if (typeof XLSX === "undefined") throw new Error("A leitura de xlsx ainda está carregando. Tente de novo em alguns segundos.");
+      var buf = await arq.arrayBuffer();
+      workbookOriginal = XLSX.read(buf);
+      var ws = workbookOriginal.Sheets[workbookOriginal.SheetNames[0]];
+      linhas = XLSX.utils.sheet_to_json(ws, { defval: "" });
+    }
+    todasLinhas = linhas;
+    importados = linhas.map(normalizarLinha).filter(function(l){ return l.nome && l.whatsapp; });
+    if (!importados.length) throw new Error("Não achei leads com nome e WhatsApp neste arquivo.");
+    document.getElementById("area-import").classList.remove("escondido");
+    montarListaImport();
+    aviso("aviso-import", importados.length + " leads encontrados no arquivo.", "ok");
+  } catch (e) {
+    aviso("aviso-import", e.message, "erro");
+  }
+});
+document.getElementById("criar-todos").addEventListener("click", async function(){
+  var prog = document.getElementById("progresso-import");
+  var faltam = importados.filter(function(l){ return !l.link; });
+  var feitos = 0, erros = 0;
+  for (var i = 0; i < importados.length; i++){
+    var l = importados[i];
+    if (l.link) continue;
+    prog.textContent = "Criando " + (feitos + erros + 1) + " de " + faltam.length + "...";
+    try { await criarAmostraImport(l); feitos++; } catch (e) { erros++; l.status = "Erro ao criar"; }
+  }
+  prog.textContent = "Pronto: " + feitos + " criadas" + (erros ? ", " + erros + " com erro (tente de novo uma por vez)" : "") + ". Agora baixe a planilha com os links e use ela no sistema.";
+  montarListaImport();
+  carregarLista();
+});
+document.getElementById("baixar-planilha").addEventListener("click", function(){
+  if (typeof XLSX === "undefined"){ alert("A planilha ainda está carregando. Tente de novo em alguns segundos."); return; }
+  var porIdx = {};
+  importados.forEach(function(l){ if (l.link) porIdx[l.idx] = l.link; });
+  var saida = todasLinhas.map(function(linha, i){
+    var copia = {};
+    Object.keys(linha).forEach(function(k){ copia[k] = linha[k]; });
+    if (porIdx[i]) copia.link_amostra = porIdx[i];
+    return copia;
+  });
+  var ws = XLSX.utils.json_to_sheet(saida);
+  var wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, "Leads");
+  XLSX.writeFile(wb, "leads-com-links.xlsx");
 });
 
 (function(){

@@ -67,6 +67,9 @@ const EDITAR = Object.assign({}, PADRAO, window.DADOS || {});
 <style>
   :root{
     --cor-botao:#111111;
+    --cor-destaque:#111111;
+    --cor-escura:#111111;
+    --cor-clara:#d9d9d9;
     --cor-texto:#141414;
     --cor-suave:#5c5c5c;
     --cor-linha:#e6e6e6;
@@ -79,7 +82,7 @@ const EDITAR = Object.assign({}, PADRAO, window.DADOS || {});
   .wrap{max-width:1120px;margin:0 auto;padding:0 22px}
   header.topo{padding:26px 0 6px}
   .marca{display:flex;align-items:center;gap:10px;font-weight:800;font-size:21px}
-  .marca .bolha{width:38px;height:38px;border-radius:50%;background:var(--cor-texto);color:#fff;display:flex;align-items:center;justify-content:center;font-size:18px}
+  .marca .bolha{width:38px;height:38px;border-radius:50%;background:var(--cor-destaque);color:#fff;display:flex;align-items:center;justify-content:center;font-size:18px}
   .marca small{display:block;font-size:10px;font-weight:600;letter-spacing:2.5px;color:var(--cor-suave);text-transform:uppercase}
   section{padding:56px 0}
   .hero{display:grid;grid-template-columns:1.05fr .95fr;grid-template-areas:"texto foto" "acao foto";gap:10px 44px;align-items:center;padding-top:30px}
@@ -99,11 +102,11 @@ const EDITAR = Object.assign({}, PADRAO, window.DADOS || {});
   @keyframes rolar{from{transform:translateX(0)}to{transform:translateX(-50%)}}
   .cartao-resultado{width:250px;flex:0 0 auto;display:grid;grid-template-columns:1fr 1fr;border-radius:10px;overflow:hidden;border:1px solid var(--cor-linha)}
   .cartao-resultado .metade{background:var(--cor-cinza);min-height:190px;display:flex;align-items:flex-end;padding:8px;font-size:11px;color:#666}
-  .cartao-resultado .metade.escura{background:var(--cor-cinza-escuro);color:#444}
+  .cartao-resultado .metade.escura{background:var(--cor-clara);color:#444}
   .para-voce{max-width:640px;margin:0 auto}
   .para-voce ul{list-style:none;margin-top:30px;display:grid;gap:20px}
   .para-voce li{display:flex;gap:16px;align-items:center;font-size:16.5px}
-  .icone-quadrado{width:46px;height:46px;flex:0 0 auto;border-radius:10px;background:var(--cor-cinza);display:flex;align-items:center;justify-content:center;font-size:21px}
+  .icone-quadrado{width:46px;height:46px;flex:0 0 auto;border-radius:10px;background:var(--cor-clara);color:var(--cor-escura);display:flex;align-items:center;justify-content:center;font-size:21px}
   .passos{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:36px}
   .passo{border:1px solid #cfcfcf;border-radius:12px;padding:26px 24px}
   .passo h3{font-size:18px;font-weight:800;margin:16px 0 10px}
@@ -113,11 +116,11 @@ const EDITAR = Object.assign({}, PADRAO, window.DADOS || {});
   .sobre p{margin-top:18px;font-size:16px;color:#2c2c2c}
   .sobre .botao{margin-top:26px}
   .faq{max-width:680px;margin:34px auto 0;display:grid;gap:12px}
-  .faq details{background:#111;border-radius:9px;overflow:hidden}
+  .faq details{background:var(--cor-escura);border-radius:9px;overflow:hidden}
   .faq summary{color:#fff;font-weight:700;font-style:italic;font-size:15.5px;text-align:center;padding:17px 20px;cursor:pointer;list-style:none;min-height:54px;display:flex;align-items:center;justify-content:center}
   .faq summary::-webkit-details-marker{display:none}
   .faq details p{color:#e8e8e8;font-size:14.5px;padding:0 22px 20px;text-align:center}
-  footer{background:#0d0d0d;color:#cfcfcf;padding:30px 0;text-align:center;font-size:13.5px}
+  footer{background:var(--cor-escura);color:#e8e2da;padding:30px 0;text-align:center;font-size:13.5px}
   footer strong{color:#fff}
   .whats-flutuante{position:fixed;right:18px;bottom:18px;width:58px;height:58px;border-radius:50%;background:#25d366;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 22px rgba(0,0,0,.25);z-index:50;text-decoration:none;color:#fff;font-size:26px}
   @media (max-width:820px){
@@ -222,6 +225,23 @@ const EDITAR = Object.assign({}, PADRAO, window.DADOS || {});
   if (params.get("cor")) EDITAR.corDoBotao = params.get("cor");
 
   document.documentElement.style.setProperty("--cor-botao", EDITAR.corDoBotao);
+  // Paleta da pagina: tons da mesma familia da cor do profissional, para
+  // os detalhes combinarem com o botao em vez de preto puro.
+  (function aplicarPaleta(){
+    var hex = String(EDITAR.corDoBotao || "#111111").trim();
+    var m = hex.match(/^#?([0-9a-f]{6})$/i);
+    if (!m) return;
+    var n = parseInt(m[1], 16);
+    var r = (n >> 16) & 255, g = (n >> 8) & 255, b = n & 255;
+    function mistura(alvo, f){
+      function c(v){ return Math.round(v + (alvo - v) * f); }
+      return "rgb(" + c(r) + "," + c(g) + "," + c(b) + ")";
+    }
+    var raiz = document.documentElement.style;
+    raiz.setProperty("--cor-destaque", hex);
+    raiz.setProperty("--cor-escura", mistura(0, 0.78));
+    raiz.setProperty("--cor-clara", mistura(255, 0.85));
+  })();
   document.title = EDITAR.cidade ? EDITAR.nome + " | Fisioterapia em " + EDITAR.cidade : EDITAR.nome + " | Fisioterapia";
 
   // Regra da pagina: o que nao foi preenchido nao aparece. Nada de texto

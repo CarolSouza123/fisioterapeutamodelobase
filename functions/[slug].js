@@ -27,17 +27,17 @@ const MODELO = `<!DOCTYPE html>
    usam o WhatsApp do campo "whatsapp" automaticamente.
    ================================================================ */
 const PADRAO = {
-  nome: "[Nome do profissional]",
-  especialidade: "[especialidade]",
-  publico: "[quem você atende]",
-  cidade: "[Cidade]",
-  fraseApresentacao: "[Frase de apresentação: como você ajuda esse paciente, com acompanhamento individual e um plano de tratamento feito para a rotina dele.]",
+  nome: "",
+  especialidade: "",
+  publico: "",
+  cidade: "",
+  fraseApresentacao: "",
   whatsapp: "[5511999999999]",
   linkDoBotao: "",
-  foto: "foto.svg",
+  foto: "",
   corDoBotao: "#111111",
-  crefito: "[número]",
-  endereco: "[Endereço do consultório, bairro, cidade]",
+  crefito: "",
+  endereco: "",
   tituloFaixa1: "Quem já se tratou comigo",
   tituloFaixa2: "O que dizem pacientes que já começaram",
   dores: [
@@ -50,9 +50,9 @@ const PADRAO = {
     { titulo: "Plano de Tratamento Personalizado", texto: "Criação de um plano exclusivo, ajustado ao seu objetivo, à sua rotina e ao seu ritmo de evolução." },
     { titulo: "Acompanhamento e Suporte", texto: "Sessões com acompanhamento próximo e suporte pelo WhatsApp para dúvidas e ajustes do plano entre uma sessão e outra." }
   ],
-  sobre1: "[Sou (nome), fisioterapeuta especialista em (especialidade). Apresente sua formação e sua forma de atender.]",
-  sobre2: "[Como é o seu acompanhamento e no que ele é diferente.]",
-  sobre3: "[Um toque pessoal curto: algo da sua história ou do que você acredita sobre o tratamento.]",
+  sobre1: "",
+  sobre2: "",
+  sobre3: "",
   faq: [
     { pergunta: "Em quanto tempo vejo resultado?", resposta: "Cada caso evolui no seu ritmo. Na avaliação, você entende o que está causando o problema e qual é o plano e o prazo estimado para o seu caso, sem promessa milagrosa." },
     { pergunta: "É só para quem sente dor?", resposta: "Não. Além de tratar dor, o acompanhamento serve para recuperar movimento, voltar ao esporte e prevenir que o problema volte." },
@@ -139,14 +139,14 @@ const EDITAR = Object.assign({}, PADRAO, window.DADOS || {});
 <main>
   <section class="hero wrap">
     <div>
-      <h1>Fisioterapeuta especialista em <span data-campo="especialidade">[especialidade]</span> para <span data-campo="publico">[público]</span> em <span data-campo="cidade">[Cidade]</span>!</h1>
+      <h1 data-titulo></h1>
       <p data-campo="fraseApresentacao"></p>
       <a class="botao" data-botao href="#" target="_blank" rel="noopener">Quero agendar minha avaliação</a>
     </div>
     <div class="foto-caixa"><img data-foto alt="Foto do profissional"></div>
   </section>
 
-  <section style="padding-top:10px">
+  <section style="padding-top:10px" data-secao-faixa>
     <div class="wrap"><h2 class="titulo" data-campo="tituloFaixa1"></h2></div>
     <div class="faixa"><div class="faixa-trilha" data-faixa></div></div>
     <div class="wrap botao-centro"><a class="botao" data-botao href="#" target="_blank" rel="noopener">Quero agendar minha avaliação</a></div>
@@ -168,7 +168,7 @@ const EDITAR = Object.assign({}, PADRAO, window.DADOS || {});
     </div>
   </section>
 
-  <section style="padding-top:6px">
+  <section style="padding-top:6px" data-secao-faixa>
     <div class="wrap"><h2 class="titulo" data-campo="tituloFaixa2"></h2></div>
     <div class="faixa"><div class="faixa-trilha" data-faixa></div></div>
     <div class="wrap botao-centro"><a class="botao" data-botao href="#" target="_blank" rel="noopener">Quero agendar minha avaliação</a></div>
@@ -197,8 +197,8 @@ const EDITAR = Object.assign({}, PADRAO, window.DADOS || {});
 
 <footer>
   <div class="wrap">
-    <strong data-campo="nome"></strong> · Fisioterapeuta · CREFITO <span data-campo="crefito"></span><br>
-    <span data-campo="endereco"></span>
+    <span data-rodape></span>
+    <div data-endereco></div>
   </div>
 </footer>
 
@@ -218,26 +218,87 @@ const EDITAR = Object.assign({}, PADRAO, window.DADOS || {});
   if (params.get("cor")) EDITAR.corDoBotao = params.get("cor");
 
   document.documentElement.style.setProperty("--cor-botao", EDITAR.corDoBotao);
-  document.title = EDITAR.nome + " | Fisioterapia em " + EDITAR.cidade;
+  document.title = EDITAR.cidade ? EDITAR.nome + " | Fisioterapia em " + EDITAR.cidade : EDITAR.nome + " | Fisioterapia";
+
+  // Regra da pagina: o que nao foi preenchido nao aparece. Nada de texto
+  // entre colchetes e nenhuma secao vazia para o visitante.
+  function vazio(v){ return !v || !String(v).trim() || /^\\[.*\\]$/.test(String(v).trim()); }
+  ["nome","especialidade","publico","cidade","fraseApresentacao","crefito","endereco","sobre1","sobre2","sobre3","foto"].forEach(function(c){
+    if (vazio(EDITAR[c])) EDITAR[c] = "";
+  });
+
+  // Frase de apresentacao automatica, criada da especialidade quando o
+  // profissional nao escreveu a dele.
+  function gerarFrase(){
+    var esp = (EDITAR.especialidade || "").toLowerCase();
+    var beneficio = "se livrar da dor e voltar a viver a sua rotina sem limitação";
+    if (esp.indexOf("pilates") !== -1) beneficio = "ganhar força, postura e mobilidade";
+    else if (esp.indexOf("esport") !== -1) beneficio = "voltar ao esporte com segurança e desempenho";
+    else if (esp.indexOf("coluna") !== -1 || esp.indexOf("dor") !== -1) beneficio = "viver sem dor e recuperar seus movimentos";
+    else if (esp.indexOf("geriatr") !== -1 || esp.indexOf("idoso") !== -1) beneficio = "manter o equilíbrio, a força e a independência no dia a dia";
+    else if (esp.indexOf("neuro") !== -1) beneficio = "recuperar movimentos e autonomia com acompanhamento próximo";
+    else if (esp.indexOf("pélvica") !== -1 || esp.indexOf("pelvica") !== -1 || esp.indexOf("urogineco") !== -1) beneficio = "cuidar da saúde pélvica com discrição e sem constrangimento";
+    else if (esp.indexOf("respirat") !== -1) beneficio = "respirar melhor e recuperar sua capacidade física";
+    else if (esp.indexOf("pós") !== -1 || esp.indexOf("reabilita") !== -1 || esp.indexOf("ortoped") !== -1) beneficio = "se recuperar com segurança, no seu ritmo";
+    var quem = EDITAR.publico ? EDITAR.publico : "pessoas";
+    return "Ajudo " + quem + " a " + beneficio + ", com atendimento individual e um plano de tratamento feito para a sua rotina.";
+  }
+  if (!EDITAR.fraseApresentacao) EDITAR.fraseApresentacao = gerarFrase();
+  if (!EDITAR.sobre1 && EDITAR.nome) {
+    EDITAR.sobre1 = "Sou " + EDITAR.nome + ", fisioterapeuta" +
+      (EDITAR.especialidade ? " especialista em " + EDITAR.especialidade : "") +
+      (EDITAR.cidade ? ", e atendo em " + EDITAR.cidade : "") + ".";
+  }
+
+  // Titulo principal montado so com as partes que existem.
+  var titulo = "Fisioterapeuta";
+  if (EDITAR.especialidade) titulo += " especialista em " + EDITAR.especialidade;
+  if (EDITAR.publico) titulo += " para " + EDITAR.publico;
+  if (EDITAR.cidade) titulo += " em " + EDITAR.cidade;
+  document.querySelector("[data-titulo]").textContent = titulo + "!";
 
   function preencher(campo, valor){
-    document.querySelectorAll('[data-campo="' + campo + '"]').forEach(function(el){ el.textContent = valor; });
+    document.querySelectorAll('[data-campo="' + campo + '"]').forEach(function(el){
+      if (!valor) { el.style.display = "none"; return; }
+      el.textContent = valor;
+    });
   }
   preencher("nome", EDITAR.nome);
-  preencher("inicial", (EDITAR.nome.replace(/[\\[\\]]/g,"").trim().charAt(0) || "F").toUpperCase());
-  preencher("especialidade", EDITAR.especialidade);
-  preencher("publico", EDITAR.publico);
-  preencher("cidade", EDITAR.cidade);
+  preencher("inicial", (EDITAR.nome.replace(/[\\\\[\\\\]]/g,"").trim().charAt(0) || "F").toUpperCase());
   preencher("fraseApresentacao", EDITAR.fraseApresentacao);
-  preencher("crefito", EDITAR.crefito);
-  preencher("endereco", EDITAR.endereco);
   preencher("sobre1", EDITAR.sobre1);
   preencher("sobre2", EDITAR.sobre2);
   preencher("sobre3", EDITAR.sobre3);
   preencher("tituloFaixa1", EDITAR.tituloFaixa1);
   preencher("tituloFaixa2", EDITAR.tituloFaixa2);
 
-  document.querySelectorAll("[data-foto]").forEach(function(img){ img.src = EDITAR.foto; });
+  // Rodape montado: nome e Fisioterapeuta sempre; CREFITO e endereco so
+  // quando preenchidos.
+  var partesRodape = ["<strong>" + EDITAR.nome + "</strong>", "Fisioterapeuta"];
+  if (EDITAR.crefito) partesRodape.push("CREFITO " + EDITAR.crefito);
+  document.querySelector("[data-rodape]").innerHTML = partesRodape.join(" · ");
+  var divEndereco = document.querySelector("[data-endereco]");
+  if (EDITAR.endereco) divEndereco.textContent = EDITAR.endereco; else divEndereco.style.display = "none";
+
+  // Faixas de resultados e depoimentos: sem material real preenchido, as
+  // secoes somem em vez de mostrar cartoes vazios.
+  if (!EDITAR.resultados || !EDITAR.resultados.length) {
+    document.querySelectorAll("[data-secao-faixa]").forEach(function(s){ s.style.display = "none"; });
+  }
+
+  // Foto: sem foto, ou com link que nao carrega, a caixa some e o texto
+  // ocupa a largura toda.
+  function esconderFotos(){
+    document.querySelectorAll(".foto-caixa").forEach(function(c){ c.style.display = "none"; });
+    document.querySelectorAll(".hero,.sobre").forEach(function(g){ g.style.gridTemplateColumns = "1fr"; });
+  }
+  if (!EDITAR.foto) { esconderFotos(); }
+  else {
+    document.querySelectorAll("[data-foto]").forEach(function(img){
+      img.onerror = esconderFotos;
+      img.src = EDITAR.foto;
+    });
+  }
 
   var link = EDITAR.linkDoBotao && EDITAR.linkDoBotao.trim()
     ? EDITAR.linkDoBotao.trim()

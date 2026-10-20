@@ -34,3 +34,5 @@ O endereço /nome-do-profissional lê os dados salvos e monta a página modelo c
 ## Cuidados
 
 Nada de promessa de cura ou de resultado garantido nos textos do modelo. Nome e CREFITO visíveis na página do profissional. Fotos de pacientes e depoimentos só com autorização de quem aparece.
+
+Ativação no Cloudflare: painel publicado em fisioterapeutaprofissional.pages.dev, com KV e chave configurados pela Caroline em 20/10/2026.

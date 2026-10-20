@@ -59,6 +59,15 @@
     <div class="cartao">
       <h2 style="margin-top:0" id="titulo-form">Novo profissional</h2>
       <button class="botao-claro escondido" id="cancelar-edicao" style="min-height:40px;padding:8px 13px;font-size:13.5px;margin-bottom:4px">Cancelar edição</button>
+      <div style="background:#faf7f2;border:1px solid #e7ded2;border-radius:14px;padding:14px;margin-bottom:18px">
+        <label for="f-ig" style="margin-top:0">Pelo Instagram (rápido)</label>
+        <input id="f-ig" placeholder="Cole o link do perfil, o @ ou a bio dele">
+        <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+          <button class="botao-claro" id="usar-ig" type="button" style="min-height:40px;padding:8px 13px;font-size:13.5px">Preencher com isso</button>
+          <a class="botao-claro escondido" id="abrir-ig" href="#" target="_blank" rel="noopener" style="min-height:40px;padding:8px 13px;font-size:13.5px;text-decoration:none;display:inline-flex;align-items:center">Abrir o perfil</a>
+        </div>
+        <p class="sub escondido" id="nota-ig" style="margin:8px 0 0"></p>
+      </div>
       <label for="f-nome">Nome do profissional *</label>
       <input id="f-nome" placeholder="Ex.: Dra. Ana Paula Ribeiro">
       <div class="linha">
@@ -336,6 +345,56 @@ function extrairCorDaFoto(img){
     nota.classList.remove("escondido");
   } catch (e) { /* sem permissao de leitura da foto: cor continua manual */ }
 }
+
+document.getElementById("usar-ig").addEventListener("click", function(){
+  var texto = document.getElementById("f-ig").value.trim();
+  var nota = document.getElementById("nota-ig");
+  function mostrar(msg){ nota.textContent = msg; nota.classList.remove("escondido"); }
+  if (!texto){ mostrar("Cola o link do perfil, o @ ou a bio dele primeiro."); return; }
+  var m = texto.match(/instagram\.com\/([A-Za-z0-9._]+)/) || texto.match(/^@?([A-Za-z0-9._]{2,30})$/);
+  var ehBio = texto.length > 45 || /\s/.test(texto);
+  if (m && !ehBio) {
+    var abrir = document.getElementById("abrir-ig");
+    abrir.href = "https://www.instagram.com/" + m[1] + "/";
+    abrir.classList.remove("escondido");
+    mostrar("Abre o perfil, copia a bio dele e cola aqui, que eu preencho a frase, a especialidade e a cidade sozinho. A foto você sobe aqui embaixo, do perfil dele.");
+    return;
+  }
+  var feitos = [];
+  var bio = texto.replace(/\s+/g, " ").trim();
+  var frase = document.getElementById("f-frase");
+  if (bio && !frase.value.trim()) { frase.value = bio.slice(0, 240); feitos.push("a frase (com a bio)"); }
+  var minuscula = texto.toLowerCase();
+  var esp = "";
+  if (minuscula.indexOf("pilates") !== -1) esp = "Pilates" + ((minuscula.indexOf("clássico") !== -1 || minuscula.indexOf("classico") !== -1) ? " Clássico" : "");
+  else if (minuscula.indexOf("fisioterapi") !== -1) esp = "Fisioterapia";
+  else if (minuscula.indexOf("osteopat") !== -1) esp = "Osteopatia";
+  else if (minuscula.indexOf("quiroprax") !== -1) esp = "Quiropraxia";
+  else if (minuscula.indexOf("drenagem") !== -1) esp = "Drenagem linfática";
+  else if (minuscula.indexOf("acupuntur") !== -1) esp = "Acupuntura";
+  else if (minuscula.indexOf("rpg") !== -1) esp = "RPG";
+  var campoEsp = document.getElementById("f-especialidade");
+  if (esp && !campoEsp.value.trim()) { campoEsp.value = esp; feitos.push("a especialidade (" + esp + ")"); }
+  var mc = texto.match(/([A-ZÀ-Ú][A-Za-zÀ-ÿ]+(?:\s+(?:de|da|do|das|dos)\s+[A-Za-zÀ-ÿ]+|\s+[A-ZÀ-Ú][A-Za-zÀ-ÿ]+)*)\s*\/\s*([A-Z]{2})\b/);
+  var campoCid = document.getElementById("f-cidade");
+  if (mc && !campoCid.value.trim()) { campoCid.value = mc[1].trim() + "/" + mc[2]; feitos.push("a cidade (" + campoCid.value + ")"); }
+  var mw = texto.match(/(?:wa\.me\/|phone=)?(\(?\d{2}\)?[\s.]?9?[\s.]?\d{4}[-.\s]?\d{4})/);
+  var campoWhats = document.getElementById("f-whats");
+  if (mw && !campoWhats.value.trim()) {
+    var d = mw[1].replace(/\D/g, "");
+    if (d.length === 10 || d.length === 11) d = "55" + d;
+    if (d.length === 12 || d.length === 13) { campoWhats.value = d; feitos.push("o WhatsApp"); }
+  }
+  var mk = texto.match(/crefito[^0-9]{0,6}(\d{4,6}[ -]?[A-Za-z]?)/i);
+  var campoK = document.getElementById("f-crefito");
+  if (mk && campoK && !campoK.value.trim()) { campoK.value = mk[1].toUpperCase(); feitos.push("o CREFITO"); }
+  if (m) {
+    var abrir2 = document.getElementById("abrir-ig");
+    abrir2.href = "https://www.instagram.com/" + m[1] + "/";
+    abrir2.classList.remove("escondido");
+  }
+  mostrar(feitos.length ? "Preenchi " + feitos.join(", ") + ". Confere e salva." : "Não achei dados novos na bio. O que já estava preenchido eu mantive.");
+});
 
 document.getElementById("salvar").addEventListener("click", async function(){
   limparAviso("aviso-form");

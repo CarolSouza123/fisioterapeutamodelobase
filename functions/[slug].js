@@ -82,7 +82,10 @@ const EDITAR = Object.assign({}, PADRAO, window.DADOS || {});
   .marca .bolha{width:38px;height:38px;border-radius:50%;background:var(--cor-texto);color:#fff;display:flex;align-items:center;justify-content:center;font-size:18px}
   .marca small{display:block;font-size:10px;font-weight:600;letter-spacing:2.5px;color:var(--cor-suave);text-transform:uppercase}
   section{padding:56px 0}
-  .hero{display:grid;grid-template-columns:1.05fr .95fr;gap:44px;align-items:center;padding-top:30px}
+  .hero{display:grid;grid-template-columns:1.05fr .95fr;grid-template-areas:"texto foto" "acao foto";gap:10px 44px;align-items:center;padding-top:30px}
+  .hero-texto{grid-area:texto}
+  .hero .foto-caixa{grid-area:foto}
+  .hero-acao{grid-area:acao;align-self:start;margin-top:14px}
   .hero h1{font-size:clamp(30px,4.6vw,46px);line-height:1.16;font-weight:800;letter-spacing:-.5px}
   .hero p{margin:20px 0 28px;font-size:17px;color:#2c2c2c;max-width:520px}
   .foto-caixa{background:#efefef;border-radius:14px;min-height:340px;display:flex;align-items:center;justify-content:center;overflow:hidden}
@@ -120,6 +123,7 @@ const EDITAR = Object.assign({}, PADRAO, window.DADOS || {});
   @media (max-width:820px){
     section{padding:42px 0}
     .hero,.sobre{grid-template-columns:1fr;gap:28px}
+    .hero{grid-template-areas:"texto" "foto" "acao"}
     .foto-caixa{min-height:260px}
     .passos{grid-template-columns:1fr}
   }
@@ -138,12 +142,12 @@ const EDITAR = Object.assign({}, PADRAO, window.DADOS || {});
 
 <main>
   <section class="hero wrap">
-    <div>
+    <div class="hero-texto">
       <h1 data-titulo></h1>
       <p data-campo="fraseApresentacao"></p>
-      <a class="botao" data-botao href="#" target="_blank" rel="noopener">Quero agendar minha avaliação</a>
     </div>
     <div class="foto-caixa"><img data-foto alt="Foto do profissional"></div>
+    <div class="hero-acao"><a class="botao" data-botao href="#" target="_blank" rel="noopener">Quero agendar minha avaliação</a></div>
   </section>
 
   <section style="padding-top:10px" data-secao-faixa>
@@ -290,7 +294,7 @@ const EDITAR = Object.assign({}, PADRAO, window.DADOS || {});
   // ocupa a largura toda.
   function esconderFotos(){
     document.querySelectorAll(".foto-caixa").forEach(function(c){ c.style.display = "none"; });
-    document.querySelectorAll(".hero,.sobre").forEach(function(g){ g.style.gridTemplateColumns = "1fr"; });
+    document.querySelectorAll(".hero,.sobre").forEach(function(g){ g.style.gridTemplateColumns = "1fr"; g.style.gridTemplateAreas = "none"; });
   }
   if (!EDITAR.foto) { esconderFotos(); }
   else {

@@ -246,9 +246,6 @@ const EDITAR = Object.assign({}, PADRAO, window.DADOS || {});
     raiz.setProperty("--cor-escura", mistura(0, 0.78));
     raiz.setProperty("--cor-clara", mistura(255, 0.85));
   })();
-  document.title = EDITAR.cidade
-    ? EDITAR.nome + " | " + (ehPilates ? "Pilates" : "Fisioterapia") + " em " + EDITAR.cidade
-    : EDITAR.nome + " | " + (ehPilates ? "Pilates" : "Fisioterapia");
 
   // Regra da pagina: o que nao foi preenchido nao aparece. Nada de texto
   // entre colchetes e nenhuma secao vazia para o visitante.
@@ -258,6 +255,9 @@ const EDITAR = Object.assign({}, PADRAO, window.DADOS || {});
   });
   var espMinuscula = (EDITAR.especialidade || "").toLowerCase();
   var ehPilates = espMinuscula.indexOf("pilates") !== -1 && espMinuscula.indexOf("fisioterapia") === -1;
+  document.title = EDITAR.cidade
+    ? EDITAR.nome + " | " + (ehPilates ? "Pilates" : "Fisioterapia") + " em " + EDITAR.cidade
+    : EDITAR.nome + " | " + (ehPilates ? "Pilates" : "Fisioterapia");
 
   // Frase de apresentacao automatica, criada da especialidade quando o
   // profissional nao escreveu a dele.

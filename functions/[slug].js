@@ -218,7 +218,7 @@ const EDITAR = Object.assign({}, PADRAO, window.DADOS || {});
 
   <section style="padding-top:6px">
     <div class="wrap">
-      <h2 class="titulo">FAQ, Dúvidas frequentes</h2>
+      <h2 class="titulo">Dúvidas frequentes</h2>
       <div class="faq" data-faq></div>
     </div>
   </section>

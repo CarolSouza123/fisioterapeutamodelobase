@@ -41,6 +41,8 @@ const PADRAO = {
   corDoBotao: "#111111",
   crefito: "",
   endereco: "",
+  areas: "",
+  formacao: "",
   tituloFaixa1: "Quem já se tratou comigo",
   tituloFaixa2: "O que dizem pacientes que já começaram",
   dores: [
@@ -122,6 +124,18 @@ const EDITAR = Object.assign({}, PADRAO, window.DADOS || {});
   .faq{max-width:680px;margin:34px auto 0;display:grid;gap:12px}
   .faq details{background:var(--cor-escura);border-radius:16px;overflow:hidden}
   .faq summary{color:#fff;font-weight:600;font-size:15.5px;text-align:center;padding:18px 22px;cursor:pointer;list-style:none;min-height:54px;display:flex;align-items:center;justify-content:center}
+  .grid-areas{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:34px}
+  .card-area{border:1px solid #e3ded6;border-radius:20px;padding:24px;background:#fff;box-shadow:0 6px 18px rgba(20,16,10,.05)}
+  .card-area h3{font-family:'Fraunces',Georgia,serif;font-size:19px;font-weight:600;margin:14px 0 8px}
+  .card-area p{font-size:15px;color:#3d3a35}
+  .formacao{margin-top:24px;border-top:1px solid var(--cor-linha);padding-top:20px}
+  .formacao h3{font-family:'Fraunces',Georgia,serif;font-size:19px;font-weight:600;margin-bottom:12px}
+  .formacao ul{list-style:none;display:grid;gap:8px;margin-bottom:14px}
+  .formacao li{font-size:15px;padding-left:18px;position:relative}
+  .formacao li::before{content:"";position:absolute;left:0;top:9px;width:7px;height:7px;border-radius:50%;background:var(--cor-botao)}
+  .formacao .cred{display:flex;gap:10px;font-size:15px;padding:5px 0}
+  .formacao .cred strong{font-weight:800;color:var(--cor-escura);min-width:170px}
+  @media(max-width:760px){.grid-areas{grid-template-columns:1fr}.formacao .cred{flex-direction:column;gap:1px}.formacao .cred strong{min-width:0}}
   .faq summary::-webkit-details-marker{display:none}
   .faq details p{color:#e8e8e8;font-size:14.5px;padding:0 22px 20px;text-align:center}
   footer{background:var(--cor-escura);color:#e8e2da;padding:30px 0;text-align:center;font-size:13.5px}
@@ -181,6 +195,13 @@ const EDITAR = Object.assign({}, PADRAO, window.DADOS || {});
     <div class="faixa"><div class="faixa-trilha" data-faixa></div></div>
   </section>
 
+  <section data-secao-areas>
+    <div class="wrap">
+      <h2 class="titulo">Áreas de atendimento</h2>
+      <div class="grid-areas" data-areas></div>
+    </div>
+  </section>
+
   <section>
     <div class="wrap sobre">
       <div>
@@ -188,6 +209,7 @@ const EDITAR = Object.assign({}, PADRAO, window.DADOS || {});
         <p data-campo="sobre1"></p>
         <p data-campo="sobre2"></p>
         <p data-campo="sobre3"></p>
+        <div class="formacao" data-formacao></div>
         <a class="botao" data-botao href="#" target="_blank" rel="noopener">Quero agendar minha avaliação</a>
       </div>
       <div class="foto-caixa"><img data-foto alt="Foto do profissional"></div>
@@ -254,7 +276,7 @@ const EDITAR = Object.assign({}, PADRAO, window.DADOS || {});
       EDITAR[c] = EDITAR[c].normalize("NFKD").normalize("NFC");
     }
   });
-  ["nome","especialidade","publico","cidade","fraseApresentacao","crefito","endereco","sobre1","sobre2","sobre3","foto"].forEach(function(c){
+  ["nome","especialidade","publico","cidade","fraseApresentacao","crefito","endereco","areas","formacao","sobre1","sobre2","sobre3","foto"].forEach(function(c){
     if (vazio(EDITAR[c])) EDITAR[c] = "";
   });
   var espMinuscula = (EDITAR.especialidade || "").toLowerCase();
@@ -312,6 +334,84 @@ const EDITAR = Object.assign({}, PADRAO, window.DADOS || {});
   preencher("sobre1", EDITAR.sobre1);
   preencher("sobre2", EDITAR.sobre2);
   preencher("sobre3", EDITAR.sobre3);
+
+  // Areas de atendimento: campo proprio do cadastro ou derivadas da
+  // especialidade, para as paginas antigas ganharem a secao sozinhas.
+  (function(){
+    function descricaoArea(titulo){
+      var s = titulo.toLowerCase();
+      if (s.indexOf("gestante") !== -1) return "Cuidado adaptado para cada fase da gestação, com segurança para você e para o bebê.";
+      if (s.indexOf("idoso") !== -1 || s.indexOf("terceira idade") !== -1) return "Fortalecimento, equilíbrio e autonomia, num ritmo seguro e adaptado.";
+      if (s.indexOf("pilates") !== -1) return "Força, postura e mobilidade, com atendimento individual e um plano feito para a sua rotina.";
+      if (s.indexOf("fisioterapia") !== -1) return "Avaliação completa e tratamento personalizado para dor, movimento e recuperação.";
+      if (s.indexOf("coluna") !== -1 || s.indexOf("dor") !== -1) return "Alívio da dor e recuperação do movimento, com um plano progressivo e acompanhado.";
+      if (s.indexOf("esport") !== -1) return "Prevenção de lesões e retorno ao esporte com segurança.";
+      if (s.indexOf("cirurg") !== -1 || s.indexOf("operat") !== -1) return "Reabilitação acompanhada em cada etapa da sua recuperação.";
+      return "Atendimento individual, com avaliação e um plano feito para você.";
+    }
+    var lista = [];
+    var linhas = (EDITAR.areas || "").split(/\\n+/).map(function(s){ return s.trim(); }).filter(Boolean);
+    if (linhas.length) {
+      lista = linhas.map(function(l){
+        var partes = l.split(/\\s*\\|\\s*/);
+        return { titulo: partes[0], descricao: partes[1] || descricaoArea(partes[0]) };
+      });
+    } else if (EDITAR.especialidade) {
+      lista = EDITAR.especialidade.split(/\\s*(?:,| e )\\s*/).filter(Boolean).map(function(tit){
+        return { titulo: tit.charAt(0).toUpperCase() + tit.slice(1), descricao: descricaoArea(tit) };
+      });
+    }
+    var secao = document.querySelector("[data-secao-areas]");
+    var caixa = document.querySelector("[data-areas]");
+    if (!lista.length) { secao.style.display = "none"; return; }
+    lista.slice(0, 6).forEach(function(a){
+      var card = document.createElement("article");
+      card.className = "card-area";
+      var icone = document.createElement("span");
+      icone.className = "icone-quadrado";
+      icone.textContent = "✦";
+      var h3 = document.createElement("h3");
+      h3.textContent = a.titulo;
+      var par = document.createElement("p");
+      par.textContent = a.descricao;
+      card.appendChild(icone); card.appendChild(h3); card.appendChild(par);
+      caixa.appendChild(card);
+    });
+  })();
+
+  // Formacao e credenciais, dentro do Sobre: linhas do cadastro mais os
+  // dados que toda pagina ja tem (especialidade, registro e cidade).
+  (function(){
+    var caixa = document.querySelector("[data-formacao]");
+    var linhas = (EDITAR.formacao || "").split(/\\n+/).map(function(s){ return s.trim(); }).filter(Boolean);
+    var creds = [];
+    if (EDITAR.especialidade) creds.push(["Especialidade", EDITAR.especialidade]);
+    if (EDITAR.crefito) creds.push(["Registro profissional", "CREFITO " + EDITAR.crefito]);
+    if (EDITAR.cidade) creds.push(["Atendimento em", EDITAR.cidade]);
+    if (!linhas.length && !creds.length) { caixa.style.display = "none"; return; }
+    var titulo = document.createElement("h3");
+    titulo.textContent = "Formação e credenciais";
+    caixa.appendChild(titulo);
+    if (linhas.length) {
+      var ul = document.createElement("ul");
+      linhas.forEach(function(l){
+        var li = document.createElement("li");
+        li.textContent = l;
+        ul.appendChild(li);
+      });
+      caixa.appendChild(ul);
+    }
+    creds.forEach(function(par){
+      var linha = document.createElement("div");
+      linha.className = "cred";
+      var rotulo = document.createElement("strong");
+      rotulo.textContent = par[0];
+      var valor = document.createElement("span");
+      valor.textContent = par[1];
+      linha.appendChild(rotulo); linha.appendChild(valor);
+      caixa.appendChild(linha);
+    });
+  })();
   preencher("tituloFaixa1", EDITAR.tituloFaixa1);
   preencher("tituloFaixa2", EDITAR.tituloFaixa2);
 
@@ -427,7 +527,7 @@ export async function onRequest(context) {
   if (!bruto) return paginaSimples("Pagina nao encontrada", "Confira o link e tente de novo.");
   let dados;
   try { dados = JSON.parse(bruto); } catch (e) { return paginaSimples("Pagina indisponivel", "Tente de novo em alguns instantes."); }
-  const campos = ["nome","especialidade","publico","cidade","fraseApresentacao","whatsapp","linkDoBotao","foto","corDoBotao","crefito","endereco","tituloFaixa1","tituloFaixa2","sobre1","sobre2","sobre3"];
+  const campos = ["nome","especialidade","publico","cidade","fraseApresentacao","whatsapp","linkDoBotao","foto","corDoBotao","crefito","endereco","tituloFaixa1","tituloFaixa2","sobre1","sobre2","sobre3","areas","formacao"];
   const limpo = {};
   for (const c of campos) { if (typeof dados[c] === "string" && dados[c].trim()) limpo[c] = dados[c]; }
   const json = JSON.stringify(limpo).replace(/</g, "\\u003c");

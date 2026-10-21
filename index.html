@@ -111,6 +111,10 @@
           <input id="f-endereco" placeholder="Rua, bairro, cidade">
         </div>
       </div>
+      <label for="f-areas">Áreas de atendimento (uma por linha)</label>
+      <textarea id="f-areas" placeholder="Ex.: Pilates Clínico | Tratamento da dor e recuperação do movimento. Se deixar vazio, a página monta os cartões a partir da especialidade."></textarea>
+      <label for="f-formacao">Formação e trajetória (um item por linha)</label>
+      <textarea id="f-formacao" placeholder="Ex.: Formada em Fisioterapia pela UEL&#10;Pós-graduação em Pilates Clínico"></textarea>
       <button class="botao-principal" id="salvar">Salvar e gerar o link</button>
       <div class="aviso" id="aviso-form"></div>
       <div class="link-gerado" id="link-gerado">
@@ -413,7 +417,9 @@ document.getElementById("salvar").addEventListener("click", async function(){
     corDoBotao: document.getElementById("f-cor").value,
     foto: fotoEnviada || document.getElementById("f-foto").value.trim(),
     crefito: document.getElementById("f-crefito").value.trim(),
-    endereco: document.getElementById("f-endereco").value.trim()
+    endereco: document.getElementById("f-endereco").value.trim(),
+    areas: document.getElementById("f-areas").value.trim(),
+    formacao: document.getElementById("f-formacao").value.trim()
   };
   try {
     var r = await chamarApi("POST", corpo);
@@ -470,6 +476,8 @@ async function editarProfissional(slug){
     }
     preencherCampo("f-crefito", d.crefito);
     preencherCampo("f-endereco", d.endereco);
+    preencherCampo("f-areas", d.areas);
+    preencherCampo("f-formacao", d.formacao);
     mostrarPrevia(d.foto || "");
     document.getElementById("titulo-form").textContent = "Editando: " + (d.nome || slug);
     document.getElementById("cancelar-edicao").classList.remove("escondido");
@@ -484,7 +492,7 @@ function sairEdicao(limpar){
   document.getElementById("cancelar-edicao").classList.add("escondido");
   document.getElementById("salvar").textContent = "Salvar e gerar o link";
   if (limpar){
-    ["f-nome","f-especialidade","f-cidade","f-publico","f-frase","f-whats","f-foto","f-crefito","f-endereco"].forEach(function(id){ preencherCampo(id, ""); });
+    ["f-nome","f-especialidade","f-cidade","f-publico","f-frase","f-whats","f-foto","f-crefito","f-endereco","f-areas","f-formacao"].forEach(function(id){ preencherCampo(id, ""); });
     document.getElementById("previa-foto").style.display = "none";
     fotoEnviada = "";
     document.getElementById("nota-foto").classList.add("escondido");

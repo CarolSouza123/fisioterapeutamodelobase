@@ -212,7 +212,7 @@ const EDITAR = Object.assign({}, PADRAO, window.DADOS || {});
         <div class="formacao" data-formacao></div>
         <a class="botao" data-botao href="#" target="_blank" rel="noopener">Quero agendar minha avaliação</a>
       </div>
-      <div class="foto-caixa"><img data-foto alt="Foto do profissional"></div>
+      <div class="foto-caixa"><img data-foto2 alt="Foto do profissional em atendimento"></div>
     </div>
   </section>
 
@@ -276,7 +276,7 @@ const EDITAR = Object.assign({}, PADRAO, window.DADOS || {});
       EDITAR[c] = EDITAR[c].normalize("NFKD").normalize("NFC");
     }
   });
-  ["nome","especialidade","publico","cidade","fraseApresentacao","crefito","endereco","areas","formacao","sobre1","sobre2","sobre3","foto"].forEach(function(c){
+  ["nome","especialidade","publico","cidade","fraseApresentacao","crefito","endereco","areas","formacao","sobre1","sobre2","sobre3","foto","foto2"].forEach(function(c){
     if (vazio(EDITAR[c])) EDITAR[c] = "";
   });
   var espMinuscula = (EDITAR.especialidade || "").toLowerCase();
@@ -435,11 +435,19 @@ const EDITAR = Object.assign({}, PADRAO, window.DADOS || {});
     document.querySelectorAll(".foto-caixa").forEach(function(c){ c.style.display = "none"; });
     document.querySelectorAll(".hero,.sobre").forEach(function(g){ g.style.gridTemplateColumns = "1fr"; g.style.gridTemplateAreas = "none"; });
   }
+  if (!EDITAR.foto && EDITAR.foto2) { EDITAR.foto = EDITAR.foto2; }
   if (!EDITAR.foto) { esconderFotos(); }
   else {
     document.querySelectorAll("[data-foto]").forEach(function(img){
       img.onerror = esconderFotos;
       img.src = EDITAR.foto;
+    });
+    document.querySelectorAll("[data-foto2]").forEach(function(img){
+      img.onerror = function(){
+        if (img.getAttribute("src") !== EDITAR.foto) { img.src = EDITAR.foto; }
+        else { esconderFotos(); }
+      };
+      img.src = EDITAR.foto2 || EDITAR.foto;
     });
   }
 
@@ -527,7 +535,7 @@ export async function onRequest(context) {
   if (!bruto) return paginaSimples("Pagina nao encontrada", "Confira o link e tente de novo.");
   let dados;
   try { dados = JSON.parse(bruto); } catch (e) { return paginaSimples("Pagina indisponivel", "Tente de novo em alguns instantes."); }
-  const campos = ["nome","especialidade","publico","cidade","fraseApresentacao","whatsapp","linkDoBotao","foto","corDoBotao","crefito","endereco","tituloFaixa1","tituloFaixa2","sobre1","sobre2","sobre3","areas","formacao"];
+  const campos = ["nome","especialidade","publico","cidade","fraseApresentacao","whatsapp","linkDoBotao","foto","foto2","corDoBotao","crefito","endereco","tituloFaixa1","tituloFaixa2","sobre1","sobre2","sobre3","areas","formacao"];
   const limpo = {};
   for (const c of campos) { if (typeof dados[c] === "string" && dados[c].trim()) limpo[c] = dados[c]; }
   const json = JSON.stringify(limpo).replace(/</g, "\\u003c");

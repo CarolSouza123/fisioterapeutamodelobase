@@ -455,7 +455,12 @@ const EDITAR = Object.assign({}, PADRAO, window.DADOS || {});
     ? EDITAR.linkDoBotao.trim()
     : "https://wa.me/" + String(EDITAR.whatsapp).replace(/\\D/g,"") + "?text=" +
       encodeURIComponent("Olá, " + EDITAR.nome + "! Vi sua página e quero agendar uma avaliação.");
-  document.querySelectorAll("[data-botao]").forEach(function(a){ a.href = link; });
+  var temContato = (EDITAR.linkDoBotao && EDITAR.linkDoBotao.trim()) || String(EDITAR.whatsapp || "").replace(/\D/g,"");
+  if (!temContato) {
+    document.querySelectorAll("[data-botao]").forEach(function(a){ a.style.display = "none"; });
+  } else {
+    document.querySelectorAll("[data-botao]").forEach(function(a){ a.href = link; });
+  }
 
   document.querySelectorAll("[data-faixa]").forEach(function(trilha){
     for (var volta = 0; volta < 2; volta++){

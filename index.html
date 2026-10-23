@@ -2,641 +2,635 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="robots" content="noindex">
-<title>Painel de amostras | Landing pages para fisioterapeutas</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dra. Nome da Profissional | Fisioterapeuta em [Cidade/UF]</title>
+<meta name="description" content="Protótipo de site para fisioterapeuta: atendimento humanizado, avaliação individual e plano de tratamento personalizado em [Cidade/UF]. Fale pelo WhatsApp.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
+  :root{
+    --cream:#FAF6EF;
+    --cream-2:#F3ECDD;
+    --cream-3:#EFE6D3;
+    --ink:#22302A;
+    --ink-soft:#5A665F;
+    --accent:#1E4D3B;
+    --accent-dark:#143327;
+    --accent-soft:#E3EDE6;
+    --gold:#C2A059;
+    --gold-soft:#F0E6CE;
+    --wa:#22A35A;
+    --wa-dark:#1B8749;
+    --card:#FFFFFF;
+    --line:#E5DCC8;
+    --radius:22px;
+    --shadow:0 18px 45px rgba(34,48,42,.10);
+    --shadow-sm:0 8px 24px rgba(34,48,42,.08);
+    --max:1160px;
+  }
   *{margin:0;padding:0;box-sizing:border-box}
-  body{font-family:system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;background:#f4f4f2;color:#161616;line-height:1.5}
-  .wrap{max-width:760px;margin:0 auto;padding:22px 18px 60px}
-  h1{font-size:24px;font-weight:800;letter-spacing:-.3px}
-  h2{font-size:18px;font-weight:800;margin:30px 0 12px}
-  p.sub{color:#5c5c5c;font-size:14.5px;margin-top:6px}
-  .cartao{background:#fff;border:1px solid #e3e3de;border-radius:14px;padding:20px;margin-top:18px}
-  label{display:block;font-size:13px;font-weight:700;margin:14px 0 6px}
-  label:first-child{margin-top:0}
-  input,textarea,select{width:100%;padding:12px 13px;border:1px solid #cfcfc9;border-radius:9px;font-size:15.5px;font-family:inherit;background:#fff;min-height:48px}
-  textarea{min-height:74px;resize:vertical}
-  .linha{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-  @media (max-width:620px){.linha{grid-template-columns:1fr}}
-  button{cursor:pointer;border:0;border-radius:9px;font-weight:700;font-size:15.5px;min-height:50px;padding:12px 20px}
-  .botao-principal{background:#111;color:#fff;width:100%;margin-top:18px}
-  .botao-claro{background:#ececea;color:#161616}
-  .botao-perigo{background:#fbe9e7;color:#9c2b1e}
-  .aviso{margin-top:14px;font-size:14px;padding:12px 14px;border-radius:9px;display:none}
-  .aviso.ok{display:block;background:#e7f6ec;color:#14532d}
-  .aviso.erro{display:block;background:#fbe9e7;color:#9c2b1e}
-  .link-gerado{margin-top:14px;display:none}
-  .link-gerado .url{background:#f4f4f2;border:1px dashed #b9b9b2;border-radius:9px;padding:12px;font-size:14.5px;word-break:break-all}
-  .link-gerado .acoes{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:10px}
-  @media (max-width:620px){.link-gerado .acoes{grid-template-columns:1fr}}
-  .item{display:flex;align-items:center;gap:12px;background:#fff;border:1px solid #e3e3de;border-radius:12px;padding:14px 16px;margin-top:10px}
-  .item .info{flex:1;min-width:0}
-  .item .nome{font-weight:800;font-size:15.5px}
-  .item .detalhe{font-size:13px;color:#5c5c5c;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  .item button{min-height:42px;padding:8px 13px;font-size:13.5px}
-  .escondido{display:none}
-  .previa-foto{margin-top:10px;border-radius:10px;max-height:170px;display:none}
-  .tag{font-size:11.5px;font-weight:800;padding:3px 9px;border-radius:99px;letter-spacing:.2px}
-  .tag-analise{background:#fef3c7;color:#92400e}
-  .tag-revisado{background:#dcfce7;color:#166534}
-  input[type="color"]{padding:4px;height:48px}
+  html{scroll-behavior:smooth;scroll-padding-top:96px}
+  body{
+    font-family:'Manrope',system-ui,-apple-system,sans-serif;
+    background:var(--cream);
+    color:var(--ink);
+    line-height:1.6;
+    font-size:16px;
+    -webkit-font-smoothing:antialiased;
+  }
+  img{max-width:100%;display:block}
+  a{text-decoration:none;color:inherit}
+  .container{width:100%;max-width:var(--max);margin:0 auto;padding:0 24px}
+  .serif{font-family:'Fraunces',Georgia,serif}
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    font-size:.72rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--accent);
+  }
+  .eyebrow::before{content:"";width:26px;height:1px;background:var(--gold);display:inline-block}
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:10px;
+    min-height:52px;padding:14px 28px;border-radius:999px;
+    font-weight:800;font-size:.98rem;border:1.5px solid transparent;
+    transition:transform .18s ease,box-shadow .18s ease,background .18s ease;
+    cursor:pointer;text-align:center;
+  }
+  .btn:active{transform:scale(.98)}
+  .btn-wa{background:var(--wa);color:#fff;box-shadow:0 12px 26px rgba(34,163,90,.28)}
+  .btn-wa:hover{background:var(--wa-dark)}
+  .btn-outline{border-color:var(--accent);color:var(--accent);background:transparent}
+  .btn-outline:hover{background:var(--accent-soft)}
+  .btn-light{background:#fff;color:var(--accent);border-color:#fff}
+  section{padding:88px 0}
+  .section-head{max-width:640px;margin:0 auto 48px;text-align:center}
+  .section-head .eyebrow{justify-content:center}
+  .section-head .eyebrow::after{content:"";width:26px;height:1px;background:var(--gold);display:inline-block}
+  .section-head h2{
+    font-family:'Fraunces',Georgia,serif;font-weight:500;
+    font-size:clamp(1.9rem,4vw,2.6rem);line-height:1.15;margin:14px 0 12px;color:var(--ink);
+  }
+  .section-head h2 em{font-style:italic;color:var(--accent)}
+  .section-head p{color:var(--ink-soft);font-size:1.02rem}
+
+  /* ---------- Header ---------- */
+  header{
+    position:fixed;top:0;left:0;right:0;z-index:60;
+    background:rgba(250,246,239,.92);backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .header-in{
+    max-width:var(--max);margin:0 auto;padding:14px 24px;
+    display:flex;align-items:center;justify-content:space-between;gap:16px;
+  }
+  .brand{display:flex;align-items:center;gap:12px;min-width:0}
+  .monogram{
+    width:46px;height:46px;flex:0 0 46px;border-radius:50%;
+    background:var(--accent);color:#F5EEDC;
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',Georgia,serif;font-size:1.05rem;font-weight:600;letter-spacing:.04em;
+    border:2px solid var(--gold);
+  }
+  .brand-text{line-height:1.2;min-width:0}
+  .brand-text strong{
+    font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:1.02rem;display:block;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  }
+  .brand-text span{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);font-weight:700}
+  nav.main-nav{display:flex;gap:28px;align-items:center}
+  nav.main-nav a{font-weight:700;font-size:.92rem;color:var(--ink);position:relative;padding:6px 0}
+  nav.main-nav a::after{content:"";position:absolute;left:0;bottom:0;width:0;height:2px;background:var(--gold);transition:width .2s ease}
+  nav.main-nav a:hover::after{width:100%}
+  .header-cta{min-height:44px;padding:10px 22px;font-size:.9rem}
+
+  /* ---------- Hero ---------- */
+  .hero{
+    padding:158px 0 0;
+    background:
+      radial-gradient(900px 480px at 85% -10%,var(--cream-3),transparent 60%),
+      linear-gradient(180deg,var(--cream) 0%,var(--cream-2) 100%);
+    overflow:hidden;
+  }
+  .hero-grid{
+    display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center;
+  }
+  .pill-tag{
+    display:inline-flex;align-items:center;gap:8px;
+    background:#fff;border:1px solid var(--line);border-radius:999px;
+    padding:8px 16px;font-size:.82rem;font-weight:800;color:var(--accent);
+    box-shadow:var(--shadow-sm);
+  }
+  .pill-tag .dot{width:8px;height:8px;border-radius:50%;background:var(--gold)}
+  .hero h1{
+    font-family:'Fraunces',Georgia,serif;font-weight:500;
+    font-size:clamp(2.3rem,5.4vw,3.7rem);line-height:1.08;letter-spacing:-.01em;
+    margin:22px 0 18px;color:var(--ink);
+  }
+  .hero h1 em{font-style:italic;color:var(--accent)}
+  .hero .subtitle{font-size:1.08rem;color:var(--ink-soft);max-width:520px;margin-bottom:32px}
+  .hero-ctas{display:flex;gap:14px;flex-wrap:wrap}
+  .hero-note{margin-top:18px;font-size:.86rem;color:var(--ink-soft);font-weight:600}
+
+  .arch-wrap{position:relative;max-width:440px;margin:0 auto;width:100%}
+  .arch{
+    border-radius:999px 999px 26px 26px;
+    overflow:hidden;position:relative;
+    aspect-ratio:4/5;
+    background:linear-gradient(160deg,var(--accent) 0%,#2E6B52 55%,var(--gold) 130%);
+    box-shadow:var(--shadow);
+    border:6px solid #fff;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .arch .initials{
+    font-family:'Fraunces',Georgia,serif;font-size:6rem;font-weight:500;color:rgba(255,255,255,.92);
+    letter-spacing:.02em;
+  }
+  .arch .photo-hint{
+    position:absolute;top:18px;left:0;right:0;text-align:center;
+    font-size:.7rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.75);
+  }
+  .arch-name{
+    position:absolute;left:16px;right:16px;bottom:16px;
+    background:rgba(255,255,255,.96);border-radius:16px;padding:12px 18px;text-align:center;
+    box-shadow:var(--shadow-sm);
+  }
+  .arch-name strong{font-family:'Fraunces',Georgia,serif;font-size:1rem;font-weight:600;display:block;line-height:1.25}
+  .arch-name span{font-size:.78rem;font-weight:700;color:var(--ink-soft);letter-spacing:.06em;text-transform:uppercase}
+  .arch-badge{
+    position:absolute;top:26px;right:-8px;
+    background:#fff;border-radius:999px;padding:9px 16px;
+    font-size:.78rem;font-weight:800;color:var(--accent);
+    box-shadow:var(--shadow-sm);border:1px solid var(--line);
+  }
+
+  /* ---------- Differentials strip ---------- */
+  .diffs{padding:0;margin-top:56px;position:relative;z-index:5}
+  .diffs-card{
+    background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);
+    border:1px solid var(--line);
+    display:grid;grid-template-columns:repeat(3,1fr);
+    padding:10px 6px;transform:translateY(44px);
+  }
+  .diff-item{
+    display:flex;align-items:center;gap:14px;padding:18px 22px;
+  }
+  .diff-item + .diff-item{border-left:1px solid var(--line)}
+  .diff-icon{
+    width:52px;height:52px;flex:0 0 52px;border-radius:50%;
+    background:var(--gold-soft);color:var(--accent);
+    display:flex;align-items:center;justify-content:center;font-size:1.3rem;
+  }
+  .diff-item strong{display:block;font-size:.96rem;line-height:1.3}
+  .diff-item span{font-size:.84rem;color:var(--ink-soft);line-height:1.4;display:block}
+
+  /* ---------- Services ---------- */
+  .services{background:var(--cream);padding-top:132px}
+  .cards{display:grid;grid-template-columns:repeat(2,1fr);gap:22px}
+  .card{
+    background:var(--card);border-radius:var(--radius);padding:32px 30px;
+    box-shadow:var(--shadow-sm);border:1px solid #F0E9D8;
+    transition:transform .2s ease,box-shadow .2s ease;
+  }
+  .card:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+  .card-icon{
+    width:56px;height:56px;border-radius:18px;background:var(--accent-soft);color:var(--accent);
+    display:flex;align-items:center;justify-content:center;font-size:1.45rem;margin-bottom:18px;
+  }
+  .card h3{font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:1.28rem;line-height:1.25;margin-bottom:8px}
+  .card p{color:var(--ink-soft);font-size:.96rem}
+  .card .card-link{display:inline-flex;gap:6px;margin-top:16px;font-weight:800;font-size:.9rem;color:var(--accent)}
+  .card .card-link:hover{color:var(--gold)}
+
+  /* ---------- How it works ---------- */
+  .how{background:var(--cream-2)}
+  .steps{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:22px;position:relative;
+  }
+  .steps::before{
+    content:"";position:absolute;top:30px;left:12%;right:12%;
+    border-top:2px dotted var(--gold);opacity:.7;
+  }
+  .step{text-align:center;padding:0 8px;position:relative}
+  .step-num{
+    width:60px;height:60px;margin:0 auto 18px;border-radius:50%;
+    background:var(--accent);color:#fff;
+    font-family:'Fraunces',Georgia,serif;font-size:1.4rem;font-weight:600;
+    display:flex;align-items:center;justify-content:center;
+    border:3px solid var(--cream-2);box-shadow:0 0 0 2px var(--gold);
+    position:relative;z-index:1;
+  }
+  .step h3{font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:1.12rem;margin-bottom:6px}
+  .step p{font-size:.9rem;color:var(--ink-soft)}
+
+  /* ---------- About ---------- */
+  .about-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:56px;align-items:center}
+  .about .arch{aspect-ratio:4/4.6}
+  .about-text h2{
+    font-family:'Fraunces',Georgia,serif;font-weight:500;
+    font-size:clamp(1.9rem,4vw,2.5rem);line-height:1.15;margin:14px 0 16px;
+  }
+  .about-text h2 em{font-style:italic;color:var(--accent)}
+  .about-text p{color:var(--ink-soft);margin-bottom:16px}
+  .about-list{list-style:none;margin:22px 0 30px;display:grid;gap:12px}
+  .about-list li{display:flex;gap:12px;align-items:flex-start;font-weight:600;font-size:.97rem}
+  .about-list .check{
+    width:24px;height:24px;flex:0 0 24px;border-radius:50%;background:var(--gold-soft);color:var(--accent);
+    display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:800;margin-top:2px;
+  }
+
+  /* ---------- Contact ---------- */
+  .contact{background:var(--cream-2)}
+  .contact-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:24px;align-items:stretch}
+  .form-card,.info-card{
+    background:#fff;border-radius:var(--radius);box-shadow:var(--shadow-sm);
+    border:1px solid #F0E9D8;padding:36px 34px;
+  }
+  .form-card h3,.info-card h3{
+    font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:1.45rem;margin-bottom:6px;
+  }
+  .form-card > p,.info-card > p{color:var(--ink-soft);font-size:.95rem;margin-bottom:24px}
+  .field{margin-bottom:16px}
+  .field label{display:block;font-weight:800;font-size:.86rem;margin-bottom:7px}
+  .field input,.field textarea{
+    width:100%;border:1.5px solid var(--line);border-radius:14px;
+    padding:14px 16px;font-family:inherit;font-size:1rem;background:var(--cream);
+    color:var(--ink);outline:none;transition:border-color .15s ease,background .15s ease;
+  }
+  .field input:focus,.field textarea:focus{border-color:var(--accent);background:#fff}
+  .field textarea{resize:vertical;min-height:104px}
+  .form-card .btn{width:100%}
+  .form-note{font-size:.8rem;color:var(--ink-soft);text-align:center;margin-top:12px}
+  .info-item{display:flex;gap:14px;padding:15px 0;border-bottom:1px solid #F1EBDB;align-items:flex-start}
+  .info-item:last-of-type{border-bottom:none}
+  .info-icon{
+    width:44px;height:44px;flex:0 0 44px;border-radius:50%;background:var(--accent-soft);color:var(--accent);
+    display:flex;align-items:center;justify-content:center;font-size:1.1rem;
+  }
+  .info-item strong{display:block;font-size:.82rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft)}
+  .info-item span{font-weight:700;font-size:1rem}
+  .info-item a:hover{color:var(--accent)}
+
+  /* ---------- Footer ---------- */
+  footer{background:var(--accent-dark);color:#DCE7DF;padding:64px 0 110px}
+  .footer-grid{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:40px}
+  footer .brand-text strong{color:#fff}
+  footer .brand-text span{color:#A9BFB2}
+  footer h4{font-family:'Fraunces',Georgia,serif;font-weight:600;color:#fff;font-size:1.05rem;margin-bottom:14px}
+  footer p,footer a{font-size:.92rem;color:#C4D4C9}
+  footer nav{display:grid;gap:9px}
+  footer nav a:hover{color:var(--gold)}
+  .footer-bottom{
+    margin-top:44px;padding-top:22px;border-top:1px solid rgba(255,255,255,.14);
+    display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;font-size:.82rem;color:#9DB4A5;
+  }
+
+  /* ---------- Floating WhatsApp ---------- */
+  .wa-float{
+    position:fixed;right:20px;bottom:20px;z-index:70;
+    width:60px;height:60px;border-radius:50%;
+    background:var(--wa);color:#fff;
+    display:flex;align-items:center;justify-content:center;
+    box-shadow:0 14px 30px rgba(34,163,90,.38);
+    transition:transform .18s ease,background .18s ease;
+  }
+  .wa-float:hover{background:var(--wa-dark);transform:translateY(-3px)}
+  .wa-float svg{width:30px;height:30px;fill:#fff}
+  .wa-float:focus-visible,.btn:focus-visible,a:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+
+  /* ---------- Responsive ---------- */
+  @media (max-width:1024px){
+    .hero-grid{gap:40px}
+    .steps{grid-template-columns:repeat(2,1fr);gap:34px 22px}
+    .steps::before{display:none}
+    .footer-grid{grid-template-columns:1fr 1fr}
+  }
+  @media (max-width:860px){
+    section{padding:64px 0}
+    .services{padding-top:104px}
+    nav.main-nav{display:none}
+    .hero{padding-top:126px}
+    .hero-grid{grid-template-columns:1fr;gap:44px}
+    .hero .subtitle{max-width:100%}
+    .about-grid{grid-template-columns:1fr;gap:40px}
+    .contact-grid{grid-template-columns:1fr}
+    .cards{grid-template-columns:1fr}
+    .diffs-card{grid-template-columns:1fr;padding:6px 4px;transform:translateY(36px)}
+    .diff-item + .diff-item{border-left:none;border-top:1px solid var(--line)}
+    .arch-wrap{max-width:360px}
+  }
+  @media (max-width:520px){
+    .container{padding:0 18px}
+    .header-in{padding:12px 16px}
+    .brand-text strong{font-size:.92rem;max-width:150px}
+    .header-cta{padding:10px 16px;font-size:.84rem;min-height:42px}
+    .hero-ctas{flex-direction:column}
+    .hero-ctas .btn{width:100%}
+    .steps{grid-template-columns:1fr}
+    .footer-grid{grid-template-columns:1fr;gap:30px}
+    .form-card,.info-card{padding:28px 22px}
+    .card{padding:26px 22px}
+    .wa-float{width:56px;height:56px;right:16px;bottom:16px}
+    footer{padding-bottom:96px}
+  }
 </style>
 </head>
 <body>
-<div class="wrap">
-  <h1>Painel de amostras</h1>
-  <p class="sub">Cadastre o profissional e o link personalizado dele nasce na hora, neste mesmo site. Um site só para todas as amostras.</p>
 
-  <div class="cartao" id="cartao-login">
-    <label for="chave">Sua chave de acesso</label>
-    <input type="password" id="chave" placeholder="A mesma chave ADMIN_KEY do Cloudflare" autocomplete="current-password">
-    <button class="botao-principal" id="entrar">Entrar no painel</button>
-    <div class="aviso" id="aviso-login"></div>
+<!-- ================= HEADER ================= -->
+<header>
+  <div class="header-in">
+    <a class="brand" href="#inicio" aria-label="Voltar ao início">
+      <span class="monogram" aria-hidden="true">NP</span>
+      <span class="brand-text">
+        <strong>Dra. Nome da Profissional</strong>
+        <span>Fisioterapeuta · [Cidade/UF]</span>
+      </span>
+    </a>
+    <nav class="main-nav" aria-label="Navegação principal">
+      <a href="#servicos">Serviços</a>
+      <a href="#como-funciona">Como funciona</a>
+      <a href="#sobre">Sobre</a>
+      <a href="#contato">Contato</a>
+    </nav>
+    <a class="btn btn-wa header-cta" href="https://wa.me/5500000000000?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20quero%20saber%20mais%20sobre%20o%20atendimento." target="_blank" rel="noopener">WhatsApp</a>
   </div>
+</header>
 
-  <div id="area-painel" class="escondido">
-    <div class="cartao">
-      <h2 style="margin-top:0" id="titulo-form">Novo profissional</h2>
-      <button class="botao-claro escondido" id="cancelar-edicao" style="min-height:40px;padding:8px 13px;font-size:13.5px;margin-bottom:4px">Cancelar edição</button>
-      <div style="background:#faf7f2;border:1px solid #e7ded2;border-radius:14px;padding:14px;margin-bottom:18px">
-        <label for="f-ig" style="margin-top:0">Pelo Instagram (rápido)</label>
-        <input id="f-ig" placeholder="Cole o link do perfil, o @ ou a bio dele">
-        <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
-          <button class="botao-claro" id="usar-ig" type="button" style="min-height:40px;padding:8px 13px;font-size:13.5px">Preencher com isso</button>
-          <a class="botao-claro escondido" id="abrir-ig" href="#" target="_blank" rel="noopener" style="min-height:40px;padding:8px 13px;font-size:13.5px;text-decoration:none;display:inline-flex;align-items:center">Abrir o perfil</a>
-        </div>
-        <p class="sub escondido" id="nota-ig" style="margin:8px 0 0"></p>
-      </div>
-      <label for="f-nome">Nome do profissional *</label>
-      <input id="f-nome" placeholder="Ex.: Dra. Ana Paula Ribeiro">
-      <div class="linha">
+<main id="inicio">
+
+  <!-- ================= HERO ================= -->
+  <div class="hero">
+    <div class="container">
+      <div class="hero-grid">
         <div>
-          <label for="f-especialidade">Especialidade</label>
-          <input id="f-especialidade" placeholder="Ex.: dor na coluna">
+          <span class="pill-tag"><span class="dot" aria-hidden="true"></span>[Especialidade Principal] · [Cidade/UF]</span>
+          <h1>Movimento sem dor, com o cuidado que <em>você merece</em></h1>
+          <p class="subtitle">Avaliação individual, plano de tratamento feito para a sua rotina e acompanhamento de perto em cada etapa da sua recuperação.</p>
+          <div class="hero-ctas">
+            <a class="btn btn-wa" href="https://wa.me/5500000000000?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20quero%20agendar%20uma%20avalia%C3%A7%C3%A3o." target="_blank" rel="noopener">Agendar uma avaliação</a>
+            <a class="btn btn-outline" href="#sobre">Conheça meu trabalho</a>
+          </div>
+          <p class="hero-note">Atendimento com hora marcada · Resposta pelo WhatsApp em horário comercial</p>
         </div>
-        <div>
-          <label for="f-cidade">Cidade</label>
-          <input id="f-cidade" placeholder="Ex.: São Paulo">
-        </div>
-      </div>
-      <label for="f-publico">Quem ele atende</label>
-      <input id="f-publico" placeholder="Ex.: quem sente dor nas costas">
-      <label for="f-frase">Frase de apresentação</label>
-      <textarea id="f-frase" placeholder="Como ele ajuda o paciente, em uma ou duas frases. Se deixar vazio, a página cria uma frase automática pela especialidade."></textarea>
-      <div class="linha">
-        <div>
-          <label for="f-whats">WhatsApp dele (com DDD) *</label>
-          <input id="f-whats" inputmode="numeric" placeholder="Ex.: 5511987654321">
-        </div>
-        <div>
-          <label for="f-cor">Cor do botão</label>
-          <input type="color" id="f-cor" value="#111111">
+
+        <div class="arch-wrap">
+          <div class="arch" role="img" aria-label="Espaço para foto principal da profissional">
+            <span class="photo-hint">Foto principal da profissional</span>
+            <span class="initials" aria-hidden="true">NP</span>
+            <div class="arch-name">
+              <strong>Dra. Nome da Profissional</strong>
+              <span>Fisioterapeuta · [Especialidade]</span>
+            </div>
+          </div>
+          <span class="arch-badge">[Cidade/UF]</span>
         </div>
       </div>
-      <p class="sub escondido" id="nota-cor" style="margin-top:10px"></p>
-      <label for="f-foto">Link da foto dele</label>
-      <input id="f-foto" placeholder="Cole o link da foto (do Instagram, do Google ou de onde estiver)">
-      <label for="f-foto-arquivo">Ou suba a foto do aparelho</label>
-      <input type="file" id="f-foto-arquivo" accept="image/*">
-      <p class="sub escondido" id="nota-foto" style="margin-top:8px"></p>
-      <img class="previa-foto" id="previa-foto" alt="Prévia da foto">
-      <div class="linha">
-        <div>
-          <label for="f-crefito">CREFITO</label>
-          <input id="f-crefito" placeholder="Ex.: 123456-F">
-        </div>
-        <div>
-          <label for="f-endereco">Endereço</label>
-          <input id="f-endereco" placeholder="Rua, bairro, cidade">
-        </div>
-      </div>
-      <label for="f-areas">Áreas de atendimento (uma por linha)</label>
-      <textarea id="f-areas" placeholder="Ex.: Pilates Clínico | Tratamento da dor e recuperação do movimento. Se deixar vazio, a página monta os cartões a partir da especialidade."></textarea>
-      <label for="f-formacao">Formação e trajetória (um item por linha)</label>
-      <textarea id="f-formacao" placeholder="Ex.: Formada em Fisioterapia pela UEL&#10;Pós-graduação em Pilates Clínico"></textarea>
-      <button class="botao-principal" id="salvar">Salvar e gerar o link</button>
-      <div class="aviso" id="aviso-form"></div>
-      <div class="link-gerado" id="link-gerado">
-        <div class="url" id="url-gerada"></div>
-        <div class="acoes">
-          <button class="botao-claro" id="copiar">Copiar o link</button>
-          <button class="botao-claro" id="abrir">Abrir a amostra</button>
-          <button class="botao-claro" id="enviar-whats">Enviar para ele</button>
+
+      <!-- Differentials strip -->
+      <div class="diffs" aria-label="Diferenciais">
+        <div class="diffs-card">
+          <div class="diff-item">
+            <span class="diff-icon" aria-hidden="true">✦</span>
+            <div><strong>Avaliação individual</strong><span>Seu caso ouvido com calma, sem pressa</span></div>
+          </div>
+          <div class="diff-item">
+            <span class="diff-icon" aria-hidden="true">◎</span>
+            <div><strong>Plano personalizado</strong><span>Tratamento montado para o seu objetivo</span></div>
+          </div>
+          <div class="diff-item">
+            <span class="diff-icon" aria-hidden="true">✆</span>
+            <div><strong>Agendamento fácil</strong><span>Marque sua avaliação direto pelo WhatsApp</span></div>
+          </div>
         </div>
       </div>
     </div>
+  </div>
 
-    <div class="cartao">
-      <h2 style="margin-top:0">Importar da planilha</h2>
-      <p class="sub">Suba o arquivo de leads e crie as amostras a partir dele, uma por vez ou todas de uma vez. No fim, baixe a planilha de volta já com os links preenchidos.</p>
-      <label for="arquivo-planilha">Arquivo de leads (xlsx ou csv)</label>
-      <input type="file" id="arquivo-planilha" accept=".xlsx,.xls,.csv">
-      <div class="aviso" id="aviso-import"></div>
-      <div id="area-import" class="escondido">
-        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:14px">
-          <button class="botao-claro" id="criar-todos">Criar para todos</button>
-          <button class="botao-claro" id="baixar-planilha">Baixar planilha com os links</button>
-        </div>
-        <p class="sub" id="progresso-import"></p>
-        <div id="lista-import"></div>
+  <!-- ================= SERVICES ================= -->
+  <section class="services" id="servicos">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Serviços</span>
+        <h2>Como posso te <em>ajudar</em></h2>
+        <p>Atendimentos pensados para aliviar a dor, recuperar o movimento e devolver qualidade de vida ao seu dia a dia.</p>
+      </div>
+      <div class="cards">
+        <article class="card">
+          <div class="card-icon" aria-hidden="true">✦</div>
+          <h3>Fisioterapia ortopédica</h3>
+          <p>Cuidado para dores na coluna, joelho, ombro e outras articulações, com exercícios terapêuticos e técnicas manuais.</p>
+          <a class="card-link" href="#contato">Quero saber mais →</a>
+        </article>
+        <article class="card">
+          <div class="card-icon" aria-hidden="true">↻</div>
+          <h3>Reabilitação pós-operatória</h3>
+          <p>Acompanhamento estruturado depois de cirurgias, para você recuperar força, mobilidade e confiança com segurança.</p>
+          <a class="card-link" href="#contato">Quero saber mais →</a>
+        </article>
+        <article class="card">
+          <div class="card-icon" aria-hidden="true">⬢</div>
+          <h3>Pilates e postura</h3>
+          <p>Fortalecimento, alongamento e consciência corporal para prevenir dores e melhorar sua postura no trabalho e em casa.</p>
+          <a class="card-link" href="#contato">Quero saber mais →</a>
+        </article>
+        <article class="card">
+          <div class="card-icon" aria-hidden="true">⌂</div>
+          <h3>Atendimento domiciliar</h3>
+          <p>Fisioterapia na sua casa, com o mesmo cuidado do consultório, ideal para quem tem dificuldade de locomoção ou rotina corrida.</p>
+          <a class="card-link" href="#contato">Quero saber mais →</a>
+        </article>
       </div>
     </div>
+  </section>
 
-    <h2>Profissionais cadastrados</h2>
-    <div id="lista"></div>
+  <!-- ================= HOW IT WORKS ================= -->
+  <section class="how" id="como-funciona">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Como funciona</span>
+        <h2>Simples do primeiro contato <em>à sua evolução</em></h2>
+        <p>Você sabe exatamente o que esperar em cada etapa do atendimento.</p>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num" aria-hidden="true">1</div>
+          <h3>Contato pelo WhatsApp</h3>
+          <p>Você chama no WhatsApp e conta, com suas palavras, o que está sentindo.</p>
+        </div>
+        <div class="step">
+          <div class="step-num" aria-hidden="true">2</div>
+          <h3>Avaliação completa</h3>
+          <p>Na primeira sessão, avalio seu caso, seu histórico e seus objetivos.</p>
+        </div>
+        <div class="step">
+          <div class="step-num" aria-hidden="true">3</div>
+          <h3>Plano de tratamento</h3>
+          <p>Você recebe um plano claro, com frequência, técnicas e metas combinadas.</p>
+        </div>
+        <div class="step">
+          <div class="step-num" aria-hidden="true">4</div>
+          <h3>Acompanhamento</h3>
+          <p>Sua evolução é acompanhada sessão a sessão, com ajustes quando precisar.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= ABOUT ================= -->
+  <section id="sobre">
+    <div class="container">
+      <div class="about-grid">
+        <div class="arch-wrap about">
+          <div class="arch" role="img" aria-label="Espaço para segunda foto da profissional em atendimento">
+            <span class="photo-hint">Foto em atendimento (foto 2)</span>
+            <span class="initials" aria-hidden="true">NP</span>
+            <div class="arch-name">
+              <strong>Dra. Nome da Profissional</strong>
+              <span>[Especialidade] · [Cidade/UF]</span>
+            </div>
+          </div>
+        </div>
+        <div class="about-text">
+          <span class="eyebrow">Sobre</span>
+          <h2>Prazer, eu sou a <em>Dra. Nome da Profissional</em></h2>
+          <p>[Espaço para um texto curto sobre a profissional: formação, especialidade principal e a forma como ela atende. Tom humano e direto, sem promessas exageradas.]</p>
+          <p>[Segundo parágrafo opcional: público que ela mais atende, cidade onde trabalha e o diferencial do atendimento, por exemplo domiciliar ou em consultório.]</p>
+          <ul class="about-list">
+            <li><span class="check" aria-hidden="true">✓</span>Atendimento individual, um paciente por vez</li>
+            <li><span class="check" aria-hidden="true">✓</span>Explicação clara do tratamento, sem termos difíceis</li>
+            <li><span class="check" aria-hidden="true">✓</span>Horários combinados direto pelo WhatsApp</li>
+          </ul>
+          <a class="btn btn-wa" href="https://wa.me/5500000000000?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20quero%20conversar%20sobre%20meu%20caso." target="_blank" rel="noopener">Falar comigo no WhatsApp</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CONTACT ================= -->
+  <section class="contact" id="contato">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Contato</span>
+        <h2>Conte o que você <em>está sentindo</em></h2>
+        <p>Preencha ao lado e a mensagem chega pronta no meu WhatsApp. Se preferir, use um dos canais diretos.</p>
+      </div>
+      <div class="contact-grid">
+        <div class="form-card">
+          <h3>Peça sua avaliação</h3>
+          <p>Leva menos de um minuto. Ao enviar, você é direcionado ao WhatsApp com a mensagem já preenchida.</p>
+          <form id="waForm" novalidate>
+            <div class="field">
+              <label for="f-nome">Seu nome</label>
+              <input id="f-nome" name="nome" type="text" autocomplete="name" placeholder="Como posso te chamar?" required>
+            </div>
+            <div class="field">
+              <label for="f-fone">Seu WhatsApp</label>
+              <input id="f-fone" name="telefone" type="tel" autocomplete="tel" inputmode="tel" placeholder="(00) 00000-0000">
+            </div>
+            <div class="field">
+              <label for="f-msg">O que você está sentindo?</label>
+              <textarea id="f-msg" name="mensagem" placeholder="Ex.: sinto dor no joelho há algumas semanas e quero agendar uma avaliação." required></textarea>
+            </div>
+            <button class="btn btn-wa" type="submit">Enviar pelo WhatsApp</button>
+            <p class="form-note">Sem compromisso. Seus dados vão só para a conversa no WhatsApp.</p>
+          </form>
+        </div>
+
+        <div class="info-card">
+          <h3>Fale comigo</h3>
+          <p>Canais diretos para agendar, tirar dúvidas ou conhecer o espaço.</p>
+          <div class="info-item">
+            <span class="info-icon" aria-hidden="true">✆</span>
+            <div><strong>WhatsApp</strong><span><a href="https://wa.me/5500000000000" target="_blank" rel="noopener">(00) 00000-0000</a></span></div>
+          </div>
+          <div class="info-item">
+            <span class="info-icon" aria-hidden="true">◎</span>
+            <div><strong>Instagram</strong><span><a href="#contato">@usuario.da.profissional</a></span></div>
+          </div>
+          <div class="info-item">
+            <span class="info-icon" aria-hidden="true">⌂</span>
+            <div><strong>Onde atendo</strong><span>[Bairro] · [Cidade/UF] e domiciliar</span></div>
+          </div>
+          <div class="info-item">
+            <span class="info-icon" aria-hidden="true">◷</span>
+            <div><strong>Horários</strong><span>[Dias e horários de atendimento]</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ================= FOOTER ================= -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <a class="brand" href="#inicio" aria-label="Voltar ao início">
+          <span class="monogram" aria-hidden="true">NP</span>
+          <span class="brand-text">
+            <strong>Dra. Nome da Profissional</strong>
+            <span>Fisioterapeuta · [Cidade/UF]</span>
+          </span>
+        </a>
+        <p style="margin-top:18px;max-width:340px">Atendimento de fisioterapia com avaliação individual e plano personalizado em [Cidade/UF].</p>
+      </div>
+      <div>
+        <h4>Navegação</h4>
+        <nav aria-label="Links do rodapé">
+          <a href="#servicos">Serviços</a>
+          <a href="#como-funciona">Como funciona</a>
+          <a href="#sobre">Sobre</a>
+          <a href="#contato">Contato</a>
+        </nav>
+      </div>
+      <div>
+        <h4>Contato</h4>
+        <p>WhatsApp: (00) 00000-0000<br>
+        Instagram: @usuario.da.profissional<br>
+        [Bairro] · [Cidade/UF]</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span id="ano">2026</span> Dra. Nome da Profissional. Todos os direitos reservados.</span>
+      <span>Conteúdo informativo. Em caso de dor intensa ou emergência, procure atendimento imediato.</span>
+    </div>
   </div>
-</div>
+</footer>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<!-- Floating WhatsApp -->
+<a class="wa-float" href="https://wa.me/5500000000000?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20quero%20saber%20mais%20sobre%20o%20atendimento." target="_blank" rel="noopener" aria-label="Falar no WhatsApp">
+  <svg viewBox="0 0 32 32" aria-hidden="true" focusable="false"><path d="M16 3C9.4 3 4 8.3 4 14.9c0 2.6.8 5 2.4 7L4.6 29l7.3-1.8c1.3.4 2.7.6 4.1.6 6.6 0 12-5.3 12-11.9S22.6 3 16 3zm0 21.7c-1.3 0-2.6-.2-3.8-.7l-.3-.1-4.3 1.1 1.1-4.1-.2-.3a9.7 9.7 0 0 1-2-5.7C6.5 9.6 10.8 5.3 16 5.3S25.5 9.6 25.5 14.9 21.2 24.7 16 24.7zm5.3-7.2c-.3-.1-1.7-.9-2-1-.3-.1-.5-.1-.7.1-.2.3-.8 1-.9 1.1-.2.2-.3.2-.6.1a11.6 11.6 0 0 1-5.7-5c-.4-.7.4-.6 1.1-2.1.1-.3 0-.5 0-.6l-.9-2.1c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.3 5.2 4.6.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.7-.7 2-1.4.3-.7.3-1.3.2-1.4-.1-.1-.3-.2-.6-.3z"/></svg>
+</a>
+
 <script>
-var chave = "";
-var ultimoLink = "";
-var ultimoWhats = "";
-var ultimoNome = "";
+  // Número da profissional (placeholder do modelo). Trocar pelos dígitos reais com DDI+DDD.
+  var WHATSAPP_NUMBER = "5500000000000";
 
-function aviso(id, texto, tipo){
-  var el = document.getElementById(id);
-  el.textContent = texto;
-  el.className = "aviso " + tipo;
-}
-function limparAviso(id){
-  var el = document.getElementById(id);
-  el.textContent = "";
-  el.className = "aviso";
-}
-async function chamarApi(metodo, corpo, consulta){
-  var opcoes = { method: metodo, headers: { "x-admin-key": chave, "content-type": "application/json" } };
-  if (corpo) opcoes.body = JSON.stringify(corpo);
-  var r = await fetch("/api/profissionais" + (consulta || ""), opcoes);
-  var dados = {};
-  try { dados = await r.json(); } catch (e) {}
-  if (!r.ok) throw new Error(dados.erro || "Algo deu errado. Tente de novo.");
-  return dados;
-}
+  document.getElementById("ano").textContent = new Date().getFullYear();
 
-document.getElementById("entrar").addEventListener("click", async function(){
-  chave = document.getElementById("chave").value.trim();
-  limparAviso("aviso-login");
-  if (!chave){ aviso("aviso-login", "Digite sua chave.", "erro"); return; }
-  try {
-    await carregarLista();
-    document.getElementById("cartao-login").classList.add("escondido");
-    document.getElementById("area-painel").classList.remove("escondido");
-    try { window["session" + "Storage"].setItem("chavePainelFisio", chave); } catch (e) {}
-  } catch (e) {
-    aviso("aviso-login", e.message, "erro");
-  }
-});
+  document.getElementById("waForm").addEventListener("submit", function (event) {
+    event.preventDefault();
 
-var slugsExistentes = {};
-async function carregarLista(){
-  var dados = await chamarApi("GET");
-  slugsExistentes = {};
-  dados.profissionais.forEach(function(p){ slugsExistentes[p.slug] = true; });
-  var box = document.getElementById("lista");
-  box.innerHTML = "";
-  if (!dados.profissionais.length){
-    box.innerHTML = '<p class="sub">Nenhum profissional ainda. O primeiro cadastro aparece aqui.</p>';
-    return;
-  }
-  dados.profissionais.forEach(function(p){
-    var item = document.createElement("div");
-    item.className = "item";
-    var info = document.createElement("div");
-    info.className = "info";
-    var nome = document.createElement("div");
-    nome.className = "nome";
-    nome.textContent = p.nome;
-    var detalhe = document.createElement("div");
-    // (nome montado abaixo, com a tarja)
-    detalhe.className = "detalhe";
-    detalhe.textContent = "/" + p.slug + (p.cidade ? " · " + p.cidade : "") + (p.especialidade ? " · " + p.especialidade : "");
-    var tarja = document.createElement("span");
-    var rev = p.revisao || "a_analisar";
-    tarja.className = "tag " + (rev === "revisado" ? "tag-revisado" : "tag-analise");
-    tarja.textContent = rev === "revisado" ? "Revisado" : "A analisar";
-    tarja.style.marginLeft = "8px";
-    nome.appendChild(tarja);
-    info.appendChild(nome);
-    info.appendChild(detalhe);
-    var bRevisao = document.createElement("button");
-    bRevisao.className = "botao-claro";
-    bRevisao.textContent = rev === "revisado" ? "Voltar p/ análise" : "Marcar revisado";
-    bRevisao.addEventListener("click", async function(){
-      try {
-        await chamarApi("POST", { slug: p.slug, revisao: rev === "revisado" ? "a_analisar" : "revisado" });
-        carregarLista();
-      } catch (e) { alert(e.message); }
-    });
-    var bAbrir = document.createElement("button");
-    bAbrir.className = "botao-claro";
-    bAbrir.textContent = "Abrir";
-    bAbrir.addEventListener("click", function(){ window.open("/" + p.slug, "_blank"); });
-    var bEditar = document.createElement("button");
-    bEditar.className = "botao-claro";
-    bEditar.textContent = "Editar";
-    bEditar.addEventListener("click", function(){ editarProfissional(p.slug); });
-    var bExcluir = document.createElement("button");
-    bExcluir.className = "botao-perigo";
-    bExcluir.textContent = "Excluir";
-    bExcluir.addEventListener("click", async function(){
-      if (!confirm("Excluir a amostra de " + p.nome + "? O link para de funcionar.")) return;
-      try { await chamarApi("DELETE", null, "?slug=" + encodeURIComponent(p.slug)); carregarLista(); }
-      catch (e) { alert(e.message); }
-    });
-    item.appendChild(info);
-    item.appendChild(bAbrir);
-    item.appendChild(bEditar);
-    item.appendChild(bRevisao);
-    item.appendChild(bExcluir);
-    box.appendChild(item);
-  });
-}
+    var nome = document.getElementById("f-nome").value.trim();
+    var fone = document.getElementById("f-fone").value.trim();
+    var mensagem = document.getElementById("f-msg").value.trim();
 
-var fotoEnviada = "";
-document.getElementById("f-foto-arquivo").addEventListener("change", function(){
-  var arq = this.files[0];
-  if (!arq) return;
-  var leitor = new FileReader();
-  leitor.onload = function(){
-    var img = new Image();
-    img.onload = function(){
-      var maximo = 900;
-      var escala = Math.min(1, maximo / Math.max(img.width, img.height));
-      var cv = document.createElement("canvas");
-      cv.width = Math.round(img.width * escala);
-      cv.height = Math.round(img.height * escala);
-      cv.getContext("2d").drawImage(img, 0, 0, cv.width, cv.height);
-      fotoEnviada = cv.toDataURL("image/jpeg", 0.82);
-      mostrarPrevia(fotoEnviada);
-      var nota = document.getElementById("nota-foto");
-      nota.textContent = "Foto do aparelho pronta para salvar (ela vale no lugar do link). Para trocar, suba outra ou cole um link.";
-      nota.classList.remove("escondido");
-    };
-    img.src = leitor.result;
-  };
-  leitor.readAsDataURL(arq);
-});
-function mostrarPrevia(url){
-  var img = document.getElementById("previa-foto");
-  if (!url){ img.style.display = "none"; return; }
-  img.crossOrigin = "anonymous";
-  img.onerror = function(){
-    img.onerror = null;
-    img.removeAttribute("crossorigin");
-    img.src = url;
-    img.style.display = "block";
-  };
-  img.onload = function(){ img.style.display = "block"; extrairCorDaFoto(img); };
-  img.src = url;
-}
-document.getElementById("f-foto").addEventListener("input", function(){
-  if (this.value.trim()){ fotoEnviada = ""; document.getElementById("nota-foto").classList.add("escondido"); }
-  mostrarPrevia(this.value.trim());
-});
-
-// Cor do botao puxada da foto: le a cor dominante com saturacao da imagem
-// e aplica no campo de cor. Se a foto nao deixar ler (permissao do site
-// de origem), nada acontece e a cor continua manual.
-function hueGraus(r, g, b){
-  r /= 255; g /= 255; b /= 255;
-  var mx = Math.max(r, g, b), mn = Math.min(r, g, b), d = mx - mn;
-  if (!d) return 0;
-  var h;
-  if (mx === r) h = ((g - b) / d) % 6;
-  else if (mx === g) h = (b - r) / d + 2;
-  else h = (r - g) / d + 4;
-  h *= 60;
-  return h < 0 ? h + 360 : h;
-}
-function extrairCorDaFoto(img){
-  try {
-    var tam = 24;
-    var cv = document.createElement("canvas");
-    cv.width = tam; cv.height = tam;
-    var cx = cv.getContext("2d");
-    cx.drawImage(img, 0, 0, tam, tam);
-    var dados = cx.getImageData(0, 0, tam, tam).data;
-    var baldes = {};
-    var melhor = null, melhorPeso = 0;
-    var soma = { r: 0, g: 0, b: 0, n: 0 };
-    for (var i = 0; i < dados.length; i += 4){
-      var r = dados[i], g = dados[i + 1], b = dados[i + 2], a = dados[i + 3];
-      if (a < 200) continue;
-      var mx = Math.max(r, g, b), mn = Math.min(r, g, b);
-      if (mx > 245 && mn > 245) continue;
-      if (mx < 18) continue;
-      soma.r += r; soma.g += g; soma.b += b; soma.n++;
-      var sat = mx === 0 ? 0 : (mx - mn) / mx;
-      if (sat < 0.25) continue;
-      var chave = Math.floor(hueGraus(r, g, b) / 30);
-      if (!baldes[chave]) baldes[chave] = { r: 0, g: 0, b: 0, peso: 0 };
-      var peso = sat * (0.4 + (mx / 255) * 0.6);
-      baldes[chave].r += r * peso; baldes[chave].g += g * peso; baldes[chave].b += b * peso; baldes[chave].peso += peso;
-      if (baldes[chave].peso > melhorPeso){ melhorPeso = baldes[chave].peso; melhor = baldes[chave]; }
+    if (!nome || !mensagem) {
+      alert("Preencha seu nome e o que você está sentindo para eu te atender melhor.");
+      return;
     }
-    var cor = null;
-    if (melhor && melhor.peso > 0) cor = [Math.round(melhor.r / melhor.peso), Math.round(melhor.g / melhor.peso), Math.round(melhor.b / melhor.peso)];
-    else if (soma.n) cor = [Math.round(soma.r / soma.n), Math.round(soma.g / soma.n), Math.round(soma.b / soma.n)];
-    if (!cor) return;
-    var lum = (0.299 * cor[0] + 0.587 * cor[1] + 0.114 * cor[2]) / 255;
-    if (lum > 0.72){ var f = 0.72 / lum; cor = cor.map(function(v){ return Math.round(v * f); }); }
-    var hex = "#" + cor.map(function(v){ var s = v.toString(16); return s.length === 1 ? "0" + s : s; }).join("");
-    document.getElementById("f-cor").value = hex;
-    var nota = document.getElementById("nota-cor");
-    nota.textContent = "Cor puxada da foto: " + hex + ". Se não gostar, troque no campo de cor.";
-    nota.classList.remove("escondido");
-  } catch (e) { /* sem permissao de leitura da foto: cor continua manual */ }
-}
 
-document.getElementById("usar-ig").addEventListener("click", function(){
-  var texto = document.getElementById("f-ig").value.trim();
-  var nota = document.getElementById("nota-ig");
-  function mostrar(msg){ nota.textContent = msg; nota.classList.remove("escondido"); }
-  if (!texto){ mostrar("Cola o link do perfil, o @ ou a bio dele primeiro."); return; }
-  var m = texto.match(/instagram\.com\/([A-Za-z0-9._]+)/) || texto.match(/^@?([A-Za-z0-9._]{2,30})$/);
-  var ehBio = texto.length > 45 || /\s/.test(texto);
-  if (m && !ehBio) {
-    var abrir = document.getElementById("abrir-ig");
-    abrir.href = "https://www.instagram.com/" + m[1] + "/";
-    abrir.classList.remove("escondido");
-    mostrar("Abre o perfil, copia a bio dele e cola aqui, que eu preencho a frase, a especialidade e a cidade sozinho. A foto você sobe aqui embaixo, do perfil dele.");
-    return;
-  }
-  var feitos = [];
-  var bio = texto.replace(/\s+/g, " ").trim();
-  var frase = document.getElementById("f-frase");
-  if (bio && !frase.value.trim()) { frase.value = bio.slice(0, 240); feitos.push("a frase (com a bio)"); }
-  var minuscula = texto.toLowerCase();
-  var esp = "";
-  if (minuscula.indexOf("pilates") !== -1) esp = "Pilates" + ((minuscula.indexOf("clássico") !== -1 || minuscula.indexOf("classico") !== -1) ? " Clássico" : "");
-  else if (minuscula.indexOf("fisioterapi") !== -1) esp = "Fisioterapia";
-  else if (minuscula.indexOf("osteopat") !== -1) esp = "Osteopatia";
-  else if (minuscula.indexOf("quiroprax") !== -1) esp = "Quiropraxia";
-  else if (minuscula.indexOf("drenagem") !== -1) esp = "Drenagem linfática";
-  else if (minuscula.indexOf("acupuntur") !== -1) esp = "Acupuntura";
-  else if (minuscula.indexOf("rpg") !== -1) esp = "RPG";
-  var campoEsp = document.getElementById("f-especialidade");
-  if (esp && !campoEsp.value.trim()) { campoEsp.value = esp; feitos.push("a especialidade (" + esp + ")"); }
-  var mc = texto.match(/([A-ZÀ-Ú][A-Za-zÀ-ÿ]+(?:\s+(?:de|da|do|das|dos)\s+[A-Za-zÀ-ÿ]+|\s+[A-ZÀ-Ú][A-Za-zÀ-ÿ]+)*)\s*\/\s*([A-Z]{2})\b/);
-  var campoCid = document.getElementById("f-cidade");
-  if (mc && !campoCid.value.trim()) { campoCid.value = mc[1].trim() + "/" + mc[2]; feitos.push("a cidade (" + campoCid.value + ")"); }
-  var mw = texto.match(/(?:wa\.me\/|phone=)?(\(?\d{2}\)?[\s.]?9?[\s.]?\d{4}[-.\s]?\d{4})/);
-  var campoWhats = document.getElementById("f-whats");
-  if (mw && !campoWhats.value.trim()) {
-    var d = mw[1].replace(/\D/g, "");
-    if (d.length === 10 || d.length === 11) d = "55" + d;
-    if (d.length === 12 || d.length === 13) { campoWhats.value = d; feitos.push("o WhatsApp"); }
-  }
-  var mk = texto.match(/crefito[^0-9]{0,6}(\d{4,6}[ -]?[A-Za-z]?)/i);
-  var campoK = document.getElementById("f-crefito");
-  if (mk && campoK && !campoK.value.trim()) { campoK.value = mk[1].toUpperCase(); feitos.push("o CREFITO"); }
-  if (m) {
-    var abrir2 = document.getElementById("abrir-ig");
-    abrir2.href = "https://www.instagram.com/" + m[1] + "/";
-    abrir2.classList.remove("escondido");
-  }
-  mostrar(feitos.length ? "Preenchi " + feitos.join(", ") + ". Confere e salva." : "Não achei dados novos na bio. O que já estava preenchido eu mantive.");
-});
-
-document.getElementById("salvar").addEventListener("click", async function(){
-  limparAviso("aviso-form");
-  var nome = document.getElementById("f-nome").value.trim();
-  var whats = document.getElementById("f-whats").value.replace(/\D/g, "");
-  if (!nome){ aviso("aviso-form", "Falta o nome do profissional.", "erro"); return; }
-  if (!whats){ aviso("aviso-form", "Falta o WhatsApp dele.", "erro"); return; }
-  var corpo = {
-    nome: nome,
-    slug: editandoSlug || undefined,
-    especialidade: document.getElementById("f-especialidade").value.trim(),
-    cidade: document.getElementById("f-cidade").value.trim(),
-    publico: document.getElementById("f-publico").value.trim(),
-    fraseApresentacao: document.getElementById("f-frase").value.trim(),
-    whatsapp: whats,
-    corDoBotao: document.getElementById("f-cor").value,
-    foto: fotoEnviada || document.getElementById("f-foto").value.trim(),
-    crefito: document.getElementById("f-crefito").value.trim(),
-    endereco: document.getElementById("f-endereco").value.trim(),
-    areas: document.getElementById("f-areas").value.trim(),
-    formacao: document.getElementById("f-formacao").value.trim()
-  };
-  try {
-    var r = await chamarApi("POST", corpo);
-    ultimoLink = location.origin + r.caminho;
-    ultimoWhats = whats;
-    ultimoNome = nome;
-    document.getElementById("url-gerada").textContent = ultimoLink;
-    document.getElementById("link-gerado").style.display = "block";
-    aviso("aviso-form", r.editou ? "Amostra atualizada." : "Amostra criada. Link pronto para enviar.", "ok");
-    if (editandoSlug) sairEdicao(false);
-    carregarLista();
-  } catch (e) {
-    aviso("aviso-form", e.message, "erro");
-  }
-});
-
-document.getElementById("copiar").addEventListener("click", async function(){
-  try { await navigator.clipboard.writeText(ultimoLink); this.textContent = "Link copiado"; }
-  catch (e) { prompt("Copie o link:", ultimoLink); }
-});
-document.getElementById("abrir").addEventListener("click", function(){
-  if (ultimoLink) window.open(ultimoLink, "_blank");
-});
-document.getElementById("enviar-whats").addEventListener("click", function(){
-  if (!ultimoWhats) return;
-  var texto = "Olá, " + ultimoNome + "! Fiz uma amostra gratuita da primeira parte de uma página para você, com seu nome e sua especialidade. É esta aqui: " + ultimoLink + " Quando puder, me diz o que achou.";
-  window.open("https://wa.me/" + ultimoWhats + "?text=" + encodeURIComponent(texto), "_blank");
-});
-
-// ---------- Editar profissional ----------
-var editandoSlug = "";
-function preencherCampo(id, valor){ document.getElementById(id).value = valor || ""; }
-async function editarProfissional(slug){
-  try {
-    var r = await chamarApi("GET", null, "?slug=" + encodeURIComponent(slug));
-    var d = r.profissional || {};
-    editandoSlug = slug;
-    preencherCampo("f-nome", d.nome);
-    preencherCampo("f-especialidade", d.especialidade);
-    preencherCampo("f-cidade", d.cidade);
-    preencherCampo("f-publico", d.publico);
-    preencherCampo("f-frase", d.fraseApresentacao);
-    preencherCampo("f-whats", d.whatsapp);
-    document.getElementById("f-cor").value = d.corDoBotao || "#111111";
-    if (d.foto && d.foto.indexOf("data:") === 0){
-      fotoEnviada = d.foto;
-      preencherCampo("f-foto", "");
-      var nf = document.getElementById("nota-foto");
-      nf.textContent = "Este profissional tem uma foto enviada do aparelho. Para trocar, suba outra foto ou cole um link.";
-      nf.classList.remove("escondido");
-    } else {
-      fotoEnviada = "";
-      preencherCampo("f-foto", d.foto);
+    var texto = "Olá! Meu nome é " + nome + ".\n" + mensagem;
+    if (fone) {
+      texto += "\nMeu WhatsApp é " + fone + ".";
     }
-    preencherCampo("f-crefito", d.crefito);
-    preencherCampo("f-endereco", d.endereco);
-    preencherCampo("f-areas", d.areas);
-    preencherCampo("f-formacao", d.formacao);
-    mostrarPrevia(d.foto || "");
-    document.getElementById("titulo-form").textContent = "Editando: " + (d.nome || slug);
-    document.getElementById("cancelar-edicao").classList.remove("escondido");
-    document.getElementById("salvar").textContent = "Salvar alterações";
-    document.getElementById("titulo-form").scrollIntoView({ behavior: "smooth" });
-    aviso("aviso-form", "Editando " + (d.nome || slug) + ". O link continua o mesmo.", "ok");
-  } catch (e) { alert(e.message); }
-}
-function sairEdicao(limpar){
-  editandoSlug = "";
-  document.getElementById("titulo-form").textContent = "Novo profissional";
-  document.getElementById("cancelar-edicao").classList.add("escondido");
-  document.getElementById("salvar").textContent = "Salvar e gerar o link";
-  if (limpar){
-    ["f-nome","f-especialidade","f-cidade","f-publico","f-frase","f-whats","f-foto","f-crefito","f-endereco","f-areas","f-formacao"].forEach(function(id){ preencherCampo(id, ""); });
-    document.getElementById("previa-foto").style.display = "none";
-    fotoEnviada = "";
-    document.getElementById("nota-foto").classList.add("escondido");
-    document.getElementById("f-foto-arquivo").value = "";
-  }
-}
-document.getElementById("cancelar-edicao").addEventListener("click", function(){ sairEdicao(true); limparAviso("aviso-form"); });
+    texto += "\nVim pelo seu site e quero saber mais sobre a avaliação.";
 
-// ---------- Importar da planilha ----------
-var importados = [];
-var todasLinhas = [];
-var workbookOriginal = null;
-function gerarSlugCliente(nome){
-  return nome.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "").slice(0, 60);
-}
-function normalizarLinha(linha, idx){
-  var m = {};
-  Object.keys(linha).forEach(function(k){ m[String(k).trim().toLowerCase()] = linha[k]; });
-  return {
-    idx: idx,
-    nome: String(m.nome || "").trim(),
-    whatsapp: String(m.whatsapp || "").replace(/\D/g, ""),
-    especialidade: String(m.especialidade || "").trim(),
-    cidade: String(m.cidade || "").trim(),
-    link: "",
-    status: ""
-  };
-}
-function parseCsv(texto){
-  var linhas = texto.split(/\r?\n/).filter(function(l){ return l.trim(); });
-  if (!linhas.length) return [];
-  var sep = linhas[0].indexOf(";") !== -1 ? ";" : ",";
-  var cab = linhas[0].split(sep).map(function(c){ return c.trim().replace(/^"|"$/g, ""); });
-  return linhas.slice(1).map(function(l){
-    var partes = l.split(sep);
-    var o = {};
-    cab.forEach(function(c, i){ o[c] = (partes[i] || "").trim().replace(/^"|"$/g, ""); });
-    return o;
+    var url = "https://wa.me/" + WHATSAPP_NUMBER + "?text=" + encodeURIComponent(texto);
+    window.open(url, "_blank", "noopener");
   });
-}
-function montarListaImport(){
-  var box = document.getElementById("lista-import");
-  box.innerHTML = "";
-  importados.forEach(function(l){
-    var slug = gerarSlugCliente(l.nome);
-    if (slugsExistentes[slug] && !l.link){ l.link = location.origin + "/" + slug; l.status = "Já cadastrada"; }
-    var item = document.createElement("div");
-    item.className = "item";
-    var info = document.createElement("div");
-    info.className = "info";
-    var nome = document.createElement("div");
-    nome.className = "nome";
-    nome.textContent = l.nome;
-    var detalhe = document.createElement("div");
-    detalhe.className = "detalhe";
-    detalhe.textContent = (l.cidade ? l.cidade + " · " : "") + l.whatsapp + (l.status ? " · " + l.status : "");
-    info.appendChild(nome);
-    info.appendChild(detalhe);
-    var b = document.createElement("button");
-    b.className = "botao-claro";
-    b.textContent = l.link ? "Ver link" : "Criar amostra";
-    b.addEventListener("click", async function(){
-      if (l.link){ prompt("Link da amostra:", l.link); return; }
-      b.textContent = "Criando...";
-      try {
-        await criarAmostraImport(l);
-        b.textContent = "Ver link";
-        detalhe.textContent = (l.cidade ? l.cidade + " · " : "") + l.whatsapp + " · " + l.status;
-      } catch (e) { b.textContent = "Tentar de novo"; alert(e.message); }
-    });
-    item.appendChild(info);
-    item.appendChild(b);
-    box.appendChild(item);
-  });
-}
-async function criarAmostraImport(l){
-  var r = await chamarApi("POST", { nome: l.nome, whatsapp: l.whatsapp, especialidade: l.especialidade, cidade: l.cidade });
-  l.link = location.origin + r.caminho;
-  l.status = r.editou ? "Atualizada" : "Criada";
-  slugsExistentes[r.slug] = true;
-  return r;
-}
-document.getElementById("arquivo-planilha").addEventListener("change", async function(){
-  var arq = this.files[0];
-  if (!arq) return;
-  limparAviso("aviso-import");
-  try {
-    var linhas;
-    if (/\.csv$/i.test(arq.name)){
-      linhas = parseCsv(await arq.text());
-      workbookOriginal = null;
-    } else {
-      if (typeof XLSX === "undefined") throw new Error("A leitura de xlsx ainda está carregando. Tente de novo em alguns segundos.");
-      var buf = await arq.arrayBuffer();
-      workbookOriginal = XLSX.read(buf);
-      var ws = workbookOriginal.Sheets[workbookOriginal.SheetNames[0]];
-      linhas = XLSX.utils.sheet_to_json(ws, { defval: "" });
-    }
-    todasLinhas = linhas;
-    importados = linhas.map(normalizarLinha).filter(function(l){ return l.nome && l.whatsapp; });
-    if (!importados.length) throw new Error("Não achei leads com nome e WhatsApp neste arquivo.");
-    document.getElementById("area-import").classList.remove("escondido");
-    montarListaImport();
-    aviso("aviso-import", importados.length + " leads encontrados no arquivo.", "ok");
-  } catch (e) {
-    aviso("aviso-import", e.message, "erro");
-  }
-});
-document.getElementById("criar-todos").addEventListener("click", async function(){
-  var prog = document.getElementById("progresso-import");
-  var faltam = importados.filter(function(l){ return !l.link; });
-  var feitos = 0, erros = 0;
-  for (var i = 0; i < importados.length; i++){
-    var l = importados[i];
-    if (l.link) continue;
-    prog.textContent = "Criando " + (feitos + erros + 1) + " de " + faltam.length + "...";
-    try { await criarAmostraImport(l); feitos++; } catch (e) { erros++; l.status = "Erro ao criar"; }
-  }
-  prog.textContent = "Pronto: " + feitos + " criadas" + (erros ? ", " + erros + " com erro (tente de novo uma por vez)" : "") + ". Agora baixe a planilha com os links e use ela no sistema.";
-  montarListaImport();
-  carregarLista();
-});
-document.getElementById("baixar-planilha").addEventListener("click", function(){
-  if (typeof XLSX === "undefined"){ alert("A planilha ainda está carregando. Tente de novo em alguns segundos."); return; }
-  var porIdx = {};
-  importados.forEach(function(l){ if (l.link) porIdx[l.idx] = l.link; });
-  var saida = todasLinhas.map(function(linha, i){
-    var copia = {};
-    Object.keys(linha).forEach(function(k){ copia[k] = linha[k]; });
-    if (porIdx[i]) copia.link_amostra = porIdx[i];
-    return copia;
-  });
-  var ws = XLSX.utils.json_to_sheet(saida);
-  var wb = XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(wb, ws, "Leads");
-  XLSX.writeFile(wb, "leads-com-links.xlsx");
-});
-
-(function(){
-  try {
-    var salva = window["session" + "Storage"].getItem("chavePainelFisio");
-    if (salva) document.getElementById("chave").value = salva;
-  } catch (e) {}
-})();
 </script>
 </body>
 </html>

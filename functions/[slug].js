@@ -1127,7 +1127,7 @@ const MODELO_PREMIUM = `<!DOCTYPE html>
 (function(){
   var D = window.DADOS || {};
   function v(s){ return (s || "").toString().trim(); }
-  function soDigitos(s){ return (s || "").replace(/\D/g, ""); }
+  function soDigitos(s){ return (s || "").split("").filter(function(c){ return c >= "0" && c <= "9"; }).join(""); }
   function formatar(d){
     if (d.length === 13) return "(" + d.slice(2, 4) + ") " + d.slice(4, 9) + "-" + d.slice(9);
     if (d.length === 12) return "(" + d.slice(2, 4) + ") " + d.slice(4, 8) + "-" + d.slice(8);
@@ -1152,7 +1152,7 @@ const MODELO_PREMIUM = `<!DOCTYPE html>
     if (md) md.setAttribute("content", nome + (esp ? " - " + esp : "") + (cid ? " em " + cid + ". " : ". ") + "Atendimento com avaliação individual e plano personalizado. Fale pelo WhatsApp.");
   }
   document.querySelectorAll("[data-nome]").forEach(function(el){ el.textContent = nome || "Fisioterapeuta"; });
-  var ini = nome.split(/\s+/).filter(Boolean).slice(0, 2).map(function(p){ return p.charAt(0).toUpperCase(); }).join("") || "F";
+  var ini = nome.split(" ").filter(Boolean).slice(0, 2).map(function(p){ return p.charAt(0).toUpperCase(); }).join("") || "F";
   document.querySelectorAll("[data-monograma]").forEach(function(el){ el.textContent = ini; });
   document.querySelectorAll("[data-iniciais]").forEach(function(el){ el.textContent = ini; });
   document.querySelectorAll("[data-cidade]").forEach(function(el){
@@ -1199,7 +1199,7 @@ const MODELO_PREMIUM = `<!DOCTYPE html>
     '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 10 9-7 9 7v10a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 20Z"/><path d="M9.5 21v-7h5v7"/></svg>'
   ];
   var cardsBox = document.querySelector("[data-areas]");
-  var linhas = v(D.areas).split(/\n+/).map(function(linha){
+  var linhas = v(D.areas).split(String.fromCharCode(10)).map(function(linha){
     var partes = linha.split("|");
     return { t: v(partes[0]), d: v(partes.slice(1).join("|")) };
   }).filter(function(l){ return !!l.t; });
@@ -1315,9 +1315,10 @@ const MODELO_PREMIUM = `<!DOCTYPE html>
         alert("Preencha seu nome e o que você está sentindo para eu te atender melhor.");
         return;
       }
-      var texto = "Olá! Meu nome é " + nomeV + ".\n" + mensagem;
-      if (fone) texto += "\nMeu WhatsApp é " + fone + ".";
-      texto += "\nVim pelo seu site e quero saber mais sobre a avaliação.";
+      var partesTexto = ["Olá! Meu nome é " + nomeV + ".", mensagem];
+      if (fone) partesTexto.push("Meu WhatsApp é " + fone + ".");
+      partesTexto.push("Vim pelo seu site e quero saber mais sobre a avaliação.");
+      var texto = partesTexto.join(String.fromCharCode(10));
       window.open("https://wa.me/" + dig + "?text=" + encodeURIComponent(texto), "_blank", "noopener");
     });
   }

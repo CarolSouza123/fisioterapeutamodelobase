@@ -25,7 +25,7 @@ function gerarSlug(nome) {
     .slice(0, 60);
 }
 
-const CAMPOS = ["nome","especialidade","publico","cidade","fraseApresentacao","whatsapp","linkDoBotao","foto","foto2","corDoBotao","crefito","endereco","tituloFaixa1","tituloFaixa2","sobre1","sobre2","sobre3","areas","formacao","revisao"];
+const CAMPOS = ["nome","especialidade","publico","cidade","fraseApresentacao","whatsapp","linkDoBotao","foto","foto2","corDoBotao","crefito","endereco","tituloFaixa1","tituloFaixa2","sobre1","sobre2","sobre3","areas","formacao","revisao","modelo","formatoFoto","ladoHero","fundo"];
 
 export async function onRequestGet(context) {
   const bloqueio = checarAcesso(context);
@@ -76,14 +76,16 @@ export async function onRequestPost(context) {
   if (!slug) return respostaJson({ erro: "Nao consegui gerar o endereco. Preencha o nome." }, 400);
   const existente = await kv.get("prof:" + slug);
   const agora = new Date().toISOString();
-  const dados = { criadoEm: existente ? (JSON.parse(existente).criadoEm || agora) : agora, atualizadoEm: agora };
+  let dadosExistentes = {};
+  try { if (existente) dadosExistentes = JSON.parse(existente); } catch (e) { dadosExistentes = {}; }
+  // Mescla com o registro existente: campos que o formulário do painel não envia
+  // (como modelo e variações) sobrevivem a uma edição feita pelo painel.
+  const dados = Object.assign({}, dadosExistentes, { criadoEm: dadosExistentes.criadoEm || agora, atualizadoEm: agora });
   for (const campo of CAMPOS) {
     if (typeof corpo[campo] === "string") dados[campo] = corpo[campo].trim();
   }
   dados.nome = nome;
-  if (!dados.revisao) {
-    dados.revisao = existente ? (JSON.parse(existente).revisao || "a_analisar") : "a_analisar";
-  }
+  if (!dados.revisao) dados.revisao = "a_analisar";
   await kv.put("prof:" + slug, JSON.stringify(dados));
   return respostaJson({ ok: true, slug: slug, caminho: "/" + slug, editou: !!existente });
 }

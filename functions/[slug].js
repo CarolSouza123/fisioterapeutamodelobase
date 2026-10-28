@@ -1542,15 +1542,6 @@ const MODELO_SEMFOTO = `<!DOCTYPE html>
     display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:800;margin-top:2px;
   }
 
-  /* ---------- Faixa de imagens ---------- */
-  .faixa{background:var(--cream)}
-  .faixa-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}
-  .faixa-item{margin:0}
-  .faixa-item img{
-    width:100%;aspect-ratio:4/3;object-fit:cover;
-    border-radius:var(--radius);box-shadow:var(--shadow-sm);
-  }
-
   /* ---------- Contact ---------- */
   .contact{background:var(--cream-2)}
   .contact-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:24px;align-items:stretch}
@@ -1623,7 +1614,6 @@ const MODELO_SEMFOTO = `<!DOCTYPE html>
     nav.main-nav{display:none}
     .contact-grid{grid-template-columns:1fr}
     .cards{grid-template-columns:1fr}
-    .faixa-grid{grid-template-columns:1fr}
     .diffs-card{grid-template-columns:1fr;padding:6px 4px}
     .diff-item + .diff-item{border-left:none;border-top:1px solid var(--line)}
   }
@@ -1768,20 +1758,6 @@ const MODELO_SEMFOTO = `<!DOCTYPE html>
     </div>
   </section>
 
-  <!-- ================= FAIXA DE IMAGENS ================= -->
-  <section class="faixa" id="faixa" aria-label="Atendimento">
-    <div class="container">
-      <div class="faixa-grid">
-        <figure class="faixa-item">
-          <img data-faixa-img="1" alt="Atendimento de fisioterapia">
-        </figure>
-        <figure class="faixa-item">
-          <img data-faixa-img="2" alt="Sessão de fisioterapia">
-        </figure>
-      </div>
-    </div>
-  </section>
-
   <!-- ================= CONTACT ================= -->
   <section class="contact" id="contato">
     <div class="container">
@@ -1918,14 +1894,6 @@ const MODELO_SEMFOTO = `<!DOCTYPE html>
     if (bannerSrc) bannerImg.src = bannerSrc;
     else bannerImg.style.display = "none";
   }
-  var faixa1 = document.querySelector('[data-faixa-img="1"]');
-  var faixa2 = document.querySelector('[data-faixa-img="2"]');
-  var src1 = v(D.foto);
-  var src2 = v(D.foto2) || src1;
-  if (faixa1 && src1) faixa1.src = src1;
-  if (faixa2 && src2) faixa2.src = src2;
-  if (!src1) esconder(document.getElementById("faixa"));
-
   var ICONES = [
     '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>',
     '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 9-9 9.7 9.7 0 0 0-6.7 2.7L3 8"/><path d="M3 3v5h5"/></svg>',

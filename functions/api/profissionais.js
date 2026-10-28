@@ -25,7 +25,7 @@ function gerarSlug(nome) {
     .slice(0, 60);
 }
 
-const CAMPOS = ["nome","especialidade","publico","cidade","fraseApresentacao","whatsapp","linkDoBotao","foto","foto2","fotoBanner","corDoBotao","crefito","endereco","tituloFaixa1","tituloFaixa2","sobre1","sobre2","sobre3","areas","formacao","revisao","modelo","formatoFoto","ladoHero","fundo"];
+const CAMPOS = ["nome","especialidade","publico","cidade","fraseApresentacao","whatsapp","linkDoBotao","foto","foto2","fotoBanner","areasFotos","corDoBotao","crefito","endereco","tituloFaixa1","tituloFaixa2","sobre1","sobre2","sobre3","areas","formacao","revisao","modelo","formatoFoto","ladoHero","fundo"];
 
 export async function onRequestGet(context) {
   const bloqueio = checarAcesso(context);
@@ -84,6 +84,7 @@ export async function onRequestPost(context) {
   for (const campo of CAMPOS) {
     if (typeof corpo[campo] === "string") dados[campo] = corpo[campo].trim();
   }
+  if (Array.isArray(corpo.areasFotos)) { var arrFotos = corpo.areasFotos.filter(function(x){ return typeof x === "string" && x.trim(); }); if (arrFotos.length) dados.areasFotos = arrFotos; }
   dados.nome = nome;
   if (!dados.revisao) dados.revisao = "a_analisar";
   await kv.put("prof:" + slug, JSON.stringify(dados));

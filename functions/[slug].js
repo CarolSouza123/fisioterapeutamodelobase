@@ -1502,6 +1502,9 @@ const MODELO_SEMFOTO = `<!DOCTYPE html>
   .card p{color:var(--ink-soft);font-size:.96rem}
   .card .card-link{display:inline-flex;gap:6px;margin-top:16px;font-weight:800;font-size:.9rem;color:var(--accent)}
   .card .card-link:hover{color:var(--gold)}
+  .card.card--foto{padding:0;overflow:hidden}
+  .card-foto{width:100%;aspect-ratio:16/9;object-fit:cover}
+  .card-body{padding:28px 30px 32px}
 
   /* ---------- How it works ---------- */
   .how{background:var(--cream-2)}
@@ -1635,6 +1638,7 @@ const MODELO_SEMFOTO = `<!DOCTYPE html>
     .footer-grid{grid-template-columns:1fr;gap:30px}
     .form-card,.info-card{padding:28px 22px}
     .card{padding:26px 22px}
+    .card.card--foto .card-body{padding:24px 22px 26px}
     .wa-float{width:56px;height:56px;right:16px;bottom:16px}
     footer{padding-bottom:96px}
   }
@@ -1938,27 +1942,42 @@ const MODELO_SEMFOTO = `<!DOCTYPE html>
       esconder(document.getElementById("servicos"));
       document.querySelectorAll('[data-nav="servicos"]').forEach(function(a){ esconder(a); });
     } else {
+      var fotosAreas = Array.isArray(D.areasFotos) ? D.areasFotos : [];
       linhas.forEach(function(l, i){
         var art = document.createElement("article");
         art.className = "card";
-        var ic = document.createElement("div");
-        ic.className = "card-icon";
-        ic.setAttribute("aria-hidden", "true");
-        ic.innerHTML = ICONES[i % ICONES.length];
+        var fotoSrc = v(fotosAreas[i]);
+        var corpo = art;
+        if (fotoSrc) {
+          art.className = "card card--foto";
+          var img = document.createElement("img");
+          img.className = "card-foto";
+          img.src = fotoSrc;
+          img.alt = l.t;
+          art.appendChild(img);
+          corpo = document.createElement("div");
+          corpo.className = "card-body";
+          art.appendChild(corpo);
+        } else {
+          var ic = document.createElement("div");
+          ic.className = "card-icon";
+          ic.setAttribute("aria-hidden", "true");
+          ic.innerHTML = ICONES[i % ICONES.length];
+          art.appendChild(ic);
+        }
         var h = document.createElement("h3");
         h.textContent = l.t;
         var a = document.createElement("a");
         a.className = "card-link";
         a.href = "#contato";
         a.textContent = "Quero saber mais →";
-        art.appendChild(ic);
-        art.appendChild(h);
+        corpo.appendChild(h);
         if (l.d) {
           var p = document.createElement("p");
           p.textContent = l.d;
-          art.appendChild(p);
+          corpo.appendChild(p);
         }
-        art.appendChild(a);
+        corpo.appendChild(a);
         cardsBox.appendChild(art);
       });
     }
@@ -2067,9 +2086,10 @@ export async function onRequest(context) {
   if (!bruto) return paginaSimples("Pagina nao encontrada", "Confira o link e tente de novo.");
   let dados;
   try { dados = JSON.parse(bruto); } catch (e) { return paginaSimples("Pagina indisponivel", "Tente de novo em alguns instantes."); }
-  const campos = ["nome","especialidade","publico","cidade","fraseApresentacao","whatsapp","linkDoBotao","foto","foto2","fotoBanner","corDoBotao","crefito","endereco","tituloFaixa1","tituloFaixa2","sobre1","sobre2","sobre3","areas","formacao","modelo","formatoFoto","ladoHero","fundo"];
+  const campos = ["nome","especialidade","publico","cidade","fraseApresentacao","whatsapp","linkDoBotao","foto","foto2","fotoBanner","areasFotos","corDoBotao","crefito","endereco","tituloFaixa1","tituloFaixa2","sobre1","sobre2","sobre3","areas","formacao","modelo","formatoFoto","ladoHero","fundo"];
   const limpo = {};
   for (const c of campos) { if (typeof dados[c] === "string" && dados[c].trim()) limpo[c] = dados[c]; }
+  if (Array.isArray(dados.areasFotos)) { var arrFotos = dados.areasFotos.filter(function(x){ return typeof x === "string" && x.trim(); }); if (arrFotos.length) limpo.areasFotos = arrFotos; }
   const json = JSON.stringify(limpo).replace(/</g, "\\u003c");
   const pagina = (limpo.modelo === "premium-sem-foto" ? MODELO_SEMFOTO : (limpo.modelo === "premium" ? MODELO_PREMIUM : MODELO)).replace("{{DADOS_JSON}}", json);
   return new Response(pagina, {

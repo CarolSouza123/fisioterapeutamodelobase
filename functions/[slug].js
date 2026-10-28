@@ -1328,6 +1328,733 @@ const MODELO_PREMIUM = `<!DOCTYPE html>
 </html>
 `;
 
+const MODELO_SEMFOTO = `<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fisioterapeuta</title>
+<meta name="description" content="Atendimento de fisioterapia com avaliação individual e plano personalizado. Fale pelo WhatsApp.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FAF6EF;
+    --cream-2:#F3ECDD;
+    --cream-3:#EFE6D3;
+    --ink:#22302A;
+    --ink-soft:#5A665F;
+    --accent:#1E4D3B;
+    --accent-dark:#143327;
+    --accent-soft:#E3EDE6;
+    --gold:#C2A059;
+    --gold-soft:#F0E6CE;
+    --wa:#22A35A;
+    --wa-dark:#1B8749;
+    --card:#FFFFFF;
+    --line:#E5DCC8;
+    --radius:22px;
+    --shadow:0 18px 45px rgba(34,48,42,.10);
+    --shadow-sm:0 8px 24px rgba(34,48,42,.08);
+    --max:1160px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth;scroll-padding-top:96px}
+  body{
+    font-family:'Manrope',system-ui,-apple-system,sans-serif;
+    background:var(--cream);
+    color:var(--ink);
+    line-height:1.6;
+    font-size:16px;
+    -webkit-font-smoothing:antialiased;
+  }
+  img{max-width:100%;display:block}
+  a{text-decoration:none;color:inherit}
+  .container{width:100%;max-width:var(--max);margin:0 auto;padding:0 24px}
+  .serif{font-family:'Fraunces',Georgia,serif}
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    font-size:.72rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--accent);
+  }
+  .eyebrow::before{content:"";width:26px;height:1px;background:var(--gold);display:inline-block}
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:10px;
+    min-height:52px;padding:14px 28px;border-radius:999px;
+    font-weight:800;font-size:.98rem;border:1.5px solid transparent;
+    transition:transform .18s ease,box-shadow .18s ease,background .18s ease;
+    cursor:pointer;text-align:center;
+  }
+  .btn:active{transform:scale(.98)}
+  .btn-wa{background:var(--wa);color:#fff;box-shadow:0 12px 26px rgba(34,163,90,.28)}
+  .btn-wa:hover{background:var(--wa-dark)}
+  .btn-outline{border-color:var(--accent);color:var(--accent);background:transparent}
+  .btn-outline:hover{background:var(--accent-soft)}
+  .btn-light{background:#fff;color:var(--accent);border-color:#fff}
+  section{padding:88px 0}
+  .section-head{max-width:640px;margin:0 auto 48px;text-align:center}
+  .section-head .eyebrow{justify-content:center}
+  .section-head .eyebrow::after{content:"";width:26px;height:1px;background:var(--gold);display:inline-block}
+  .section-head h2{
+    font-family:'Fraunces',Georgia,serif;font-weight:500;
+    font-size:clamp(1.9rem,4vw,2.6rem);line-height:1.15;margin:14px 0 12px;color:var(--ink);
+  }
+  .section-head h2 em{font-style:italic;color:var(--accent)}
+  .section-head p{color:var(--ink-soft);font-size:1.02rem}
+
+  /* ---------- Header ---------- */
+  header{
+    position:fixed;top:0;left:0;right:0;z-index:60;
+    background:rgba(250,246,239,.92);backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .header-in{
+    max-width:var(--max);margin:0 auto;padding:14px 24px;
+    display:flex;align-items:center;justify-content:space-between;gap:16px;
+  }
+  .brand{display:flex;align-items:center;gap:12px;min-width:0}
+  .monogram{
+    width:46px;height:46px;flex:0 0 46px;border-radius:50%;
+    background:var(--accent);color:#F5EEDC;
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',Georgia,serif;font-size:1.05rem;font-weight:600;letter-spacing:.04em;
+    border:2px solid var(--gold);
+  }
+  .brand-text{line-height:1.2;min-width:0}
+  .brand-text strong{
+    font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:1.02rem;display:block;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  }
+  .brand-text span{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);font-weight:700}
+  nav.main-nav{display:flex;gap:28px;align-items:center}
+  nav.main-nav a{font-weight:700;font-size:.92rem;color:var(--ink);position:relative;padding:6px 0}
+  nav.main-nav a::after{content:"";position:absolute;left:0;bottom:0;width:0;height:2px;background:var(--gold);transition:width .2s ease}
+  nav.main-nav a:hover::after{width:100%}
+  .header-cta{min-height:44px;padding:10px 22px;font-size:.9rem}
+
+  /* ---------- Banner hero (sem foto de profissional) ---------- */
+  .banner-hero{
+    position:relative;overflow:hidden;background:var(--accent-dark);
+    min-height:580px;display:flex;align-items:flex-end;
+    padding:150px 0 64px;
+  }
+  .banner-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .banner-overlay{
+    position:absolute;inset:0;
+    background:linear-gradient(180deg,rgba(20,51,39,.55) 0%,rgba(20,51,39,.30) 45%,rgba(20,51,39,.82) 100%);
+  }
+  .banner-content{position:relative;z-index:2;color:#fff;max-width:760px}
+  .banner-eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    font-size:.72rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--gold-soft);
+  }
+  .banner-eyebrow::before{content:"";width:26px;height:1px;background:var(--gold);display:inline-block}
+  .banner-content h1{
+    font-family:'Fraunces',Georgia,serif;font-weight:500;
+    font-size:clamp(2.3rem,5.4vw,3.7rem);line-height:1.08;letter-spacing:-.01em;
+    margin:22px 0 18px;color:#fff;
+  }
+  .banner-content h1 em{font-style:italic;color:var(--gold-soft)}
+  .banner-subtitle{font-size:1.08rem;color:rgba(255,255,255,.90);max-width:560px;margin-bottom:32px}
+  .banner-ctas{display:flex;gap:14px;flex-wrap:wrap}
+  .banner-note{margin-top:18px;font-size:.86rem;color:rgba(255,255,255,.80);font-weight:600}
+
+  /* ---------- Differentials strip ---------- */
+  .diffs{padding:32px 0 0;margin:0;position:relative;z-index:6}
+  .diffs-card{
+    background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);
+    border:1px solid var(--line);
+    display:grid;grid-template-columns:repeat(3,1fr);
+    padding:10px 6px;
+  }
+  .diff-item{
+    display:flex;align-items:center;gap:14px;padding:18px 22px;
+  }
+  .diff-item + .diff-item{border-left:1px solid var(--line)}
+  .diff-icon{
+    width:52px;height:52px;flex:0 0 52px;border-radius:50%;
+    background:var(--gold-soft);color:var(--accent);
+    display:flex;align-items:center;justify-content:center;line-height:0;
+  }
+  .diff-icon svg,.card-icon svg,.info-icon svg{width:26px;height:26px;flex:0 0 auto;display:block;margin:auto}
+  .diff-icon svg{width:30px;height:30px}
+  .info-icon svg{width:22px;height:22px}
+  .about-list .check svg{width:13px;height:13px}
+  .diff-item strong{display:block;font-size:.96rem;line-height:1.3}
+  .diff-item div span{font-size:.84rem;color:var(--ink-soft);line-height:1.4;display:block}
+
+  /* ---------- Services ---------- */
+  .services{background:var(--cream);padding-top:64px}
+  .cards{display:grid;grid-template-columns:repeat(2,1fr);gap:22px}
+  .card{
+    background:var(--card);border-radius:var(--radius);padding:32px 30px;
+    box-shadow:var(--shadow-sm);border:1px solid #F0E9D8;
+    transition:transform .2s ease,box-shadow .2s ease;
+  }
+  .card:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+  .card-icon{
+    width:56px;height:56px;border-radius:18px;background:var(--accent-soft);color:var(--accent);
+    display:flex;align-items:center;justify-content:center;font-size:1.45rem;margin-bottom:18px;
+  }
+  .card h3{font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:1.28rem;line-height:1.25;margin-bottom:8px}
+  .card p{color:var(--ink-soft);font-size:.96rem}
+  .card .card-link{display:inline-flex;gap:6px;margin-top:16px;font-weight:800;font-size:.9rem;color:var(--accent)}
+  .card .card-link:hover{color:var(--gold)}
+
+  /* ---------- How it works ---------- */
+  .how{background:var(--cream-2)}
+  .steps{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:22px;position:relative;
+  }
+  .steps::before{
+    content:"";position:absolute;top:30px;left:12%;right:12%;
+    border-top:2px dotted var(--gold);opacity:.7;
+  }
+  .step{text-align:center;padding:0 8px;position:relative}
+  .step-num{
+    width:60px;height:60px;margin:0 auto 18px;border-radius:50%;
+    background:var(--accent);color:#fff;
+    font-family:'Fraunces',Georgia,serif;font-size:1.4rem;font-weight:600;
+    display:flex;align-items:center;justify-content:center;
+    border:3px solid var(--cream-2);box-shadow:0 0 0 2px var(--gold);
+    position:relative;z-index:1;
+  }
+  .step h3{font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:1.12rem;margin-bottom:6px}
+  .step p{font-size:.9rem;color:var(--ink-soft)}
+
+  /* ---------- About (somente texto, sem foto) ---------- */
+  .about-text--solo{max-width:740px}
+  .about-text h2{
+    font-family:'Fraunces',Georgia,serif;font-weight:500;
+    font-size:clamp(1.9rem,4vw,2.5rem);line-height:1.15;margin:14px 0 16px;
+  }
+  .about-text h2 em{font-style:italic;color:var(--accent)}
+  .about-text p{color:var(--ink-soft);margin-bottom:16px}
+  .about-list{list-style:none;margin:22px 0 30px;display:grid;gap:12px}
+  .about-list li{display:flex;gap:12px;align-items:flex-start;font-weight:600;font-size:.97rem}
+  .about-list .check{
+    width:24px;height:24px;flex:0 0 24px;border-radius:50%;background:var(--gold-soft);color:var(--accent);
+    display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:800;margin-top:2px;
+  }
+
+  /* ---------- Faixa de imagens ---------- */
+  .faixa{background:var(--cream)}
+  .faixa-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+  .faixa-item{margin:0}
+  .faixa-item img{
+    width:100%;aspect-ratio:4/3;object-fit:cover;
+    border-radius:var(--radius);box-shadow:var(--shadow-sm);
+  }
+
+  /* ---------- Contact ---------- */
+  .contact{background:var(--cream-2)}
+  .contact-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:24px;align-items:stretch}
+  .form-card,.info-card{
+    background:#fff;border-radius:var(--radius);box-shadow:var(--shadow-sm);
+    border:1px solid #F0E9D8;padding:36px 34px;
+  }
+  .form-card h3,.info-card h3{
+    font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:1.45rem;margin-bottom:6px;
+  }
+  .form-card > p,.info-card > p{color:var(--ink-soft);font-size:.95rem;margin-bottom:24px}
+  .field{margin-bottom:16px}
+  .field label{display:block;font-weight:800;font-size:.86rem;margin-bottom:7px}
+  .field input,.field textarea{
+    width:100%;border:1.5px solid var(--line);border-radius:14px;
+    padding:14px 16px;font-family:inherit;font-size:1rem;background:var(--cream);
+    color:var(--ink);outline:none;transition:border-color .15s ease,background .15s ease;
+  }
+  .field input:focus,.field textarea:focus{border-color:var(--accent);background:#fff}
+  .field textarea{resize:vertical;min-height:104px}
+  .form-card .btn{width:100%}
+  .form-note{font-size:.8rem;color:var(--ink-soft);text-align:center;margin-top:12px}
+  .info-item{display:flex;gap:14px;padding:15px 0;border-bottom:1px solid #F1EBDB;align-items:flex-start}
+  .info-item:last-of-type{border-bottom:none}
+  .info-icon{
+    width:44px;height:44px;flex:0 0 44px;border-radius:50%;background:var(--accent-soft);color:var(--accent);
+    display:flex;align-items:center;justify-content:center;font-size:1.1rem;
+  }
+  .info-item strong{display:block;font-size:.82rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft)}
+  .info-item span{font-weight:700;font-size:1rem}
+  .info-item a:hover{color:var(--accent)}
+
+  /* ---------- Footer ---------- */
+  footer{background:var(--accent-dark);color:#DCE7DF;padding:64px 0 110px}
+  .footer-grid{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:40px}
+  footer .brand-text strong{color:#fff}
+  footer .brand-text span{color:#A9BFB2}
+  footer h4{font-family:'Fraunces',Georgia,serif;font-weight:600;color:#fff;font-size:1.05rem;margin-bottom:14px}
+  footer p,footer a{font-size:.92rem;color:#C4D4C9}
+  footer nav{display:grid;gap:9px}
+  footer nav a:hover{color:var(--gold)}
+  .footer-bottom{
+    margin-top:44px;padding-top:22px;border-top:1px solid rgba(255,255,255,.14);
+    display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;font-size:.82rem;color:#9DB4A5;
+  }
+
+  /* ---------- Floating WhatsApp ---------- */
+  .wa-float{
+    position:fixed;right:20px;bottom:20px;z-index:70;
+    width:60px;height:60px;border-radius:50%;
+    background:var(--wa);color:#fff;
+    display:flex;align-items:center;justify-content:center;
+    box-shadow:0 14px 30px rgba(34,163,90,.38);
+    transition:transform .18s ease,background .18s ease;
+  }
+  .wa-float:hover{background:var(--wa-dark);transform:translateY(-3px)}
+  .wa-float svg{width:30px;height:30px;fill:#fff}
+  .wa-float:focus-visible,.btn:focus-visible,a:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+
+  /* ---------- Responsive ---------- */
+  @media (max-width:1024px){
+    .steps{grid-template-columns:repeat(2,1fr);gap:34px 22px}
+    .steps::before{display:none}
+    .footer-grid{grid-template-columns:1fr 1fr}
+  }
+  @media (max-width:860px){
+    section{padding:64px 0}
+    .services{padding-top:48px}
+    .banner-hero{padding-top:120px;min-height:480px}
+    nav.main-nav{display:none}
+    .contact-grid{grid-template-columns:1fr}
+    .cards{grid-template-columns:1fr}
+    .faixa-grid{grid-template-columns:1fr}
+    .diffs-card{grid-template-columns:1fr;padding:6px 4px}
+    .diff-item + .diff-item{border-left:none;border-top:1px solid var(--line)}
+  }
+  @media (max-width:520px){
+    .container{padding:0 18px}
+    .header-in{padding:12px 16px}
+    .brand-text strong{font-size:.92rem;max-width:150px}
+    .header-cta{padding:10px 16px;font-size:.84rem;min-height:42px}
+    .banner-ctas{flex-direction:column}
+    .banner-ctas .btn{width:100%}
+    .steps{grid-template-columns:1fr}
+    .footer-grid{grid-template-columns:1fr;gap:30px}
+    .form-card,.info-card{padding:28px 22px}
+    .card{padding:26px 22px}
+    .wa-float{width:56px;height:56px;right:16px;bottom:16px}
+    footer{padding-bottom:96px}
+  }
+</style>
+</head>
+<body>
+
+<!-- ================= HEADER ================= -->
+<header>
+  <div class="header-in">
+    <a class="brand" href="#inicio" aria-label="Voltar ao início">
+      <span class="monogram" data-monograma aria-hidden="true">F</span>
+      <span class="brand-text">
+        <strong data-nome>Fisioterapeuta</strong>
+        <span data-marca-sub>Fisioterapeuta</span>
+      </span>
+    </a>
+    <nav class="main-nav" aria-label="Navegação principal">
+      <a href="#servicos" data-nav="servicos">Serviços</a>
+      <a href="#como-funciona">Como funciona</a>
+      <a href="#sobre">Sobre</a>
+      <a href="#contato">Contato</a>
+    </nav>
+    <a class="btn btn-wa header-cta" data-wa href="#" target="_blank" rel="noopener">WhatsApp</a>
+  </div>
+</header>
+
+<main id="inicio">
+
+  <!-- ================= BANNER HERO (imagem de ambiente, sem retrato) ================= -->
+  <section class="banner-hero" aria-label="Apresentação">
+    <img class="banner-img" data-banner alt="Atendimento de fisioterapia">
+    <div class="banner-overlay" aria-hidden="true"></div>
+    <div class="container banner-content">
+      <span class="banner-eyebrow" data-pill>Fisioterapia</span>
+      <h1>Movimento sem dor, com o cuidado que <em>você merece</em></h1>
+      <p class="banner-subtitle" data-frase>Avaliação individual, plano de tratamento feito para a sua rotina e acompanhamento de perto em cada etapa da sua recuperação.</p>
+      <div class="banner-ctas">
+        <a class="btn btn-wa" data-wa href="#" target="_blank" rel="noopener">Agendar uma avaliação</a>
+        <a class="btn btn-light" href="#sobre">Conheça meu trabalho</a>
+      </div>
+      <p class="banner-note">Atendimento com hora marcada · Resposta pelo WhatsApp em horário comercial</p>
+    </div>
+  </section>
+
+  <!-- Differentials strip -->
+  <div class="diffs" aria-label="Diferenciais">
+    <div class="container">
+        <div class="diffs-card">
+          <div class="diff-item">
+            <span class="diff-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4a3 3 0 0 1 6 0"/><path d="m9 13 2 2 4-4"/></svg></span>
+            <div><strong>Avaliação individual</strong><span>Seu caso ouvido com calma, sem pressa</span></div>
+          </div>
+          <div class="diff-item">
+            <span class="diff-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.2" fill="currentColor"/></svg></span>
+            <div><strong>Plano personalizado</strong><span>Tratamento montado para o seu objetivo</span></div>
+          </div>
+          <div class="diff-item">
+            <span class="diff-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/><path d="m9.5 15.5 2 2 3.5-3.5"/></svg></span>
+            <div><strong>Agendamento fácil</strong><span>Marque sua avaliação direto pelo WhatsApp</span></div>
+          </div>
+        </div>
+    </div>
+  </div>
+
+  <!-- ================= SERVICES ================= -->
+  <section class="services" id="servicos">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Serviços</span>
+        <h2>Como posso te <em>ajudar</em></h2>
+        <p>Atendimentos pensados para aliviar a dor, recuperar o movimento e devolver qualidade de vida ao seu dia a dia.</p>
+      </div>
+      <div class="cards" data-areas></div>
+    </div>
+  </section>
+
+  <!-- ================= HOW IT WORKS ================= -->
+  <section class="how" id="como-funciona">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Como funciona</span>
+        <h2>Simples do primeiro contato <em>à sua evolução</em></h2>
+        <p>Você sabe exatamente o que esperar em cada etapa do atendimento.</p>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num" aria-hidden="true">1</div>
+          <h3>Contato pelo WhatsApp</h3>
+          <p>Você chama no WhatsApp e conta, com suas palavras, o que está sentindo.</p>
+        </div>
+        <div class="step">
+          <div class="step-num" aria-hidden="true">2</div>
+          <h3>Avaliação completa</h3>
+          <p>Na primeira sessão, avalio seu caso, seu histórico e seus objetivos.</p>
+        </div>
+        <div class="step">
+          <div class="step-num" aria-hidden="true">3</div>
+          <h3>Plano de tratamento</h3>
+          <p>Você recebe um plano claro, com frequência, técnicas e metas combinadas.</p>
+        </div>
+        <div class="step">
+          <div class="step-num" aria-hidden="true">4</div>
+          <h3>Acompanhamento</h3>
+          <p>Sua evolução é acompanhada sessão a sessão, com ajustes quando precisar.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= ABOUT (somente texto, sem foto) ================= -->
+  <section id="sobre">
+    <div class="container">
+      <div class="about-text about-text--solo">
+        <span class="eyebrow">Sobre</span>
+        <h2>Prazer, eu sou <em data-nome>Fisioterapeuta</em></h2>
+        <div data-sobre>
+          <p>Atendimento individual, com avaliação cuidadosa e um plano montado para a sua rotina.</p>
+        </div>
+        <ul class="about-list">
+          <li><span class="check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span>Atendimento individual, um paciente por vez</li>
+          <li><span class="check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span>Explicação clara do tratamento, sem termos difíceis</li>
+          <li><span class="check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span>Horários combinados direto pelo WhatsApp</li>
+        </ul>
+        <a class="btn btn-wa" data-wa href="#" target="_blank" rel="noopener">Falar comigo no WhatsApp</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= FAIXA DE IMAGENS ================= -->
+  <section class="faixa" id="faixa" aria-label="Atendimento">
+    <div class="container">
+      <div class="faixa-grid">
+        <figure class="faixa-item">
+          <img data-faixa-img="1" alt="Atendimento de fisioterapia">
+        </figure>
+        <figure class="faixa-item">
+          <img data-faixa-img="2" alt="Sessão de fisioterapia">
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CONTACT ================= -->
+  <section class="contact" id="contato">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Contato</span>
+        <h2>Conte o que você <em>está sentindo</em></h2>
+        <p>Preencha ao lado e a mensagem chega pronta no meu WhatsApp. Se preferir, use um dos canais diretos.</p>
+      </div>
+      <div class="contact-grid">
+        <div class="form-card" id="formCard">
+          <h3>Peça sua avaliação</h3>
+          <p>Leva menos de um minuto. Ao enviar, você é direcionado ao WhatsApp com a mensagem já preenchida.</p>
+          <form id="waForm" novalidate>
+            <div class="field">
+              <label for="f-nome">Seu nome</label>
+              <input id="f-nome" name="nome" type="text" autocomplete="name" placeholder="Como posso te chamar?" required>
+            </div>
+            <div class="field">
+              <label for="f-fone">Seu WhatsApp</label>
+              <input id="f-fone" name="telefone" type="tel" autocomplete="tel" inputmode="tel" placeholder="(00) 00000-0000">
+            </div>
+            <div class="field">
+              <label for="f-msg">O que você está sentindo?</label>
+              <textarea id="f-msg" name="mensagem" placeholder="Ex.: sinto dor no joelho há algumas semanas e quero agendar uma avaliação." required></textarea>
+            </div>
+            <button class="btn btn-wa" type="submit">Enviar pelo WhatsApp</button>
+            <p class="form-note">Sem compromisso. Seus dados vão só para a conversa no WhatsApp.</p>
+          </form>
+        </div>
+
+        <div class="info-card">
+          <h3>Fale comigo</h3>
+          <p>Canais diretos para agendar, tirar dúvidas ou conhecer o espaço.</p>
+          <div class="info-item">
+            <span class="info-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.13 1 .36 1.9.7 2.8a2 2 0 0 1-.45 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.45c.9.34 1.85.57 2.8.7A2 2 0 0 1 22 16.9z"/></svg></span>
+            <div><strong>WhatsApp</strong><span><a data-wa data-wa-texto href="#" target="_blank" rel="noopener">Chamar no WhatsApp</a></span></div>
+          </div>
+          <div class="info-item">
+            <span class="info-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg></span>
+            <div><strong>Onde atendo</strong><span data-endereco></span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ================= FOOTER ================= -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <a class="brand" href="#inicio" aria-label="Voltar ao início">
+          <span class="monogram" data-monograma aria-hidden="true">F</span>
+          <span class="brand-text">
+            <strong data-nome>Fisioterapeuta</strong>
+            <span data-marca-sub>Fisioterapeuta</span>
+          </span>
+        </a>
+        <p style="margin-top:18px;max-width:340px" data-rodape-texto>Atendimento de fisioterapia com avaliação individual e plano personalizado.</p>
+      </div>
+      <div>
+        <h4>Navegação</h4>
+        <nav aria-label="Links do rodapé">
+          <a href="#servicos" data-nav="servicos">Serviços</a>
+          <a href="#como-funciona">Como funciona</a>
+          <a href="#sobre">Sobre</a>
+          <a href="#contato">Contato</a>
+        </nav>
+      </div>
+      <div>
+        <h4>Contato</h4>
+        <p><span data-rodape-wa></span><br>
+        <span data-rodape-end></span></p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span data-rodape-copy>Todos os direitos reservados.</span>
+      <span data-crefito></span>
+      <span>Conteúdo informativo. Em caso de dor intensa ou emergência, procure atendimento imediato.</span>
+    </div>
+  </div>
+</footer>
+
+<!-- Floating WhatsApp -->
+<a class="wa-float" data-wa href="#" target="_blank" rel="noopener" aria-label="Falar no WhatsApp">
+  <svg viewBox="0 0 32 32" aria-hidden="true" focusable="false"><path d="M16 3C9.4 3 4 8.3 4 14.9c0 2.6.8 5 2.4 7L4.6 29l7.3-1.8c1.3.4 2.7.6 4.1.6 6.6 0 12-5.3 12-11.9S22.6 3 16 3zm0 21.7c-1.3 0-2.6-.2-3.8-.7l-.3-.1-4.3 1.1 1.1-4.1-.2-.3a9.7 9.7 0 0 1-2-5.7C6.5 9.6 10.8 5.3 16 5.3S25.5 9.6 25.5 14.9 21.2 24.7 16 24.7zm5.3-7.2c-.3-.1-1.7-.9-2-1-.3-.1-.5-.1-.7.1-.2.3-.8 1-.9 1.1-.2.2-.3.2-.6.1a11.6 11.6 0 0 1-5.7-5c-.4-.7.4-.6 1.1-2.1.1-.3 0-.5 0-.6l-.9-2.1c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.3 5.2 4.6.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.7-.7 2-1.4.3-.7.3-1.3.2-1.4-.1-.1-.3-.2-.6-.3z"/></svg>
+</a>
+
+<script>window.DADOS = {{DADOS_JSON}};</script>
+<script>
+(function(){
+  var D = window.DADOS || {};
+  function v(s){ return (s || "").toString().trim(); }
+  function soDigitos(s){ return (s || "").split("").filter(function(c){ return c >= "0" && c <= "9"; }).join(""); }
+  function formatar(d){
+    if (d.length === 13) return "(" + d.slice(2, 4) + ") " + d.slice(4, 9) + "-" + d.slice(9);
+    if (d.length === 12) return "(" + d.slice(2, 4) + ") " + d.slice(4, 8) + "-" + d.slice(8);
+    if (d.length === 11) return "(" + d.slice(0, 2) + ") " + d.slice(2, 7) + "-" + d.slice(7);
+    return d;
+  }
+  function misturar(hex, alvo, pct){
+    var n = parseInt(hex.slice(1), 16);
+    var r = (n >> 16) & 255, g = (n >> 8) & 255, b = n & 255;
+    var t = parseInt(alvo.slice(1), 16);
+    var tr = (t >> 16) & 255, tg = (t >> 8) & 255, tb = t & 255;
+    var m = function(a, c){ return Math.round(a + (c - a) * pct); };
+    return "rgb(" + m(r, tr) + "," + m(g, tg) + "," + m(b, tb) + ")";
+  }
+  function esconder(el){ if (el) el.style.display = "none"; }
+
+  var nome = v(D.nome), esp = v(D.especialidade), cid = v(D.cidade);
+
+  if (nome) {
+    document.title = nome + (cid ? " | Fisioterapeuta em " + cid : " | Fisioterapeuta");
+    var md = document.querySelector('meta[name="description"]');
+    if (md) md.setAttribute("content", nome + (esp ? " - " + esp : "") + (cid ? " em " + cid + ". " : ". ") + "Atendimento com avaliação individual e plano personalizado. Fale pelo WhatsApp.");
+  }
+  document.querySelectorAll("[data-nome]").forEach(function(el){ el.textContent = nome || "Fisioterapeuta"; });
+  var ini = nome.split(" ").filter(Boolean).slice(0, 2).map(function(p){ return p.charAt(0).toUpperCase(); }).join("") || "F";
+  document.querySelectorAll("[data-monograma]").forEach(function(el){ el.textContent = ini; });
+  document.querySelectorAll("[data-marca-sub]").forEach(function(el){
+    el.textContent = "Fisioterapeuta" + (cid ? " · " + cid : "");
+  });
+  var pill = document.querySelector("[data-pill]");
+  if (pill) pill.textContent = [esp, cid].filter(Boolean).join(" · ") || "Fisioterapia";
+  var fraseEl = document.querySelector("[data-frase]");
+  if (fraseEl && v(D.fraseApresentacao)) fraseEl.textContent = v(D.fraseApresentacao);
+
+  var bannerImg = document.querySelector("[data-banner]");
+  var bannerSrc = v(D.fotoBanner) || v(D.foto);
+  if (bannerImg) {
+    if (bannerSrc) bannerImg.src = bannerSrc;
+    else bannerImg.style.display = "none";
+  }
+  var faixa1 = document.querySelector('[data-faixa-img="1"]');
+  var faixa2 = document.querySelector('[data-faixa-img="2"]');
+  var src1 = v(D.foto);
+  var src2 = v(D.foto2) || src1;
+  if (faixa1 && src1) faixa1.src = src1;
+  if (faixa2 && src2) faixa2.src = src2;
+  if (!src1) esconder(document.getElementById("faixa"));
+
+  var ICONES = [
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>',
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 9-9 9.7 9.7 0 0 0-6.7 2.7L3 8"/><path d="M3 3v5h5"/></svg>',
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 14c1.5-1.5 3-3.2 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.8 0-3 .5-4.5 2-1.5-1.5-2.7-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4 3 5.5l7 7Z"/></svg>',
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 10 9-7 9 7v10a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 20Z"/><path d="M9.5 21v-7h5v7"/></svg>'
+  ];
+  var cardsBox = document.querySelector("[data-areas]");
+  var linhas = v(D.areas).split(String.fromCharCode(10)).map(function(linha){
+    var partes = linha.split("|");
+    return { t: v(partes[0]), d: v(partes.slice(1).join("|")) };
+  }).filter(function(l){ return !!l.t; });
+  if (cardsBox) {
+    if (!linhas.length) {
+      esconder(document.getElementById("servicos"));
+      document.querySelectorAll('[data-nav="servicos"]').forEach(function(a){ esconder(a); });
+    } else {
+      linhas.forEach(function(l, i){
+        var art = document.createElement("article");
+        art.className = "card";
+        var ic = document.createElement("div");
+        ic.className = "card-icon";
+        ic.setAttribute("aria-hidden", "true");
+        ic.innerHTML = ICONES[i % ICONES.length];
+        var h = document.createElement("h3");
+        h.textContent = l.t;
+        var a = document.createElement("a");
+        a.className = "card-link";
+        a.href = "#contato";
+        a.textContent = "Quero saber mais →";
+        art.appendChild(ic);
+        art.appendChild(h);
+        if (l.d) {
+          var p = document.createElement("p");
+          p.textContent = l.d;
+          art.appendChild(p);
+        }
+        art.appendChild(a);
+        cardsBox.appendChild(art);
+      });
+    }
+  }
+
+  var sobreBox = document.querySelector("[data-sobre]");
+  var paras = [D.sobre1, D.sobre2, D.sobre3].map(v).filter(Boolean);
+  if (sobreBox) {
+    if (!paras.length) {
+      esconder(sobreBox);
+    } else {
+      sobreBox.innerHTML = "";
+      paras.forEach(function(t){
+        var p = document.createElement("p");
+        p.textContent = t;
+        sobreBox.appendChild(p);
+      });
+    }
+  }
+
+  var dig = soDigitos(D.whatsapp);
+  var link = v(D.linkDoBotao);
+  var temContato = !!(dig || link);
+  var msg = "Olá" + (nome ? ", " + nome : "") + "! Vim pelo seu site e quero agendar uma avaliação.";
+  var hrefWa = link ? link : (dig ? "https://wa.me/" + dig + "?text=" + encodeURIComponent(msg) : "#");
+  document.querySelectorAll("[data-wa]").forEach(function(a){
+    if (!temContato) { esconder(a); return; }
+    a.setAttribute("href", hrefWa);
+    a.setAttribute("target", "_blank");
+    a.setAttribute("rel", "noopener");
+  });
+  var formCard = document.getElementById("formCard");
+  if (!dig && formCard) esconder(formCard);
+  if (!temContato) {
+    var grid = document.querySelector(".contact-grid");
+    if (grid) grid.style.gridTemplateColumns = "1fr";
+  }
+  var waTexto = document.querySelector("[data-wa-texto]");
+  if (waTexto) {
+    if (!temContato) {
+      esconder(waTexto.closest(".info-item"));
+    } else {
+      waTexto.textContent = dig ? formatar(dig) : "Chamar no WhatsApp";
+      waTexto.setAttribute("href", hrefWa);
+    }
+  }
+  var endTxt = v(D.endereco) || cid;
+  var endEl = document.querySelector("[data-endereco]");
+  if (endEl) {
+    if (!endTxt) esconder(endEl.closest(".info-item"));
+    else endEl.textContent = endTxt;
+  }
+  var rodapeWa = document.querySelector("[data-rodape-wa]");
+  if (rodapeWa) rodapeWa.textContent = dig ? "WhatsApp: " + formatar(dig) : (temContato ? "WhatsApp: chamar pelo botão" : "");
+  var rodapeEnd = document.querySelector("[data-rodape-end]");
+  if (rodapeEnd) rodapeEnd.textContent = endTxt;
+  var copyEl = document.querySelector("[data-rodape-copy]");
+  if (copyEl) copyEl.textContent = "© " + new Date().getFullYear() + (nome ? " " + nome : "") + ". Todos os direitos reservados.";
+  var crefEl = document.querySelector("[data-crefito]");
+  if (crefEl) {
+    if (v(D.crefito)) crefEl.textContent = "CREFITO " + v(D.crefito);
+    else esconder(crefEl);
+  }
+  var rodapeTxt = document.querySelector("[data-rodape-texto]");
+  if (rodapeTxt) rodapeTxt.textContent = "Atendimento de fisioterapia com avaliação individual e plano personalizado" + (cid ? " em " + cid + "." : ".");
+
+  var cor = /^#[0-9a-fA-F]{6}$/.test(v(D.corDoBotao)) ? v(D.corDoBotao) : "#1E4D3B";
+  var root = document.documentElement;
+  root.style.setProperty("--accent", cor);
+  root.style.setProperty("--accent-dark", misturar(cor, "#000000", 0.35));
+  root.style.setProperty("--accent-soft", misturar(cor, "#ffffff", 0.88));
+
+  var form = document.getElementById("waForm");
+  if (form && dig) {
+    form.addEventListener("submit", function(ev){
+      ev.preventDefault();
+      var nomeV = document.getElementById("f-nome").value.trim();
+      var fone = document.getElementById("f-fone").value.trim();
+      var mensagem = document.getElementById("f-msg").value.trim();
+      if (!nomeV || !mensagem) {
+        alert("Preencha seu nome e o que você está sentindo para eu te atender melhor.");
+        return;
+      }
+      var partesTexto = ["Olá! Meu nome é " + nomeV + ".", mensagem];
+      if (fone) partesTexto.push("Meu WhatsApp é " + fone + ".");
+      partesTexto.push("Vim pelo seu site e quero saber mais sobre a avaliação.");
+      var texto = partesTexto.join(String.fromCharCode(10));
+      window.open("https://wa.me/" + dig + "?text=" + encodeURIComponent(texto), "_blank", "noopener");
+    });
+  }
+})();
+</script>
+</body>
+</html>
+`;
+
 export async function onRequest(context) {
   const { request, env, params, next } = context;
   if (request.method !== "GET") return next();
@@ -1340,11 +2067,11 @@ export async function onRequest(context) {
   if (!bruto) return paginaSimples("Pagina nao encontrada", "Confira o link e tente de novo.");
   let dados;
   try { dados = JSON.parse(bruto); } catch (e) { return paginaSimples("Pagina indisponivel", "Tente de novo em alguns instantes."); }
-  const campos = ["nome","especialidade","publico","cidade","fraseApresentacao","whatsapp","linkDoBotao","foto","foto2","corDoBotao","crefito","endereco","tituloFaixa1","tituloFaixa2","sobre1","sobre2","sobre3","areas","formacao","modelo","formatoFoto","ladoHero","fundo"];
+  const campos = ["nome","especialidade","publico","cidade","fraseApresentacao","whatsapp","linkDoBotao","foto","foto2","fotoBanner","corDoBotao","crefito","endereco","tituloFaixa1","tituloFaixa2","sobre1","sobre2","sobre3","areas","formacao","modelo","formatoFoto","ladoHero","fundo"];
   const limpo = {};
   for (const c of campos) { if (typeof dados[c] === "string" && dados[c].trim()) limpo[c] = dados[c]; }
   const json = JSON.stringify(limpo).replace(/</g, "\\u003c");
-  const pagina = (limpo.modelo === "premium" ? MODELO_PREMIUM : MODELO).replace("{{DADOS_JSON}}", json);
+  const pagina = (limpo.modelo === "premium-sem-foto" ? MODELO_SEMFOTO : (limpo.modelo === "premium" ? MODELO_PREMIUM : MODELO)).replace("{{DADOS_JSON}}", json);
   return new Response(pagina, {
     headers: { "content-type": "text/html; charset=utf-8", "x-robots-tag": "noindex" }
   });

@@ -25,7 +25,7 @@ function gerarSlug(nome) {
     .slice(0, 60);
 }
 
-const CAMPOS = ["nome","especialidade","publico","cidade","fraseApresentacao","whatsapp","linkDoBotao","foto","foto2","corDoBotao","crefito","endereco","tituloFaixa1","tituloFaixa2","sobre1","sobre2","sobre3","areas","formacao","revisao","modelo","formatoFoto","ladoHero","fundo"];
+const CAMPOS = ["nome","especialidade","publico","cidade","fraseApresentacao","whatsapp","linkDoBotao","foto","foto2","fotoBanner","corDoBotao","crefito","endereco","tituloFaixa1","tituloFaixa2","sobre1","sobre2","sobre3","areas","formacao","revisao","modelo","formatoFoto","ladoHero","fundo"];
 
 export async function onRequestGet(context) {
   const bloqueio = checarAcesso(context);
